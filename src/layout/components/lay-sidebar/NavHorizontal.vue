@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { isAllEmpty } from "@pureadmin/utils";
-import { ref, nextTick, computed } from "vue";
-import { useNav } from "@/layout/hooks/useNav";
-import LaySearch from "../lay-search/index.vue";
-import LayNotice from "../lay-notice/index.vue";
-import { usePermissionStoreHook } from "@/store/modules/permission";
-import LaySidebarItem from "../lay-sidebar/components/SidebarItem.vue";
-import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vue";
+import { isAllEmpty } from '@pureadmin/utils'
+import { ref, nextTick, computed } from 'vue'
+import { useNav } from '@/layout/hooks/useNav'
+import LaySearch from '../lay-search/index.vue'
+import LayNotice from '../lay-notice/index.vue'
+import { usePermissionStoreHook } from '@/store/modules/permission'
+import LaySidebarItem from '../lay-sidebar/components/SidebarItem.vue'
+import LaySidebarFullScreen from '../lay-sidebar/components/SidebarFullScreen.vue'
 
-import LogoutCircleRLine from "@iconify-icons/ri/logout-circle-r-line";
-import Setting from "@iconify-icons/ri/settings-3-line";
+import LogoutCircleRLine from '@iconify-icons/ri/logout-circle-r-line'
+import Setting from '@iconify-icons/ri/settings-3-line'
 
-const menuRef = ref();
+const menuRef = ref()
 
 const {
   route,
@@ -23,15 +23,15 @@ const {
   userAvatar,
   backTopMenu,
   avatarsStyle
-} = useNav();
+} = useNav()
 
 const defaultActive = computed(() =>
   !isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path
-);
+)
 
 nextTick(() => {
-  menuRef.value?.handleResize();
-});
+  menuRef.value?.handleResize()
+})
 </script>
 
 <template>

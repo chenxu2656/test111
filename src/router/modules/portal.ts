@@ -1,1 +1,1 @@
-export default [] satisfies Array<RouteConfigsTable>;
+export default [] satisfies Array<RouteConfigsTable>

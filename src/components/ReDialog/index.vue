@@ -5,17 +5,17 @@ import {
   type DialogOptions,
   closeDialog,
   dialogStore
-} from "./index";
-import { ref, computed } from "vue";
-import { isFunction } from "@pureadmin/utils";
-import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
-import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
+} from './index'
+import { ref, computed } from 'vue'
+import { isFunction } from '@pureadmin/utils'
+import Fullscreen from '@iconify-icons/ri/fullscreen-fill'
+import ExitFullscreen from '@iconify-icons/ri/fullscreen-exit-fill'
 
 defineOptions({
-  name: "ReDialog"
-});
+  name: 'ReDialog'
+})
 
-const fullscreen = ref(false);
+const fullscreen = ref(false)
 
 const footerButtons = computed(() => {
   return (options: DialogOptions) => {
@@ -23,48 +23,48 @@ const footerButtons = computed(() => {
       ? options.footerButtons
       : ([
           {
-            label: "取消",
+            label: '取消',
             text: true,
             bg: true,
             btnClick: ({ dialog: { options, index } }) => {
               const done = () =>
-                closeDialog(options, index, { command: "cancel" });
+                closeDialog(options, index, { command: 'cancel' })
               if (options?.beforeCancel && isFunction(options?.beforeCancel)) {
-                options.beforeCancel(done, { options, index });
+                options.beforeCancel(done, { options, index })
               } else {
-                done();
+                done()
               }
             }
           },
           {
-            label: "确定",
-            type: "primary",
+            label: '确定',
+            type: 'primary',
             text: true,
             bg: true,
             popconfirm: options?.popconfirm,
             btnClick: ({ dialog: { options, index } }) => {
               const done = () =>
-                closeDialog(options, index, { command: "sure" });
+                closeDialog(options, index, { command: 'sure' })
               if (options?.beforeSure && isFunction(options?.beforeSure)) {
-                options.beforeSure(done, { options, index });
+                options.beforeSure(done, { options, index })
               } else {
-                done();
+                done()
               }
             }
           }
-        ] as Array<ButtonProps>);
-  };
-});
+        ] as Array<ButtonProps>)
+  }
+})
 
 const fullscreenClass = computed(() => {
   return [
-    "el-icon",
-    "el-dialog__close",
-    "-translate-x-2",
-    "cursor-pointer",
-    "hover:!text-[red]"
-  ];
-});
+    'el-icon',
+    'el-dialog__close',
+    '-translate-x-2',
+    'cursor-pointer',
+    'hover:!text-[red]'
+  ]
+})
 
 function eventsCallBack(
   event: EventType,
@@ -72,19 +72,19 @@ function eventsCallBack(
   index: number,
   isClickFullScreen = false
 ) {
-  if (!isClickFullScreen) fullscreen.value = options?.fullscreen ?? false;
+  if (!isClickFullScreen) fullscreen.value = options?.fullscreen ?? false
   if (options?.[event] && isFunction(options?.[event])) {
-    return options?.[event]({ options, index });
+    return options?.[event]({ options, index })
   }
 }
 
 function handleClose(
   options: DialogOptions,
   index: number,
-  args = { command: "close" }
+  args = { command: 'close' }
 ) {
-  closeDialog(options, index, args);
-  eventsCallBack("close", options, index);
+  closeDialog(options, index, args)
+  eventsCallBack('close', options, index)
 }
 </script>
 
@@ -116,13 +116,13 @@ function handleClose(
           :class="fullscreenClass"
           @click="
             () => {
-              fullscreen = !fullscreen;
+              fullscreen = !fullscreen
               eventsCallBack(
                 'fullscreenCallBack',
                 { ...options, fullscreen },
                 index,
                 true
-              );
+              )
             }
           "
         >

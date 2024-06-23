@@ -25,11 +25,24 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit",
+    "source.fixAll.tslint": "explicit"
   },
   "iconify.excludes": [
     "el"
   ],
+   "vetur.validation.template": false,
+  "vetur.validation.script": false,
+  "vetur.validation.style": false,
+
+
+  // 不添加分号
+  "prettier.semi": true,
+  // 使用单引号
+  "prettier.singleQuote": true,
+
+
   "vscodeCustomCodeColor.highlightValue": [
     "v-loading",
     "v-auth",
