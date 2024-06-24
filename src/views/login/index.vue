@@ -1,23 +1,21 @@
 <script setup lang="ts">
-import Motion from './utils/motion'
-import { useRouter } from 'vue-router'
-import { message } from '@/utils/message'
-import { loginRules } from './utils/rule'
-import { useNav } from '@/layout/hooks/useNav'
-import type { FormInstance } from 'element-plus'
-import { useLayout } from '@/layout/hooks/useLayout'
-import { useUserStoreHook } from '@/store/modules/user'
-import { initRouter, getTopMenu } from '@/router/utils'
-import { bg, avatar, illustration } from './utils/static'
-import { useRenderIcon } from '@/components/ReIcon/src/hooks'
-import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from 'vue'
-import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange'
-
-import dayIcon from '@/assets/svg/day.svg?component'
+import { getVCode, verifyVcode } from '@/api/user'
 import darkIcon from '@/assets/svg/dark.svg?component'
-import Lock from '@iconify-icons/ri/lock-fill'
+import dayIcon from '@/assets/svg/day.svg?component'
+import { useRenderIcon } from '@/components/ReIcon/src/hooks'
+import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange'
+import { useLayout } from '@/layout/hooks/useLayout'
+import { useNav } from '@/layout/hooks/useNav'
 import User from '@iconify-icons/ri/user-3-fill'
-
+import { ElMessage, type FormInstance } from 'element-plus'
+import { onBeforeUnmount, onMounted, reactive, ref, toRaw } from 'vue'
+import { useRouter } from 'vue-router'
+import Motion from './utils/motion'
+import { loginRules } from './utils/rule'
+import { avatar, bg, illustration } from './utils/static'
+const buttonCon = ref('获取验证码')
+const registerInfo = ref({})
+const isDisabled = ref(false)
 defineOptions({
   name: 'Login'
 })
@@ -33,33 +31,9 @@ dataThemeChange(overallStyle.value)
 const { title } = useNav()
 
 const ruleForm = reactive({
-  username: 'admin',
-  password: 'admin123'
+  phoneNumber: '',
+  verificationCode: ''
 })
-
-const onLogin = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      loading.value = true
-      useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: 'admin123' })
-        .then(res => {
-          if (res.success) {
-            // 获取后端路由
-            return initRouter().then(() => {
-              router.push(getTopMenu(true).path).then(() => {
-                message('登录成功', { type: 'success' })
-              })
-            })
-          } else {
-            message('登录失败', { type: 'error' })
-          }
-        })
-        .finally(() => (loading.value = false))
-    }
-  })
-}
 
 /** 使用公共函数，避免`removeEventListener`失效 */
 function onkeypress({ code }: KeyboardEvent) {
@@ -67,7 +41,6 @@ function onkeypress({ code }: KeyboardEvent) {
     onLogin(ruleFormRef.value)
   }
 }
-
 onMounted(() => {
   window.document.addEventListener('keypress', onkeypress)
 })
@@ -75,6 +48,50 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.document.removeEventListener('keypress', onkeypress)
 })
+const sendCode = () => {
+  ruleFormRef.value.validateField('phoneNumber', async (valid, fields) => {
+    if (valid) {
+      isDisabled.value = true
+      let time = 60
+      getVCode(ruleForm.phoneNumber).then(resp => {
+        ElMessage.success('验证码发送成功')
+        registerInfo.value = resp
+        console.log('registerInfo', registerInfo.value)
+      })
+      const timer = setInterval(() => {
+        if (time === 0) {
+          clearInterval(timer)
+          isDisabled.value = false
+          buttonCon.value = '获取验证码'
+        } else {
+          buttonCon.value = `${time}s`
+          time--
+        }
+      }, 1000)
+    } else {
+      ElMessage.error('请输入手机号')
+    }
+  })
+}
+const verifyCode = (phone: string, code: string) => {
+  ruleFormRef.value.validate(async valid => {
+    if (valid) {
+      try {
+        verifyVcode(phone, code).then(resp => {
+          if (resp.access_token) {
+            ElMessage.success('验证成功')
+          } else {
+            ElMessage.error('验证失败')
+          }
+        })
+      } catch (error) {
+        ElMessage.error('验证码错误')
+      }
+    } else {
+      return false
+    }
+  })
+}
 </script>
 
 <template>
@@ -112,30 +129,47 @@ onBeforeUnmount(() => {
                 :rules="[
                   {
                     required: true,
-                    message: '请输入账号',
+                    message: '请输入手机号',
                     trigger: 'blur'
                   }
                 ]"
-                prop="username"
+                prop="phoneNumber"
               >
                 <el-input
-                  v-model="ruleForm.username"
+                  v-model="ruleForm.phoneNumber"
                   clearable
-                  placeholder="账号"
+                  placeholder="请输入手机号"
                   :prefix-icon="useRenderIcon(User)"
                 />
               </el-form-item>
             </Motion>
 
-            <Motion :delay="150">
-              <el-form-item prop="password">
-                <el-input
-                  v-model="ruleForm.password"
-                  clearable
-                  show-password
-                  placeholder="密码"
-                  :prefix-icon="useRenderIcon(Lock)"
-                />
+            <Motion :delay="100">
+              <el-form-item
+                prop="verificationCode"
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入验证码',
+                    trigger: 'blur'
+                  }
+                ]"
+              >
+                <div class="w-full flex justify-between">
+                  <el-input
+                    v-model="ruleForm.verificationCode"
+                    clearable
+                    placeholder="请输入验证码"
+                    :prefix-icon="useRenderIcon('ri:shield-keyhole-line')"
+                  />
+                  <el-button
+                    :disabled="isDisabled"
+                    class="ml-2"
+                    @click="sendCode"
+                  >
+                    {{ buttonCon }}
+                  </el-button>
+                </div>
               </el-form-item>
             </Motion>
 
@@ -145,7 +179,9 @@ onBeforeUnmount(() => {
                 size="default"
                 type="primary"
                 :loading="loading"
-                @click="onLogin(ruleFormRef)"
+                @click="
+                  verifyCode(ruleForm.phoneNumber, ruleForm.verificationCode)
+                "
               >
                 登录
               </el-button>
