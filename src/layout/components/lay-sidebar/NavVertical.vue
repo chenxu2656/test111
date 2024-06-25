@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
-import { emitter } from '@/utils/mitt'
-import { useNav } from '@/layout/hooks/useNav'
 import { responsiveStorageNameSpace } from '@/config'
-import { storageLocal, isAllEmpty } from '@pureadmin/utils'
+import { useNav } from '@/layout/hooks/useNav'
 import { findRouteByPath, getParentPaths } from '@/router/utils'
 import { usePermissionStoreHook } from '@/store/modules/permission'
-import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
-import LaySidebarLogo from '../lay-sidebar/components/SidebarLogo.vue'
+import { emitter } from '@/utils/mitt'
+import { isAllEmpty, storageLocal } from '@pureadmin/utils'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import LaySidebarCenterCollapse from '../lay-sidebar/components/SidebarCenterCollapse.vue'
 import LaySidebarItem from '../lay-sidebar/components/SidebarItem.vue'
 import LaySidebarLeftCollapse from '../lay-sidebar/components/SidebarLeftCollapse.vue'
-import LaySidebarCenterCollapse from '../lay-sidebar/components/SidebarCenterCollapse.vue'
 
 const route = useRoute()
 const isShow = ref(false)

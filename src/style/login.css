@@ -32,6 +32,7 @@
   align-items: center;
   text-align: center;
   overflow: hidden;
+  margin-top: -300px;
 }
 
 .login-form {

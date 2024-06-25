@@ -1,15 +1,7 @@
 import { getLogin, getVCode } from '@/api/user'
-import { removeToken, setToken, userKey, type DataInfo } from '@/utils/auth'
+import { setToken, userKey, type DataInfo } from '@/utils/auth'
 import { defineStore } from 'pinia'
-import {
-  resetRouter,
-  router,
-  routerArrays,
-  storageLocal,
-  store,
-  type userType
-} from '../utils'
-import { useMultiTagsStoreHook } from './multiTags'
+import { router, storageLocal, store, type userType } from '../utils'
 
 export const useUserStore = defineStore({
   id: 'pure-user',
@@ -81,11 +73,7 @@ export const useUserStore = defineStore({
     },
     /** 前端登出（不调用接口） */
     logOut() {
-      this.username = ''
-      this.roles = []
-      removeToken()
-      useMultiTagsStoreHook().handleTags('equal', [...routerArrays])
-      resetRouter()
+      localStorage.removeItem('jwt')
       router.push('/login')
     }
   }

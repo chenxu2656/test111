@@ -2,10 +2,9 @@
 
 /** @type {import("prettier").Config} */
 export default {
-  bracketSpacing: true,
-  singleQuote: true,
-  arrowParens: "avoid",
-  trailingComma: "none",
-
-  semi: false,
-};
+  // bracketSpacing: true,
+  // singleQuote: true,
+  // arrowParens: 'avoid',
+  // trailingComma: 'none',
+  // semi: false
+}

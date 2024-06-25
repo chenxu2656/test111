@@ -29,7 +29,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       proxy: {
         '/api/v1': {
           // 这里填写后端地址
-          target: 'http://124.222.84.233:8000/',
+          target: 'http://localhost:8000/',
           changeOrigin: true,
           bypass: function (req, res, options) {
             // 设置代理转发前缀
@@ -45,11 +45,11 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
             return path.replace(/^\/api/, '/api')
           }
         }
-      },
-      // 预热文件以提前转换和缓存结果，降低启动期间的初始页面加载时长并防止转换瀑布
-      warmup: {
-        clientFiles: ['./index.html', './src/{views,components}/*']
       }
+      // 预热文件以提前转换和缓存结果，降低启动期间的初始页面加载时长并防止转换瀑布
+      // warmup: {
+      //   clientFiles: ['./index.html', './src/{views,components}/*']
+      // }
     },
     plugins: [
       getPluginsList(VITE_CDN, VITE_COMPRESSION),
