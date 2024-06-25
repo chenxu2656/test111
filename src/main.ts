@@ -6,9 +6,8 @@ import router from './router'
 // import { useEcharts } from "@/plugins/echarts";
 import { useElementPlus } from '@/plugins/elementPlus'
 import { injectResponsiveStorage } from '@/utils/responsive'
-import { createApp, type Directive } from 'vue'
-
 import Table from '@pureadmin/table'
+import { createApp, type Directive } from 'vue'
 // import PureDescriptions from "@pureadmin/descriptions";
 
 // 引入重置样式

@@ -1,20 +1,15 @@
+import { getLogin, getVCode } from '@/api/user'
+import { removeToken, setToken, userKey, type DataInfo } from '@/utils/auth'
 import { defineStore } from 'pinia'
 import {
-  type userType,
-  store,
-  router,
   resetRouter,
+  router,
   routerArrays,
-  storageLocal
+  storageLocal,
+  store,
+  type userType
 } from '../utils'
-import {
-  type UserResult,
-  type RefreshTokenResult,
-  getLogin,
-  refreshTokenApi
-} from '@/api/user'
 import { useMultiTagsStoreHook } from './multiTags'
-import { type DataInfo, setToken, removeToken, userKey } from '@/utils/auth'
 
 export const useUserStore = defineStore({
   id: 'pure-user',
@@ -59,10 +54,24 @@ export const useUserStore = defineStore({
     },
     /** 登入 */
     async loginByUsername(data) {
-      return new Promise<UserResult>((resolve, reject) => {
+      return new Promise<any>((resolve, reject) => {
         getLogin(data)
           .then(data => {
             if (data?.success) setToken(data.data)
+            resolve(data)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    /**
+     * 发送验证码
+     */
+    sendVCode(PhoneNum: string) {
+      return new Promise<any>((resolve, reject) => {
+        getVCode(PhoneNum)
+          .then(data => {
             resolve(data)
           })
           .catch(error => {
@@ -78,21 +87,6 @@ export const useUserStore = defineStore({
       useMultiTagsStoreHook().handleTags('equal', [...routerArrays])
       resetRouter()
       router.push('/login')
-    },
-    /** 刷新`token` */
-    async handRefreshToken(data) {
-      return new Promise<RefreshTokenResult>((resolve, reject) => {
-        refreshTokenApi(data)
-          .then(data => {
-            if (data) {
-              setToken(data.data)
-              resolve(data)
-            }
-          })
-          .catch(error => {
-            reject(error)
-          })
-      })
     }
   }
 })
