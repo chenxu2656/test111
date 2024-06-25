@@ -6,13 +6,15 @@ import { useRenderIcon } from '@/components/ReIcon/src/hooks'
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange'
 import { useLayout } from '@/layout/hooks/useLayout'
 import { useNav } from '@/layout/hooks/useNav'
+import { getTopMenu, initRouter } from '@/router/utils'
+import { message } from '@/utils/message'
 import User from '@iconify-icons/ri/user-3-fill'
 import { ElMessage, type FormInstance } from 'element-plus'
 import { onBeforeUnmount, onMounted, reactive, ref, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import Motion from './utils/motion'
 import { loginRules } from './utils/rule'
-import { avatar, bg, illustration } from './utils/static'
+import { bg, illustration } from './utils/static'
 const buttonCon = ref('获取验证码')
 const registerInfo = ref({})
 const isDisabled = ref(false)
@@ -76,17 +78,23 @@ const sendCode = () => {
 const verifyCode = (phone: string, code: string) => {
   ruleFormRef.value.validate(async valid => {
     if (valid) {
-      try {
-        verifyVcode(phone, code).then(resp => {
+      verifyVcode(phone, code)
+        .then(resp => {
           if (resp.access_token) {
-            ElMessage.success('验证成功')
+            return initRouter().then(() => {
+              console.log('getTopMenu(true)', getTopMenu(true))
+              router.push('/welcome').then(() => {
+                message('登录成功', { type: 'success' })
+                localStorage.setItem('jwt', resp.access_token)
+              })
+            })
           } else {
-            ElMessage.error('验证失败')
+            message('验证码错误，登录失败', { type: 'error' })
           }
         })
-      } catch (error) {
-        ElMessage.error('验证码错误')
-      }
+        .catch(() => {
+          message('验证码错误，登录失败', { type: 'error' })
+        })
     } else {
       return false
     }
@@ -113,9 +121,14 @@ const verifyCode = (phone: string, code: string) => {
       </div>
       <div class="login-box">
         <div class="login-form">
-          <avatar class="avatar" />
+          <img
+            src="@/assets/images/logo.png"
+            alt=""
+            srcset=""
+            style="width: 200px"
+          />
           <Motion>
-            <h2 class="outline-none">{{ title }}</h2>
+            <h2 class="outline-none">医疗器械创业供给平台</h2>
           </Motion>
 
           <el-form

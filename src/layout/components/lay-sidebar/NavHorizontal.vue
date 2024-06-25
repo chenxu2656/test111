@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { isAllEmpty } from '@pureadmin/utils'
-import { ref, nextTick, computed } from 'vue'
 import { useNav } from '@/layout/hooks/useNav'
-import LaySearch from '../lay-search/index.vue'
-import LayNotice from '../lay-notice/index.vue'
 import { usePermissionStoreHook } from '@/store/modules/permission'
-import LaySidebarItem from '../lay-sidebar/components/SidebarItem.vue'
+import { isAllEmpty } from '@pureadmin/utils'
+import { computed, nextTick, ref } from 'vue'
+import LayNotice from '../lay-notice/index.vue'
+import LaySearch from '../lay-search/index.vue'
 import LaySidebarFullScreen from '../lay-sidebar/components/SidebarFullScreen.vue'
+import LaySidebarItem from '../lay-sidebar/components/SidebarItem.vue'
 
 import LogoutCircleRLine from '@iconify-icons/ri/logout-circle-r-line'
 import Setting from '@iconify-icons/ri/settings-3-line'
@@ -77,7 +77,7 @@ nextTick(() => {
                 :icon="LogoutCircleRLine"
                 style="margin: 5px"
               />
-              退出系统
+              退出系统1
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
