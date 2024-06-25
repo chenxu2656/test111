@@ -30,7 +30,7 @@ export default [
   {
     path: '/portal',
     name: 'Portal',
-    component: () => import('@/views/portal/index.vue'),
+    component: () => import('@/views/portal/home/index.vue'),
     meta: {
       title: 'Med',
       showLink: false,
