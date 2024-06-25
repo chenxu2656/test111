@@ -18,13 +18,14 @@ import './style/index.scss'
 import 'element-plus/dist/index.css'
 import './style/tailwind.css'
 // 导入字体图标
+import './assets/base.less'
 import './assets/iconfont/iconfont.css'
 import './assets/iconfont/iconfont.js'
-
-const app = createApp(App)
+import './assets/main.less'
 
 // 自定义指令
 import * as directives from '@/directives'
+const app = createApp(App)
 Object.keys(directives).forEach(key => {
   app.directive(key, (directives as { [key: string]: Directive })[key])
 })
@@ -44,9 +45,12 @@ import { Auth } from '@/components/ReAuth'
 app.component('Auth', Auth)
 
 // 全局注册vue-tippy
+import { createPinia } from 'pinia'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
 import VueTippy from 'vue-tippy'
+
+const pinia = createPinia()
 app.use(VueTippy)
 
 getPlatformConfig(app).then(async config => {
@@ -54,7 +58,7 @@ getPlatformConfig(app).then(async config => {
   app.use(router)
   await router.isReady()
   injectResponsiveStorage(app, config)
-  app.use(MotionPlugin).use(useElementPlus).use(Table)
+  app.use(MotionPlugin).use(useElementPlus).use(Table).use(pinia)
   // .use(PureDescriptions)
   // .use(useEcharts);
   app.mount('#app')

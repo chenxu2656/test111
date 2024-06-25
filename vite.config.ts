@@ -1,4 +1,6 @@
 import { loadEnv, type ConfigEnv, type UserConfigExport } from 'vite'
+import Pages from 'vite-plugin-pages'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import { exclude, include } from './build/optimize'
 import { getPluginsList } from './build/plugins'
 import {
@@ -49,7 +51,17 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
         clientFiles: ['./index.html', './src/{views,components}/*']
       }
     },
-    plugins: getPluginsList(VITE_CDN, VITE_COMPRESSION),
+    plugins: [
+      getPluginsList(VITE_CDN, VITE_COMPRESSION),
+      VueDevTools(),
+      Pages({
+        dirs: 'src/views', // 需要生成路由的文件目录，默认就是识别src下面的pages文件
+        exclude: ['**/components/*.vue'], // 排除在外的目录，上面配置目录的例子，里面有 components 目录，我们不希望他被解析为路由
+        extendRoute(route) {
+          if (route.path === '/') return { ...route, redirect: 'page1' } // 给默认路由加一个redirect，默认为index.vue
+        }
+      })
+    ],
     // https://cn.vitejs.dev/config/dep-optimization-options.html#dep-optimization-options
     optimizeDeps: {
       include,

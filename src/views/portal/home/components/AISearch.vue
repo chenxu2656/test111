@@ -109,7 +109,6 @@ const input = ref('')
           height: 30px;
           line-height: 30px;
           font-size: 16px;
-          color: #414141;
         }
         .guess_you_like_list {
           width: 80%;
