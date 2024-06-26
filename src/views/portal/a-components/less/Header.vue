@@ -1,163 +1,163 @@
 <script setup>
-import { RouterLink, useRoute, useRouter } from 'vue-router'
-import { onUnmounted, ref, watch, computed, onMounted } from 'vue'
-import { use_app_state_store } from '@/stores/systemStatus.ts'
-import { storeToRefs } from 'pinia'
-import HeaderLinksBox from '@/views/portal/a-components/less/HeaderLinksBox.vue'
-import { Place } from '@element-plus/icons-vue'
-import Logo from '@/views/portal/a-components/Logo.vue'
+import { RouterLink, useRoute, useRouter } from "vue-router";
+import { onUnmounted, ref, watch, computed, onMounted } from "vue";
+import { use_app_state_store } from "@/stores/systemStatus.ts";
+import { storeToRefs } from "pinia";
+import HeaderLinksBox from "@/views/portal/a-components/less/HeaderLinksBox.vue";
+import { Place } from "@element-plus/icons-vue";
+import Logo from "@/views/portal/a-components/Logo.vue";
 
-let appStates = use_app_state_store()
-const { headerState, navs } = storeToRefs(appStates)
+let appStates = use_app_state_store();
+const { headerState, navs } = storeToRefs(appStates);
 
-console.log(headerState, navs)
+console.log(headerState, navs);
 
-let router = useRouter()
-let route = useRoute()
+let router = useRouter();
+let route = useRoute();
 
-let headerBoxShadow = ref('')
+let headerBoxShadow = ref("");
 watch(
   () => route.path,
-  newValue => {
-    if (newValue === '/menu') {
-      headerBoxShadow.value = '0 0 0 #000'
+  (newValue) => {
+    if (newValue === "/menu") {
+      headerBoxShadow.value = "0 0 0 #000";
     } else {
-      headerBoxShadow.value = '0 0 30px rgba(0, 0, 0, .2)'
+      headerBoxShadow.value = "0 0 30px rgba(0, 0, 0, .2)";
     }
   },
   {
-    immediate: true
-  }
-)
+    immediate: true,
+  },
+);
 
 /* menuIcon */
-const btnMenu = ref()
-let menuIconName = ref('')
+const btnMenu = ref();
+let menuIconName = ref("");
 watch(
   () => route.path,
-  newValue => {
-    if (newValue === '/menu') {
-      menuIconName.value = 'cross'
+  (newValue) => {
+    if (newValue === "/menu") {
+      menuIconName.value = "cross";
     } else {
-      menuIconName.value = 'wap-nav'
+      menuIconName.value = "wap-nav";
     }
   },
   {
-    immediate: true
-  }
-)
+    immediate: true,
+  },
+);
 watch(menuIconName, () => {
-  btnMenu.value.classList.toggle('transform-rotate-180')
-})
+  btnMenu.value.classList.toggle("transform-rotate-180");
+});
 
 function menuClick() {
-  if (menuIconName.value === 'cross') {
-    router.back()
+  if (menuIconName.value === "cross") {
+    router.back();
   } else {
-    router.push('/menu')
+    router.push("/menu");
   }
 }
 
 /* menuIcon */
 
 /* 透明模式 */
-let headerHeight = ref('50px')
+let headerHeight = ref("50px");
 watch(
   () => headerState.value.showBehavior,
   (newValue, oldValue) => {
-    if (newValue.includes('transparentMode')) {
-      window.addEventListener('scroll', transparentAnimation)
-      headerHeight.value = '70px'
+    if (newValue.includes("transparentMode")) {
+      window.addEventListener("scroll", transparentAnimation);
+      headerHeight.value = "70px";
     } else {
-      window.removeEventListener('scroll', transparentAnimation)
-      headerHeight.value = '50px'
+      window.removeEventListener("scroll", transparentAnimation);
+      headerHeight.value = "50px";
     }
   },
   {
-    immediate: true
-  }
-)
+    immediate: true,
+  },
+);
 
 function transparentAnimation() {
   if (window.scrollY > 0) {
-    headerHeight.value = '50px'
+    headerHeight.value = "50px";
     appStates.$patch({
       headerState: {
-        bgc: 'white',
-        color: '#101010'
-      }
-    })
+        bgc: "white",
+        color: "#101010",
+      },
+    });
   } else {
-    headerHeight.value = '70px'
+    headerHeight.value = "70px";
     appStates.$patch({
       headerState: {
-        bgc: 'transparent',
+        bgc: "transparent",
 
-        color: '#dfdfdf'
-      }
-    })
+        color: "#dfdfdf",
+      },
+    });
   }
 }
 
 function onMouseover() {
   if (
     window.scrollY === 0 &&
-    headerState.value.showBehavior.includes('transparentMode')
+    headerState.value.showBehavior.includes("transparentMode")
   ) {
-    headerHeight.value = '50px'
+    headerHeight.value = "50px";
     appStates.$patch({
       headerState: {
-        color: '#101010',
-        bgc: 'white'
-      }
-    })
+        color: "#101010",
+        bgc: "white",
+      },
+    });
   }
 }
 
 function onMouseleave() {
   if (
     window.scrollY === 0 &&
-    headerState.value.showBehavior.includes('transparentMode')
+    headerState.value.showBehavior.includes("transparentMode")
   ) {
-    headerHeight.value = '70px'
+    headerHeight.value = "70px";
     appStates.$patch({
       headerState: {
-        color: '#dfdfdf',
-        bgc: 'transparent'
-      }
-    })
+        color: "#dfdfdf",
+        bgc: "transparent",
+      },
+    });
   }
 }
 
 /* 透明模式 */
 
 /* auto hide mode */
-let lastScrollY = 0
-let header = ref()
+let lastScrollY = 0;
+let header = ref();
 watch(
   () => headerState.value.showBehavior,
   (newValue, oldValue) => {
-    if (newValue.includes('autoHide')) {
-      window.addEventListener('scroll', autoHide)
+    if (newValue.includes("autoHide")) {
+      window.addEventListener("scroll", autoHide);
     } else {
-      appStates.$patch({ headerState: { headerTransform: 'translateY(0)' } })
-      window.removeEventListener('scroll', autoHide)
+      appStates.$patch({ headerState: { headerTransform: "translateY(0)" } });
+      window.removeEventListener("scroll", autoHide);
     }
   },
   {
-    immediate: true
-  }
-)
+    immediate: true,
+  },
+);
 function autoHide() {
-  const currentScrollY = window.scrollY
-  const difference = currentScrollY - lastScrollY
+  const currentScrollY = window.scrollY;
+  const difference = currentScrollY - lastScrollY;
   if (difference > 100) {
-    appStates.$patch({ headerState: { transform: 'translateY(-50px)' } })
-    lastScrollY = currentScrollY
+    appStates.$patch({ headerState: { transform: "translateY(-50px)" } });
+    lastScrollY = currentScrollY;
   } else if (difference < -100) {
-    appStates.$patch({ headerState: { transform: 'translateY(0)' } })
+    appStates.$patch({ headerState: { transform: "translateY(0)" } });
     // header.value.classList.add("active")
-    lastScrollY = currentScrollY
+    lastScrollY = currentScrollY;
   }
   if (currentScrollY == 0) {
     // header.value.classList.remove("active")
@@ -187,7 +187,7 @@ window.addEventListener('resize', ()=>{
       position: headerState.position,
       boxShadow: headerBoxShadow,
       color: headerState.color,
-      transform: headerState.transform
+      transform: headerState.transform,
     }"
     @mouseover="onMouseover"
     @mouseleave="onMouseleave"
@@ -231,7 +231,7 @@ window.addEventListener('resize', ()=>{
 </template>
 
 <style scoped lang="less">
-@import '../../assets/main.less';
+@import "../../assets/main.less";
 
 .header {
   position: inherit;

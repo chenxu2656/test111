@@ -58,6 +58,7 @@ export const remainingPaths = Object.keys(remainingRouter).map((v) => {
   return remainingRouter[v].path;
 });
 
+console.log(remainingPaths);
 /** 创建路由实例 */
 export const router: Router = createRouter({
   history: getHistoryMode(import.meta.env.VITE_ROUTER_HISTORY),
@@ -95,7 +96,7 @@ export function resetRouter() {
 }
 
 /** 路由白名单 */
-const whiteList = ["/portal", "/login"];
+const whiteList = remainingPaths;
 
 const { VITE_HIDE_HOME } = import.meta.env;
 

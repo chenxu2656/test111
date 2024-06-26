@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Mic, Search } from '@element-plus/icons-vue'
-import { ref } from 'vue'
-const input = ref('')
+import { Mic, Search } from "@element-plus/icons-vue";
+import { ref } from "vue";
+const input = ref("");
 </script>
 
 <template>
@@ -22,7 +22,7 @@ const input = ref('')
               <el-icon :size="30"><Mic /></el-icon>
             </div>
             <div class="flex-grow" />
-            <div class="switch"><el-switch />切换</div>
+
             <div class="btn">
               <el-button :icon="Search" type="primary">搜索</el-button>
             </div>

@@ -1,5 +1,5 @@
 <script setup>
-import { Mic } from '@element-plus/icons-vue'
+import { Mic } from "@element-plus/icons-vue";
 </script>
 <template>
   <el-container class="home-page">
@@ -23,19 +23,11 @@ import { Mic } from '@element-plus/icons-vue'
     </el-aside>
 
     <el-main>
-      <div class="banner">
-        <div class="banner-content">
-          <h2>2024年安徽省</h2>
-          <h1>重点工业互联网平台申报</h1>
-          <p>PROVINCIAL KEY INDUSTRIAL INTERNET PLATFORM APPLICATION</p>
-          <el-button type="primary">了解详情</el-button>
-        </div>
-        <img
-          src="@/assets/img/banner.jpg"
-          alt="Banner Image"
-          class="banner-image"
-        />
-      </div>
+      <el-carousel :interval="5000" arrow="always">
+        <el-carousel-item v-for="item in 4" :key="item">
+          <h3 text="2xl" justify="center">{{ item }}</h3>
+        </el-carousel-item>
+      </el-carousel>
     </el-main>
   </el-container>
 </template>
@@ -44,10 +36,10 @@ import { Mic } from '@element-plus/icons-vue'
 export default {
   data() {
     return {
-      activeMenu: '1'
-    }
-  }
-}
+      activeMenu: "1",
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -92,41 +84,20 @@ export default {
     }
   }
 
-  .banner {
-    background-color: #e6f7ff;
-    border-radius: 8px;
-    margin: 20px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  .el-carousel__item h3 {
+    color: #475669;
+    opacity: 0.75;
+    line-height: 300px;
+    margin: 0;
+    text-align: center;
+  }
 
-    .banner-content {
-      h1 {
-        font-size: 32px;
-        margin: 0 0 10px;
-        font-weight: bold;
-      }
-      h2 {
-        font-size: 24px;
-        margin: 0 0 10px;
-      }
-      p {
-        font-size: 14px;
-        color: #999;
-        margin: 0 0 20px;
-      }
-      .el-button {
-        background-color: #00aaff;
-        border-color: #00aaff;
-      }
-    }
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
 
-    .banner-image {
-      width: 200px;
-      height: auto;
-    }
+  .el-carousel__item:nth-child(2n + 1) {
+    background-color: #d3dce6;
   }
 }
 </style>
