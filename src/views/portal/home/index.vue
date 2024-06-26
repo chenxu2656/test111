@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import Home from '@/views/portal/a-views/HomeView.vue'
+import Home from "@/views/portal/a-views/HomeView.vue";
+import Header from "./components/Header.vue";
 </script>
 
 <template>
   <div class="page">
-    <!-- <Header /> -->
+    <Header />
     <Home />
   </div>
 </template>
