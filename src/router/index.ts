@@ -122,8 +122,8 @@ router.beforeEach((to: ToRouteType, _from, next) => {
   function toCorrectRoute() {
     whiteList.includes(to.fullPath) ? next(_from.fullPath) : next();
   }
-  // if (localStorage.getItem('jwt')) {
-  if (true) {
+  if (localStorage.getItem("jwt")) {
+    // if (false) {
     // 无权限跳转403页面
     if (to.meta?.roles && !isOneOfArray(to.meta?.roles, userInfo?.roles)) {
       next({ path: "/error/403" });
