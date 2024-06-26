@@ -1,5 +1,7 @@
 <script setup>
+import More from "@/assets/svg/more.svg?component";
 import { Mic } from "@element-plus/icons-vue";
+import { RouterLink } from "vue-router";
 </script>
 <template>
   <el-container class="home-page">
@@ -7,15 +9,24 @@ import { Mic } from "@element-plus/icons-vue";
       <div class="left">
         <div class="left_top">
           <span class="name">分类</span>
-          <span class="link">所有商品</span>
+          <span class="link">
+            <el-icon><More /></el-icon>所有商品></span
+          >
         </div>
         <div class="left_con">
           <div class="list">
-            <el-icon><Mic /></el-icon>
+            <el-icon :size="18"><Mic /></el-icon>
             <div class="list_item">
-              <span>质量管理</span>
-              <span>质量管理</span>
-              <span>质量管理</span>
+              <RouterLink class="link">质量管理</RouterLink>
+              <RouterLink class="link">质量管理</RouterLink>
+              <RouterLink class="link">质量管理</RouterLink>
+            </div>
+          </div>
+
+          <div class="list">
+            <el-icon :size="18"><Mic /></el-icon>
+            <div style="margin-left: 10px; font-size: 14px">
+              <RouterLink class="link">质量管理</RouterLink>
             </div>
           </div>
         </div>
@@ -62,21 +73,38 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        .name {
+          font-weight: 600;
+        }
+        .link {
+          color: #01b862;
+
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
       }
       .left_con {
         .list {
           display: flex;
           width: 96%;
+          flex-direction: row;
+          align-items: center;
+          margin: 5px auto;
 
           .list_item {
             width: 100%;
+            font-size: 14px;
             display: flex;
             align-items: center;
             align-content: center;
             justify-content: space-around;
             flex-direction: row;
-            .span {
-              margin: 20px auto;
+            .link {
+            }
+            .link:hover {
+              background-color: #fff;
+              color: #01b862;
             }
           }
         }

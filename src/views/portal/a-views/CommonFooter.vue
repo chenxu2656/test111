@@ -1,95 +1,94 @@
 <script setup>
-import { ref } from 'vue'
-import Logo from '@/views/portal/a-components/Logo.vue'
-import Divider from '@/views/portal/a-components/less/Divider.vue'
+import Divider from "@/views/portal/a-components/less/Divider.vue";
+import { ref } from "vue";
 
 let footerLinks = ref({
   tips: [
     {
-      showName: '法律声明及隐私权政策',
-      path: '#contact',
-      type: 'RouterLink',
-      target: '_blank'
+      showName: "法律声明及隐私权政策",
+      path: "#contact",
+      type: "RouterLink",
+      target: "_blank",
     },
     {
-      showName: 'Cookies政策',
-      path: '#contact',
-      type: 'RouterLink',
-      target: '_blank'
+      showName: "Cookies政策",
+      path: "#contact",
+      type: "RouterLink",
+      target: "_blank",
     },
     {
-      showName: '举报',
-      path: '#contact',
-      type: 'RouterLink',
-      target: '_blank'
+      showName: "举报",
+      path: "#contact",
+      type: "RouterLink",
+      target: "_blank",
     },
     {
-      showName: '联系/加入我们',
-      path: '#contact',
-      type: 'RouterLink',
-      target: '_blank'
-    }
+      showName: "联系/加入我们",
+      path: "#contact",
+      type: "RouterLink",
+      target: "_blank",
+    },
   ],
   friendship: [
     {
-      showName: 'vue.js',
-      path: 'https://cn.vuejs.org/',
-      type: 'a',
-      target: '_blank'
+      showName: "vue.js",
+      path: "https://cn.vuejs.org/",
+      type: "a",
+      target: "_blank",
     },
     {
-      showName: 'vant',
-      path: 'https://vant-contrib.gitee.io/vant/#/zh-CN',
-      type: 'a',
-      target: '_blank'
+      showName: "vant",
+      path: "https://vant-contrib.gitee.io/vant/#/zh-CN",
+      type: "a",
+      target: "_blank",
     },
     {
-      showName: 'element',
-      path: 'https://element-plus.org/zh-CN/',
-      type: 'a',
-      target: '_blank'
-    }
+      showName: "element",
+      path: "https://element-plus.org/zh-CN/",
+      type: "a",
+      target: "_blank",
+    },
   ],
   copyright: [
     {
-      showName: '© 2023-2030 ainowr.com 版权所有 (made by ainow)',
-      type: 'div'
+      showName: "© 2023-2030 ainowr.com 版权所有 (made by ainow)",
+      type: "div",
     },
     // {showName: '经营许可证:浙B2-xxx-x', path: '#', type: 'a',},
-    { showName: '经营许可证:申请中', path: '#', type: 'RouterLink' }
+    { showName: "经营许可证:申请中", path: "#", type: "RouterLink" },
   ],
   pnsp: [
     // {showName: '备案中', path: '#', type: 'RouterLink',},
     {
-      showName: '桂公网安备45032302000124号',
-      path: 'https://beian.mps.gov.cn/#/query/webSearch',
-      type: 'a',
-      target: '_blank'
+      showName: "桂公网安备45032302000124号",
+      path: "https://beian.mps.gov.cn/#/query/webSearch",
+      type: "a",
+      target: "_blank",
     },
     {
-      showName: '蜀ICP备2024060727号',
-      path: 'http://beian.miit.gov.cn/',
-      type: 'a',
-      target: '_blank'
-    }
+      showName: "蜀ICP备2024060727号",
+      path: "http://beian.miit.gov.cn/",
+      type: "a",
+      target: "_blank",
+    },
     // {showName: '浙B2-xxx-x', path: '#', type: 'a',},
-  ]
-})
+  ],
+});
 
 function getLinkProps(item) {
-  let props = {}
-  props.target = item.target || '_self'
-  if (item.type === 'RouterLink') {
-    props.to = item.path
-  } else if (item.type === 'a') {
-    props.href = item.path
-  } else if (item.type === 'img') {
-    props.src = item.path
+  let props = {};
+  props.target = item.target || "_self";
+  if (item.type === "RouterLink") {
+    props.to = item.path;
+  } else if (item.type === "a") {
+    props.href = item.path;
+  } else if (item.type === "img") {
+    props.src = item.path;
   }
-  if (item.target === '_blank') {
-    props.rel = item.rel || 'noopener'
+  if (item.target === "_blank") {
+    props.rel = item.rel || "noopener";
   }
-  return props
+  return props;
 }
 </script>
 
@@ -98,9 +97,7 @@ function getLinkProps(item) {
   <div class="footer">
     <div class="content">
       <Divider />
-      <Logo class="logo" />
       <div class="first">
-        <p class="description">关注Q享公众号，查看更多资讯</p>
         <div class="codes">
           <div class="code">
             <el-icon size="100" fill="#6c7778">
@@ -112,8 +109,6 @@ function getLinkProps(item) {
             </el-icon>
             <p>扫一扫，关注公众号</p>
           </div>
-
-          <!--                <img src="@/assets/img/code/img.png">-->
         </div>
       </div>
       <div class="tips">
@@ -173,7 +168,7 @@ function getLinkProps(item) {
 </template>
 
 <style scoped lang="less">
-@import '@/assets/main.less';
+@import "@/assets/main.less";
 
 a {
   .m-a-1;

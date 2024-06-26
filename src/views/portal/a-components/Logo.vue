@@ -1,15 +1,15 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+import { RouterLink } from "vue-router";
 </script>
 
 <template>
   <RouterLink class="ainow-logo" to="/">
-    <img src="../assets/svg/logo.svg" />享
+    <img src="../assets/svg/logo.svg" />
   </RouterLink>
 </template>
 
 <style scoped lang="less">
-@import '@/assets/main.less';
+@import "@/assets/main.less";
 .ainow-logo {
   color: inherit;
   font-size: 1.4rem;
