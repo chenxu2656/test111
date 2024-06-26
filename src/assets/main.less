@@ -1,0 +1,190 @@
+/*copyright*/
+/* 在此处修改混入样式不会热更新,办法
+    1需放到对应文件:
+    2调用的地方去掉scoped：scoped属性会对样式中的选择器加上一个data-v-，使其只对当前组件生效。而SCSS预处理器生成的CSS选择器在编译时无法加上改后缀，导致样式无法生效。
+     .main .content[data-v-df017b28]{}
+    ？但没有scoped需手动刷新
+
+   突然又行了？？
+     */
+@headerHeight: 50px;
+@statusTitleHeight: 100px;
+@headerColor: white;
+
+@bodyBgc: #eee;
+@bodyMinWidth: 0px;
+
+@light-theme-color: #585858;
+@light-window-color: #eee;
+@light-bord-color: white;
+@light-font-color: #101010;
+@light-font-select-color: #89d961;
+@light-font-hover-color: #6c7778;
+@light-border-color: #cfd4db;
+@light-link-color: #1989fa;
+@light-icon-color: #1989fa;
+
+@light-item-color: #294743;
+@light-item-bgc: transparent;
+@light-item-hover-bgc: #294743;
+@light-item-hover-color: transparent;
+
+@dark-window-color: #333;
+@dark-bord-color: 555;
+@dark-font-color: #dfdfdf;
+@dark-font-select-color: #89d961;
+@dark-font-hover-color: white;
+@dark-border-color: #cfd4db;
+@dark-link-color: #1989fa;
+
+.transition(@time:0.1s) {
+  -webkit-transition: all @time linear;
+  transition: all @time linear;
+}
+
+//loading蒙层,遮罩层
+.loading:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff url('@/assets/img/loading/loading-common.gif') no-repeat
+    center;
+}
+//建议做法，m-full-screen套m-reactive-box
+.m-full-screen() {
+  height: 100vh;
+  width: 100%;
+}
+.m-reactive-box() {
+  word-break: break-word;
+
+  width: 90%;
+  min-width: @bodyMinWidth;
+  height: fit-content;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+
+  @media (max-width: 1600px) {
+    //width: 1200px;
+  }
+  @media (max-width: 1200px) {
+    width: 90%;
+  }
+  @media (max-width: 800px) {
+    width: 95%;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+}
+.m-reactive-box-son {
+  max-width: 100%;
+}
+//不推荐
+.reactive-box-padding() {
+  word-wrap: break-word;
+  width: 100%;
+  height: fit-content;
+  padding: 0 10%;
+  @media (max-width: 1200px) {
+    padding: 0 8%;
+  }
+  @media (max-width: 800px) {
+    padding: 0 4%;
+  }
+  @media (max-width: 600px) {
+    padding: 0;
+  }
+}
+
+//文字溢出省略号
+.text-ellipsis-2 {
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.m-bg {
+  //background: -webkit-gradient(linear, left top, right bottom, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 0, 0, 0.1))), url(./img/window-rain.png) no-repeat;
+  /*  gradient from top to bottom */
+  background-image: linear-gradient(to top, #09203f 0%, #537895 100%);
+
+  /*background-position: 0 0;*/
+  //background-position: 0;
+}
+
+.m-a-1 {
+  padding: 6px 3px;
+  margin: 0;
+  text-decoration: none;
+  color: #6c7778;
+  cursor: pointer;
+
+  transition: 0s;
+
+  &:hover {
+    background: transparent;
+    color: @light-link-color;
+  }
+  &.router-link-exact-active {
+  }
+  &.router-link-active {
+  }
+}
+
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: transform 1s;
+}
+.slide-down-enter-from,
+.slide-down-leave-to {
+  transform: translateY(-100vh);
+}
+
+.slide-right-enter-active {
+  transition: transform 0.5s;
+}
+.slide-right-leave-active {
+  transition: transform 3s;
+}
+.slide-right-enter-from,
+.slide-right-leave-to {
+  transform: translateX(-100%);
+}
+
+/* 下面我们会解释这些 class 是做什么的 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s linear;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// use in template
+.transform-rotate-180 {
+  -webkit-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+}
+
+.transform-rotate(@deg:0deg) {
+  -webkit-transform: rotate(@deg);
+  transform: rotate(@deg);
+}
+
+@keyframes-rotate-deg: 360deg;
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(@keyframes-rotate-deg);
+  }
+}

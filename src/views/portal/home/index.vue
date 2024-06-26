@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import AISearch from './components/AISearch.vue'
-import Header from './components/Header.vue'
+import Home from '@/views/portal/a-views/HomeView.vue'
 </script>
 
 <template>
   <div class="page">
-    <Header />
-    <AISearch />
+    <!-- <Header /> -->
+    <Home />
   </div>
 </template>
 
