@@ -81,11 +81,11 @@ const verifyCode = (phone: string, code: string) => {
       verifyVcode(phone, code)
         .then(resp => {
           if (resp.access_token) {
+            localStorage.setItem('jwt', resp.access_token)
             return initRouter().then(() => {
               console.log('getTopMenu(true)', getTopMenu(true))
               router.push('/welcome').then(() => {
                 message('登录成功', { type: 'success' })
-                localStorage.setItem('jwt', resp.access_token)
               })
             })
           } else {

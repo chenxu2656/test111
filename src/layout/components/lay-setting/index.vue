@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import {
-  ref,
-  unref,
-  watch,
-  reactive,
-  computed,
-  nextTick,
-  onUnmounted,
-  onBeforeMount
-} from 'vue'
-import { emitter } from '@/utils/mitt'
-import LayPanel from '../lay-panel/index.vue'
-import { useNav } from '@/layout/hooks/useNav'
-import { useAppStoreHook } from '@/store/modules/app'
-import { toggleTheme } from '@pureadmin/theme/dist/browser-utils'
-import { useMultiTagsStoreHook } from '@/store/modules/multiTags'
 import Segmented, { type OptionsType } from '@/components/ReSegmented'
 import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange'
-import { useDark, useGlobal, debounce, isNumber } from '@pureadmin/utils'
+import { useNav } from '@/layout/hooks/useNav'
+import { useAppStoreHook } from '@/store/modules/app'
+import { useMultiTagsStoreHook } from '@/store/modules/multiTags'
+import { emitter } from '@/utils/mitt'
+import { toggleTheme } from '@pureadmin/theme/dist/browser-utils'
+import { debounce, isNumber, useDark, useGlobal } from '@pureadmin/utils'
+import {
+  computed,
+  nextTick,
+  onBeforeMount,
+  onUnmounted,
+  reactive,
+  ref,
+  unref,
+  watch
+} from 'vue'
+import LayPanel from '../lay-panel/index.vue'
 
+import DarkIcon from '@/assets/svg/dark.svg?component'
+import DayIcon from '@/assets/svg/day.svg?component'
+import SystemIcon from '@/assets/svg/system.svg?component'
 import Check from '@iconify-icons/ep/check'
 import LeftArrow from '@iconify-icons/ri/arrow-left-s-line'
 import RightArrow from '@iconify-icons/ri/arrow-right-s-line'
-import DayIcon from '@/assets/svg/day.svg?component'
-import DarkIcon from '@/assets/svg/dark.svg?component'
-import SystemIcon from '@/assets/svg/system.svg?component'
 
 const { device } = useNav()
 const { isDark } = useDark()

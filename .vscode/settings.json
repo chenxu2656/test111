@@ -7,7 +7,7 @@
   "editor.tabSize": 2,
   "editor.formatOnPaste": true,
   "editor.guides.bracketPairs": "active",
-  "files.autoSave": "afterDelay",
+  // "files.autoSave": "afterDelay",
   "git.confirmSync": false,
   "workbench.startupEditor": "newUntitledFile",
   "editor.suggestSelection": "first",
@@ -29,19 +29,15 @@
     "source.organizeImports": "explicit",
     "source.fixAll.tslint": "explicit"
   },
-  "iconify.excludes": [
-    "el"
-  ],
-   "vetur.validation.template": false,
+  "iconify.excludes": ["el"],
+  "vetur.validation.template": false,
   "vetur.validation.script": false,
   "vetur.validation.style": false,
-
 
   // 不添加分号
   "prettier.semi": true,
   // 使用单引号
   "prettier.singleQuote": true,
-
 
   "vscodeCustomCodeColor.highlightValue": [
     "v-loading",
@@ -51,5 +47,5 @@
     "v-optimize",
     "v-ripple"
   ],
-  "vscodeCustomCodeColor.highlightValueColor": "#b392f0",
+  "vscodeCustomCodeColor.highlightValueColor": "#b392f0"
 }

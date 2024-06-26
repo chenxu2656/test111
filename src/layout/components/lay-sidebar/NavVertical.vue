@@ -10,6 +10,7 @@ import { useRoute } from 'vue-router'
 import LaySidebarCenterCollapse from '../lay-sidebar/components/SidebarCenterCollapse.vue'
 import LaySidebarItem from '../lay-sidebar/components/SidebarItem.vue'
 import LaySidebarLeftCollapse from '../lay-sidebar/components/SidebarLeftCollapse.vue'
+import LaySidebarLogo from '../lay-sidebar/components/SidebarLogo.vue'
 
 const route = useRoute()
 const isShow = ref(false)

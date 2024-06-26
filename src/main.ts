@@ -1,13 +1,13 @@
+import { useEcharts } from '@/plugins/echarts'
+import { useElementPlus } from '@/plugins/elementPlus'
 import { setupStore } from '@/store'
+import { injectResponsiveStorage } from '@/utils/responsive'
+import Table from '@pureadmin/table'
 import { MotionPlugin } from '@vueuse/motion'
+import { createApp, type Directive } from 'vue'
 import App from './App.vue'
 import { getPlatformConfig } from './config'
 import router from './router'
-// import { useEcharts } from "@/plugins/echarts";
-import { useElementPlus } from '@/plugins/elementPlus'
-import { injectResponsiveStorage } from '@/utils/responsive'
-import Table from '@pureadmin/table'
-import { createApp, type Directive } from 'vue'
 // import PureDescriptions from "@pureadmin/descriptions";
 
 // 引入重置样式
@@ -54,8 +54,11 @@ getPlatformConfig(app).then(async config => {
   app.use(router)
   await router.isReady()
   injectResponsiveStorage(app, config)
-  app.use(MotionPlugin).use(useElementPlus).use(Table)
-  // .use(PureDescriptions)
-  // .use(useEcharts);
+  app
+    .use(MotionPlugin)
+    .use(useElementPlus)
+    .use(Table)
+    // .use(PureDescriptions)
+    .use(useEcharts)
   app.mount('#app')
 })
