@@ -12,6 +12,9 @@ const handleSelect = (key: string, keyPath: string[]) => {
 const goToLogin = () => {
   router.push('/login')
 }
+const goToSupply = () => {
+  router.push('/supply')
+}
 </script>
 
 <template>
@@ -26,7 +29,7 @@ const goToLogin = () => {
       <el-menu-item index="0">
         <KeyboardEsc />
       </el-menu-item>
-      <el-menu-item index="1"> 供需服务 </el-menu-item>
+      <el-menu-item index="1" @click="goToSupply"> 供需服务 </el-menu-item>
       <el-menu-item index="2"> 生态合作 </el-menu-item>
       <el-sub-menu index="3">
         <template #title>Workspace</template>
