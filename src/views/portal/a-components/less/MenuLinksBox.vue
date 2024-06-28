@@ -1,65 +1,63 @@
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue'
-import { RouterLink, useRoute, useRouter } from 'vue-router'
-import { use_app_state_store } from '@/stores/systemStatus.ts'
-import { storeToRefs } from 'pinia'
+import { use_app_state_store } from "@/store/systemStatus.ts";
+import { RouterLink, useRouter } from "vue-router";
 
 const props = defineProps({
   bean: {
     type: Object,
     required: false,
     default: {
-      showName: '默认名称',
-      type: 'RouterLink',
-      path: '/demo',
-      name: '/demo',
+      showName: "默认名称",
+      type: "RouterLink",
+      path: "/demo",
+      name: "/demo",
       children: [
         {
-          showName: '测试1',
-          path: '/1',
-          name: '/1',
-          type: 'a',
-          target: '_blank'
+          showName: "测试1",
+          path: "/1",
+          name: "/1",
+          type: "a",
+          target: "_blank",
         },
-        { showName: '测试2', path: '/2', name: '/2', type: 'RouterLink' }
-      ]
-    }
-  }
-})
+        { showName: "测试2", path: "/2", name: "/2", type: "RouterLink" },
+      ],
+    },
+  },
+});
 
-const router = useRouter()
-let appStates = use_app_state_store()
+const router = useRouter();
+let appStates = use_app_state_store();
 
 function getLinkProps(item) {
-  let props = {}
-  props.target = item.target || '_self'
-  if (item.type === 'RouterLink') {
-    props.to = item.path
-  } else if (item.type === 'a') {
-    props.href = item.path
+  let props = {};
+  props.target = item.target || "_self";
+  if (item.type === "RouterLink") {
+    props.to = item.path;
+  } else if (item.type === "a") {
+    props.href = item.path;
   }
-  if (item.target === '_blank') {
-    props.rel = item.rel || 'noopener'
+  if (item.target === "_blank") {
+    props.rel = item.rel || "noopener";
   }
-  return props
+  return props;
 }
 function getIconProp(icon) {
-  let props = {}
+  let props = {};
   if (!icon) {
-    props.theme = 'outline'
-    props.fill = '#333'
+    props.theme = "outline";
+    props.fill = "#333";
   } else {
-    props.theme = icon.theme || 'outline'
-    props.fill = icon.fill || '#333'
+    props.theme = icon.theme || "outline";
+    props.fill = icon.fill || "#333";
   }
-  return props
+  return props;
 }
 
 function getIconName(icon) {
   if (!icon) {
-    return 'icon-' + 'link-one'
+    return "icon-" + "link-one";
   }
-  return 'icon-' + icon.name || 'link-one'
+  return "icon-" + icon.name || "link-one";
 }
 </script>
 
@@ -94,7 +92,7 @@ function getIconName(icon) {
 </template>
 
 <style scoped lang="less">
-@import '../../assets/main.less';
+@import "../../assets/main.less";
 
 ainow-menu-links-box {
   white-space: nowrap;
