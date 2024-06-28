@@ -9,6 +9,7 @@ const cards = [1, 2, 3, 4,5,6,7,8,9,10];
 //     console.lod(res)
 //   })
 // })
+
 </script>
 <template>
   <div>
@@ -43,11 +44,9 @@ const cards = [1, 2, 3, 4,5,6,7,8,9,10];
      <span ><el-tag type="info">工厂规划</el-tag></span>
          <span style="margin-left: 5vw;font-size: 12px;"><el-icon >
       <Location />
-    </el-icon> 合肥市</span>
-          <span style="margin-left: 2vw;font-size: 12px;">2023-03-24</span>
-  </p>
-         
-          
+    </el-icon>合肥市</span>
+      <span style="margin-left: 2vw;font-size: 12px;">2023-03-24</span>
+  </p>      
         </el-card>
     </div>
       <el-pagination
@@ -89,8 +88,15 @@ const cards = [1, 2, 3, 4,5,6,7,8,9,10];
   margin-left: 5vw;
   margin-top:4vh;
   height: 26vh;
+  cursor: pointer;
 }
 .myCard h2{
   padding-top: 0vh;
+}
+.myCard span{
+  color:black;
+}
+.myCard:hover{
+  color:rgb(103,194,58)
 }
 </style>
