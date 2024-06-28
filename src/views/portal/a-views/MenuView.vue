@@ -1,29 +1,28 @@
 <script setup>
-import MenuLinksBox from '@/views/portal/a-components/less/MenuLinksBox.vue'
-import { use_app_state_store } from '@/stores/systemStatus.ts'
-import { storeToRefs } from 'pinia'
-import CommonFooter from '@/views/portal/a-views/CommonFooter.vue'
-import Divider from '@/views/portal/a-components/less/Divider.vue'
+import { use_app_state_store } from "@/store/systemStatus.ts";
+import MenuLinksBox from "@/views/portal/a-components/less/MenuLinksBox.vue";
+import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
+import { storeToRefs } from "pinia";
 
-let appStates = use_app_state_store()
-let { navs, headerState } = storeToRefs(appStates)
+let appStates = use_app_state_store();
+let { navs, headerState } = storeToRefs(appStates);
 
-let newNavs = []
+let newNavs = [];
 let aNavItem = {
   // showName:'其他',
-  showName: '',
-  type: 'a',
-  path: '#',
-  children: []
-}
-navs.value.forEach(item => {
+  showName: "",
+  type: "a",
+  path: "#",
+  children: [],
+};
+navs.value.forEach((item) => {
   if (item.children) {
-    newNavs.push(item)
+    newNavs.push(item);
   } else {
-    aNavItem.children.push(item)
+    aNavItem.children.push(item);
   }
-})
-newNavs.unshift(aNavItem)
+});
+newNavs.unshift(aNavItem);
 </script>
 
 <template>
@@ -37,7 +36,7 @@ newNavs.unshift(aNavItem)
 </template>
 
 <style scoped lang="less">
-@import '../assets/main.less';
+@import "../assets/main.less";
 .full-screen {
   width: 100%;
   padding: @headerHeight 0 0;

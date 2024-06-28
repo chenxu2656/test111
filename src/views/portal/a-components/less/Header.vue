@@ -1,11 +1,10 @@
 <script setup>
-import { RouterLink, useRoute, useRouter } from "vue-router";
-import { onUnmounted, ref, watch, computed, onMounted } from "vue";
-import { use_app_state_store } from "@/stores/systemStatus.ts";
-import { storeToRefs } from "pinia";
-import HeaderLinksBox from "@/views/portal/a-components/less/HeaderLinksBox.vue";
-import { Place } from "@element-plus/icons-vue";
+import { use_app_state_store } from "@/store/systemStatus.ts";
 import Logo from "@/views/portal/a-components/Logo.vue";
+import HeaderLinksBox from "@/views/portal/a-components/less/HeaderLinksBox.vue";
+import { storeToRefs } from "pinia";
+import { ref, watch } from "vue";
+import { RouterLink, useRoute, useRouter } from "vue-router";
 
 let appStates = use_app_state_store();
 const { headerState, navs } = storeToRefs(appStates);
