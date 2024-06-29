@@ -47,4 +47,14 @@ export default [
       rank: 103,
     },
   },
+  {
+    path: "/supply_detail",
+    name: "supply_detail",
+    component: () => import("@/views/portal/supply_detail/index.vue"),
+    meta: {
+      title: "Supply Detail",
+      showLink: false,
+      rank: 103,
+    },
+  },
 ] satisfies Array<RouteConfigsTable>;

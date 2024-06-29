@@ -1,15 +1,34 @@
 <script setup>
 import { Search, CaretRight,Location } from "@element-plus/icons-vue";
 import { getSupplyList } from '@/api/supply'
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
+import router from '@/router'
 const keyWord = ref("");
+const supplyInfo = {
+    name: "数字化管理",
+  category: "企业需求",
+  type: "工厂规划",
+  region: "合肥市",
+  start_date: "2024-06-28",
+  end_date: "2024-06-28",
+  content: "安徽克菱保健科技有限公司，公司于2007年成立，注册资金6,000万，年产值一个亿，现新建4层共计16,000平米的厂房，流程式生产，希望通过信息化手段来降低人工投入，实现数据的采集和生产调度。需求时间为长期，具体预算面谈。",
+  cover_image: "string",
+  company_name: "string",
+  company_location: "string",
+  company_type: "string",
+  contactName: "string",
+  contactPhone: "string",
+  createUserId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
 const cards = [1, 2, 3, 4,5,6,7,8,9,10];
 // onMounted(() => {
 //   getSupplyList().then(res => {
 //     console.lod(res)
 //   })
 // })
-
+const goToDetail=() => {
+  router.push('/supply_detail')
+}
 </script>
 <template>
   <div>
@@ -32,20 +51,17 @@ const cards = [1, 2, 3, 4,5,6,7,8,9,10];
       
     </div>
     <div class="allCard">
-        <el-card class="myCard" v-for="item in cards" shadow="hover">
-          <h2>数字化管理</h2>
+        <el-card class="myCard" v-for="item in cards" shadow="hover" @click="goToDetail">
+          <h2>{{supplyInfo.name}}</h2>
             <el-text line-clamp="2">
-    安徽克菱保健科技有限公司，公司于2007年成立，注册资金6,000万，
-    年产值一个亿，现新建4层共计16,000平米的厂房，流程式生产，
-    希望通过信息化手段来降低人工投入，实现数据的采集和生产调度。
-    需求时间为长期，具体预算面谈。
+    {{ supplyInfo.content }}
   </el-text>
   <p>
-     <span ><el-tag type="info">工厂规划</el-tag></span>
+     <span ><el-tag type="info">{{supplyInfo.type}}</el-tag></span>
          <span style="margin-left: 5vw;font-size: 12px;"><el-icon >
       <Location />
-    </el-icon>合肥市</span>
-      <span style="margin-left: 2vw;font-size: 12px;">2023-03-24</span>
+    </el-icon>{{supplyInfo.region}}</span>
+      <span style="margin-left: 2vw;font-size: 12px;">{{ supplyInfo.start_date }}</span>
   </p>      
         </el-card>
     </div>
