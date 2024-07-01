@@ -1,0 +1,29 @@
+<script setup>
+import Header from "@/views/portal/home/components/Header.vue";
+import MySide from "@/views/portal/supply/components/MySide.vue";
+import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
+</script>
+<template>
+   <el-backtop :right="10" :bottom="10" />
+<Header></Header>
+ <div class="all_layout">
+    <el-container>
+      <el-aside width="20vw"><MySide/></el-aside>
+      <el-main><MainView/></el-main>
+    </el-container>
+   
+  </div>
+ <CommonFooter id="declare-offset" />
+  
+</template>
+<script lang="scss" scoped>
+$fullHeight:80vh;
+.all_layout{
+
+  margin-left: 10vw;
+   min-height: $fullHeight;
+}
+  .el-main{
+    padding: 0;
+  }
+</script>
