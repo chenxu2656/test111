@@ -1,32 +1,23 @@
 <script setup>
 import { Search, CaretRight,Location } from "@element-plus/icons-vue";
-import { getSupplyList } from '@/api/supply'
-import { ref, onMounted } from "vue";
+import { getSupplyList } from '@/api/supply';
+import { useSupplyStoreHook } from '@/store/modules/supply'
+import { ref,reactive,onMounted } from "vue";
 import router from '@/router'
 const keyWord = ref("");
-const supplyInfo = {
-    name: "数字化管理",
-  category: "企业需求",
-  type: "工厂规划",
-  region: "合肥市",
-  start_date: "2024-06-28",
-  end_date: "2024-06-28",
-  content: "安徽克菱保健科技有限公司，公司于2007年成立，注册资金6,000万，年产值一个亿，现新建4层共计16,000平米的厂房，流程式生产，希望通过信息化手段来降低人工投入，实现数据的采集和生产调度。需求时间为长期，具体预算面谈。",
-  cover_image: "string",
-  company_name: "string",
-  company_location: "string",
-  company_type: "string",
-  contactName: "string",
-  contactPhone: "string",
-  createUserId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-}
-const cards = [1, 2, 3, 4,5,6,7,8,9,10];
-// onMounted(() => {
-//   getSupplyList().then(res => {
-//     console.lod(res)
-//   })
-// })
-const goToDetail=() => {
+
+var supplyInfos =reactive([]);
+
+onMounted(() => {
+  getSupplyList().then(res => {
+     supplyInfos.splice(0, supplyInfos.length, ...res);
+    console.log(supplyInfos)
+  })
+})
+
+const goToDetail = (id) => {
+  useSupplyStoreHook().supplyId=id
+  // console.log(useSupplyStoreHook().supplyId)
   router.push('/supply_detail')
 }
 </script>
@@ -51,7 +42,9 @@ const goToDetail=() => {
       
     </div>
     <div class="allCard">
-        <el-card class="myCard" v-for="item in cards" shadow="hover" @click="goToDetail">
+        <el-card class="myCard" v-for="supplyInfo in supplyInfos" 
+         shadow="hover" 
+        @click="goToDetail(supplyInfo.id)">
           <h2>{{supplyInfo.name}}</h2>
             <el-text line-clamp="2">
     {{ supplyInfo.content }}

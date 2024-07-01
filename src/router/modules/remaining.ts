@@ -57,4 +57,14 @@ export default [
       rank: 103,
     },
   },
+  {
+    path: "/solve",
+    name: "solve",
+    component: () => import("@/views/portal/solve/index.vue"),
+    meta: {
+      title: "Solve",
+      showLink: false,
+      rank: 103,
+    },
+  },
 ] satisfies Array<RouteConfigsTable>;
