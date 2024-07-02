@@ -8,7 +8,7 @@ export default {
     icon: "ri:function-add-fill",
     // showLink: false,
     title: "提供服务",
-    rank: 10,
+    rank: 20,
   },
   children: [
     {
@@ -36,15 +36,6 @@ export default {
       meta: {
         title: "解决企业需求",
       },
-    },
-    {
-      path: "/service/technologyService",
-      name: "发布数字化服务",
-      component: () =>
-        import("@/views/admin/requirement/requirementManagement.vue"),
-      meta: {
-        title: "发布数字化服务",
-      },
-    },
+    }
   ],
 } satisfies RouteConfigsTable;

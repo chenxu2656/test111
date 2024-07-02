@@ -2,11 +2,11 @@
 import ReCol from '@/components/ReCol'
 import { ReNormalCountTo } from '@/components/ReCountTo'
 import { useRenderFlicker } from '@/components/ReFlicker'
-import Segmented, { type OptionsType } from '@/components/ReSegmented'
+import { type OptionsType } from '@/components/ReSegmented'
 import { markRaw, ref } from 'vue'
-import { ChartBar, ChartLine, ChartRound } from './components/charts'
+import { ChartLine, ChartRound } from './components/charts'
 import WelcomeTable from './components/table/index.vue'
-import { barChartData, chartData, latestNewsData, progressData } from './data'
+import { chartData, latestNewsData } from './data'
 import { randomGradient, useDark } from './utils'
 
 defineOptions({
@@ -88,7 +88,7 @@ const optionsBasis: Array<OptionsType> = [
           </div>
         </el-card>
       </re-col>
-
+<!-- 
       <re-col
         v-motion
         class="mb-[18px]"
@@ -108,7 +108,7 @@ const optionsBasis: Array<OptionsType> = [
       >
         <el-card class="bar-card" shadow="never">
           <div class="flex justify-between">
-            <span class="text-md font-medium">分析概览</span>
+            <span class="text-md font-medium">订单管理</span>
             <Segmented v-model="curWeek" :options="optionsBasis" />
           </div>
           <div class="flex justify-between items-start mt-3">
@@ -118,9 +118,9 @@ const optionsBasis: Array<OptionsType> = [
             />
           </div>
         </el-card>
-      </re-col>
+      </re-col> -->
 
-      <re-col
+      <!-- <re-col
         v-motion
         class="mb-[18px]"
         :value="6"
@@ -165,7 +165,7 @@ const optionsBasis: Array<OptionsType> = [
             </span>
           </div>
         </el-card>
-      </re-col>
+      </re-col> -->
 
       <re-col
         v-motion
@@ -186,7 +186,7 @@ const optionsBasis: Array<OptionsType> = [
       >
         <el-card shadow="never" class="h-[580px]">
           <div class="flex justify-between">
-            <span class="text-md font-medium">数据统计</span>
+            <span class="text-md font-medium">订单管理</span>
           </div>
           <WelcomeTable class="mt-3" />
         </el-card>
@@ -211,7 +211,7 @@ const optionsBasis: Array<OptionsType> = [
       >
         <el-card shadow="never">
           <div class="flex justify-between">
-            <span class="text-md font-medium">最新动态</span>
+            <span class="text-md font-medium">需求动态</span>
           </div>
           <el-scrollbar max-height="504" class="mt-3">
             <el-timeline>
