@@ -35,8 +35,8 @@ const goToSolve = () => {
        <el-sub-menu index="1">
     <template #title>供需服务</template>
     <el-menu-item index="1-1" @click="goToSupply">需求大厅</el-menu-item>
-    <el-menu-item index="1-2" @click='goToSolve'>解决方案</el-menu-item>
-    <el-menu-item index="1-3">创新成果</el-menu-item>
+    <el-menu-item index="1-2" @click='goToSolve'>科技成果</el-menu-item>
+    <el-menu-item index="1-3">商品/服务</el-menu-item>
        </el-sub-menu>
       <el-menu-item index="2"> 生态合作 </el-menu-item>
       <el-sub-menu index="3">

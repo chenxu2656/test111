@@ -1,6 +1,17 @@
 <script setup>
 import Header from "@/views/portal/home/components/Header.vue";
 import { Warning } from "@element-plus/icons-vue";
+import { useSupplyStoreHook } from '@/store/modules/supply'
+import { getSupplyDetail } from "@/api/supply";
+import { onMounted,reactive } from "vue";
+var supplyDetail = reactive({data:{}});
+onMounted(() => {
+  let id=useSupplyStoreHook().supplyId
+  getSupplyDetail(id).then(res => {
+    supplyDetail.data = res
+    console.log(res)
+  })
+})
 // import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 </script>
 <template>
@@ -10,18 +21,18 @@ import { Warning } from "@element-plus/icons-vue";
   <div class="all_card">
     <el-card>
       <h2>
-        项目申报咨询
+        {{supplyDetail.data.name}}
       </h2>
       <el-card shadow="never" style="background-color: aliceblue;">
         <el-text>
-        需求类型：咨询服务
+        需求类型：{{ supplyDetail.data.type }}
       </el-text>
       <el-text style="margin-left: 10vw">
-        需求区域：安庆市
+        需求区域：{{ supplyDetail.data.region }}
       </el-text>
       <p>
         需求内容：
-本公司目前计划申报一些项目，希望可以得到专业机构的咨询服务。
+{{supplyDetail.data.content}}
       </p>
       </el-card>
       <el-button type="primary" style="margin-top: 3vh"
@@ -46,7 +57,7 @@ import { Warning } from "@element-plus/icons-vue";
   </div>
     <el-card class=rightC>
        <h3>为您推荐</h3> 
-       <el-card shadow="never">
+       <el-card shadow="never" v-for="i in [1,2,3,4,5]" class="recommend">
         <div style="float:left">
           <img src="../../../assets/img/supply.jpg" width="60px" style="margin-top:2vh"/>
         </div>
@@ -73,6 +84,7 @@ $fullHeight:80vh;
   }
   .el-card{
     border:none;
+    
   }
   .bottomC{
     width: 55vw;
@@ -83,8 +95,26 @@ $fullHeight:80vh;
     width: 24vw;
     margin-left: 1vw;
     max-height: 70vh;
+    overflow:auto;
   }
+.rightC::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+}
+.rightC::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 10px;
+  height: 20px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  // background: #E5E5E5;
+  background: rgb(245,247,250);
+}
+
   .recommendC{
     margin-left: 6vw;
+  }
+  .recommend {
+    --el-card-padding:5px
   }
 </style>

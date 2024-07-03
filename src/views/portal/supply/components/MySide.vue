@@ -26,14 +26,14 @@ const reset = () => {
 <template>
   <div class="full_side">
     <div class="sort">
-      <h4>需求分类</h4>
+      <h4>分类</h4>
       <el-button v-for="item in form.category" type='primary' 
       size="small" @click="categoryChange(item)"
       :plain="form.categorySelect!=item">{{ item }}</el-button>
       <el-divider style="padding-bottom: 0;margin-bottom: 0;"></el-divider>
     </div>
     <div class="sort">
-      <h4>需求类型</h4>
+      <h4>类型</h4>
       <el-button v-for="item in form.type" type='success' 
       size="small" @click="typeChange(item)"
       :plain="form.typeFlag!=item">{{ item }}</el-button>

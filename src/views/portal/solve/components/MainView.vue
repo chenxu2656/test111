@@ -27,7 +27,7 @@ const goToDetail = (id) => {
   <div>
     <div class="picture">
       <div class="search">
-      <h2>需求大厅</h2>
+      <h2>解决方案</h2>
       <el-input
       v-model="keyWord"
       style="max-width: 30vw;height: 6vh"
@@ -39,7 +39,7 @@ const goToDetail = (id) => {
       </template>
     </el-input>
     <el-button type="success" 
-    style="margin-left:3vw;height: 6vh">需求发布 <el-icon :size="20"><CaretRight/></el-icon></el-button>
+    style="margin-left:3vw;height: 6vh">提供方案 <el-icon :size="20"><CaretRight/></el-icon></el-button>
       </div>
       
     </div>
@@ -47,17 +47,21 @@ const goToDetail = (id) => {
         <el-card class="myCard" v-for="supplyInfo in supplyInfos" 
          shadow="hover" 
         @click="goToDetail(supplyInfo.id)">
-          <div class="titleName">{{supplyInfo.name}}</div>
-            <el-text line-clamp="2">
-    {{ supplyInfo.content }}
-  </el-text>
-  <p>
-     <span ><el-tag type="info">{{supplyInfo.type}}</el-tag></span>
-         <el-text style="margin-left: 8vw;font-size: 12px;"><el-icon >
-      <Location />
-    </el-icon>{{supplyInfo.region}}</el-text>
-      <span style="margin-left: 2vw;font-size: 12px;">{{ supplyInfo.start_date }}</span>
-  </p>      
+        <el-image src="https://oss-hefei-a2a.openstorage.cn/iiep-prod/7a91f4730e79429c9be4bc77c1e90874.jpg"></el-image>
+        <div style="float:right;height: 26vh;width: 30vw;">
+        <div class="titleName">{{supplyInfo.name}}</div>
+                    <el-text line-clamp="3">
+            {{ supplyInfo.content }}
+          </el-text>
+          <p>
+            <span ><el-tag type="info">{{supplyInfo.type}}</el-tag></span>
+                <el-text style="margin-left: 15vw;font-size: 1vw;"><el-icon >
+              <Location />
+            </el-icon>{{supplyInfo.region}}</el-text>
+              <span style="margin-left: 2vw;font-size: 1vw;">{{ supplyInfo.start_date }}</span>
+          </p>
+        </div>
+          
         </el-card>
     </div>
       <el-pagination
@@ -88,6 +92,10 @@ const goToDetail = (id) => {
 .search{
   margin-left: 5vw;
 }
+.el-image{
+  height:20vh;
+  width: 15vw;
+}
 .titleName{
   // padding: 10px;
   font-size:1.5vw;
@@ -98,12 +106,10 @@ const goToDetail = (id) => {
 }
 .allCard{
   width:60vw;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  // display: block;
 }
 .myCard{
-  width:25vw;
+  width:50vw;
   margin-left: 5vw;
   margin-top:4vh;
   height: 26vh;
@@ -114,6 +120,7 @@ const goToDetail = (id) => {
 }
 .myCard span{
   color:black;
+  font-size: 1vw;
 }
 .myCard:hover{
   color:rgb(103,194,58)

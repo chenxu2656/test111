@@ -1,6 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import Header from "@/views/portal/home/components/Header.vue";
 import MySide from "@/views/portal/supply/components/MySide.vue";
+import MainView from "@/views/portal/solve/components/MainView.vue";
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 </script>
 <template>
@@ -9,14 +10,14 @@ import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
  <div class="all_layout">
     <el-container>
       <el-aside width="20vw"><MySide/></el-aside>
-      <el-main><MainView/></el-main>
+      <el-main> <MainView/></el-main>
     </el-container>
    
   </div>
  <CommonFooter id="declare-offset" />
   
 </template>
-<script lang="scss" scoped>
+<style lang="scss" scoped>
 $fullHeight:80vh;
 .all_layout{
 
@@ -26,4 +27,4 @@ $fullHeight:80vh;
   .el-main{
     padding: 0;
   }
-</script>
+</style>
