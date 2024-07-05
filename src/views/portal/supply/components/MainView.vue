@@ -75,7 +75,7 @@ const goToDetail = (id) => {
 </template>
 <style scoped lang='less'>
 .picture{
-  background-image: url("https://preprod.lingyangplat.com/antelope-static-resource/website/images/second-page-banners/banner-demand-EDF2FA.jpg");
+  background-image: url("https://www.huayun.com/upload/image/20210727/08ecbfb624707943dcfc79b4208f2a55.jpg");
   background-size: 100% 100%;
   width:60vw;
   height: 40vh;

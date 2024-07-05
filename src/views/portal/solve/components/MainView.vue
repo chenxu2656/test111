@@ -1,33 +1,33 @@
 <script setup>
 import { Search, CaretRight,Location } from "@element-plus/icons-vue";
-import { getSupplyList } from '@/api/supply';
-import { useSupplyStoreHook } from '@/store/modules/supply'
+import { getSolveList } from '@/api/solve';
+// import { useSupplyStoreHook } from '@/store/modules/supply'
 import { ref,reactive,onMounted } from "vue";
 import router from '@/router'
 const keyWord = ref("");
 const currentPage = ref(1);
 const pageSize = 10;
 var size = ref(11);
-var supplyInfos =reactive([]);
+var solveInfos =reactive([]);
 onMounted(() => {
-  getSupplyList().then(res => {
-     supplyInfos.splice(0, supplyInfos.length, ...res);
+  getSolveList().then(res => {
+     solveInfos.splice(0, solveInfos.length, ...res);
       size = res.length;
-    console.log(supplyInfos)
+    console.log(solveInfos)
   })
 })
 
 const goToDetail = (id) => {
-  useSupplyStoreHook().supplyId=id
+  // useSupplyStoreHook().supplyId=id
   // console.log(useSupplyStoreHook().supplyId)
-  router.push('/supply_detail')
+  router.push('/solve_detail')
 }
 </script>
 <template>
   <div>
     <div class="picture">
       <div class="search">
-      <h2>解决方案</h2>
+      <h2>科技成果</h2>
       <el-input
       v-model="keyWord"
       style="max-width: 30vw;height: 6vh"
@@ -44,21 +44,24 @@ const goToDetail = (id) => {
       
     </div>
     <div class="allCard">
-        <el-card class="myCard" v-for="supplyInfo in supplyInfos" 
+        <el-card class="myCard" v-for="solveInfo in solveInfos" 
          shadow="hover" 
-        @click="goToDetail(supplyInfo.id)">
+        @click="goToDetail(solveInfo.id)">
         <el-image src="https://oss-hefei-a2a.openstorage.cn/iiep-prod/7a91f4730e79429c9be4bc77c1e90874.jpg"></el-image>
         <div style="float:right;height: 26vh;width: 30vw;">
-        <div class="titleName">{{supplyInfo.name}}</div>
-                    <el-text line-clamp="3">
-            {{ supplyInfo.content }}
+       <div style="display: flex">
+<div class="titleName">{{solveInfo.achievement_name}}</div> <el-tag type="success" style="float:right">{{ solveInfo.achievement_maturity }}</el-tag>
+       </div> 
+        <el-text>转让方式：{{solveInfo.achievement_transfer_method}} 技术领域：{{solveInfo.achievement_category}}</el-text>           
+        <el-text line-clamp="2">
+            技术简介：{{ solveInfo.achievement_brief_introduction }}
           </el-text>
           <p>
-            <span ><el-tag type="info">{{supplyInfo.type}}</el-tag></span>
-                <el-text style="margin-left: 15vw;font-size: 1vw;"><el-icon >
+            <span ><el-tag type="error">成果价格：{{solveInfo.achievement_transfer_price}}</el-tag></span>
+                <el-text style="margin-left: 6vw;font-size: 1vw;"><el-icon >
               <Location />
-            </el-icon>{{supplyInfo.region}}</el-text>
-              <span style="margin-left: 2vw;font-size: 1vw;">{{ supplyInfo.start_date }}</span>
+            </el-icon>{{solveInfo.region}}</el-text>
+              <span style="margin-left: 2vw;font-size: 1vw;">完成年份：{{ solveInfo.achievement_year }}</span>
           </p>
         </div>
           
@@ -79,7 +82,7 @@ const goToDetail = (id) => {
 </template>
 <style scoped lang='less'>
 .picture{
-  background-image: url("https://preprod.lingyangplat.com/antelope-static-resource/website/images/second-page-banners/banner-demand-EDF2FA.jpg");
+    background-image: url("https://www.huayun.com/upload/image/20210727/08ecbfb624707943dcfc79b4208f2a55.jpg");
   background-size: 100% 100%;
   width:60vw;
   height: 40vh;
@@ -98,6 +101,7 @@ const goToDetail = (id) => {
 }
 .titleName{
   // padding: 10px;
+  width: 25vw;
   font-size:1.5vw;
   font-weight:600;
   white-space: nowrap;

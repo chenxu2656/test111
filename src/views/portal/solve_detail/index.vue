@@ -20,21 +20,20 @@ onMounted(() => {
  <div class="all_layout">
   <div class="all_card">
     <el-card>
-      <h2>
-        {{supplyDetail.data.name}}
-      </h2>
-      <el-card shadow="never" style="background-color: aliceblue;">
-        <el-text>
-        需求类型：{{ supplyDetail.data.type }}
-      </el-text>
-      <el-text style="margin-left: 10vw">
-        需求区域：{{ supplyDetail.data.region }}
-      </el-text>
-      <p>
-        需求内容：
-{{supplyDetail.data.content}}
-      </p>
-      </el-card>
+      <el-descriptions title="User Info">
+    <el-descriptions-item label="成果年份：">2021</el-descriptions-item>
+    <el-descriptions-item label="价格：">18100000000元</el-descriptions-item>
+    <el-descriptions-item label="转让方式：">Suzhou</el-descriptions-item>
+    <el-descriptions-item label="成果类别：">
+      <el-tag size="small">School</el-tag>
+    </el-descriptions-item>
+    <el-descriptions-item label="成果属性：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="成果成熟度：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="成果属性：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="成果成熟度：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="成果属性：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="成果成熟度：">No.1188</el-descriptions-item>
+  </el-descriptions>
       <el-button type="primary" style="margin-top: 3vh"
       size="small">获得联系方式</el-button>
       <div style="float: right;margin-top: 3vh;">
