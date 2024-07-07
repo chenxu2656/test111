@@ -1,32 +1,25 @@
 <script setup>
 import { Search, CaretRight,Location } from "@element-plus/icons-vue";
-import { getSupplyList } from '@/api/supply'
-import { ref, onMounted } from "vue";
+import { getSupplyList } from '@/api/supply';
+import { useSupplyStoreHook } from '@/store/modules/supply'
+import { ref,reactive,onMounted } from "vue";
 import router from '@/router'
 const keyWord = ref("");
-const supplyInfo = {
-    name: "数字化管理",
-  category: "企业需求",
-  type: "工厂规划",
-  region: "合肥市",
-  start_date: "2024-06-28",
-  end_date: "2024-06-28",
-  content: "安徽克菱保健科技有限公司，公司于2007年成立，注册资金6,000万，年产值一个亿，现新建4层共计16,000平米的厂房，流程式生产，希望通过信息化手段来降低人工投入，实现数据的采集和生产调度。需求时间为长期，具体预算面谈。",
-  cover_image: "string",
-  company_name: "string",
-  company_location: "string",
-  company_type: "string",
-  contactName: "string",
-  contactPhone: "string",
-  createUserId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-}
-const cards = [1, 2, 3, 4,5,6,7,8,9,10];
-// onMounted(() => {
-//   getSupplyList().then(res => {
-//     console.lod(res)
-//   })
-// })
-const goToDetail=() => {
+const currentPage = ref(1);
+const pageSize = 10;
+var size = ref(11);
+var supplyInfos =reactive([]);
+onMounted(() => {
+  getSupplyList().then(res => {
+     supplyInfos.splice(0, supplyInfos.length, ...res);
+      size = res.length;
+    console.log(supplyInfos)
+  })
+})
+
+const goToDetail = (id) => {
+  useSupplyStoreHook().supplyId=id
+  // console.log(useSupplyStoreHook().supplyId)
   router.push('/supply_detail')
 }
 </script>
@@ -51,27 +44,29 @@ const goToDetail=() => {
       
     </div>
     <div class="allCard">
-        <el-card class="myCard" v-for="item in cards" shadow="hover" @click="goToDetail">
-          <h2>{{supplyInfo.name}}</h2>
+        <el-card class="myCard" v-for="supplyInfo in supplyInfos" 
+         shadow="hover" 
+        @click="goToDetail(supplyInfo.id)">
+          <div class="titleName">{{supplyInfo.name}}</div>
             <el-text line-clamp="2">
     {{ supplyInfo.content }}
   </el-text>
   <p>
      <span ><el-tag type="info">{{supplyInfo.type}}</el-tag></span>
-         <span style="margin-left: 5vw;font-size: 12px;"><el-icon >
+         <el-text style="margin-left: 8vw;font-size: 12px;"><el-icon >
       <Location />
-    </el-icon>{{supplyInfo.region}}</span>
+    </el-icon>{{supplyInfo.region}}</el-text>
       <span style="margin-left: 2vw;font-size: 12px;">{{ supplyInfo.start_date }}</span>
   </p>      
         </el-card>
     </div>
       <el-pagination
-      v-model:current-page="currentPage3"
-      v-model:page-size="pageSize3"
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
       :size="size"
       :disabled="disabled"
       layout="prev, pager, next, jumper"
-      :total="1000"
+      :total="2"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       style="margin: 5vh 0 5vh 25vw"
@@ -80,7 +75,7 @@ const goToDetail=() => {
 </template>
 <style scoped lang='less'>
 .picture{
-  background-image: url("https://preprod.lingyangplat.com/antelope-static-resource/website/images/second-page-banners/banner-demand-EDF2FA.jpg");
+  background-image: url("https://www.huayun.com/upload/image/20210727/08ecbfb624707943dcfc79b4208f2a55.jpg");
   background-size: 100% 100%;
   width:60vw;
   height: 40vh;
@@ -92,6 +87,14 @@ const goToDetail=() => {
 }
 .search{
   margin-left: 5vw;
+}
+.titleName{
+  // padding: 10px;
+  font-size:1.5vw;
+  font-weight:600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .allCard{
   width:60vw;
@@ -106,7 +109,7 @@ const goToDetail=() => {
   height: 26vh;
   cursor: pointer;
 }
-.myCard h2{
+.myCard .el-text{
   padding-top: 0vh;
 }
 .myCard span{
