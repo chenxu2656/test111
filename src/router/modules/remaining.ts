@@ -57,4 +57,14 @@ export default [
       rank: 103,
     },
   },
+  {
+    path: "/menu",
+    name: "menu",
+    component: () => import("@/views/portal/a-views/MenuView.vue"),
+    meta: {
+      title: "Menu",
+      showLink: false,
+      rank: 103,
+    },
+  },
 ] satisfies Array<RouteConfigsTable>;

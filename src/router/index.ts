@@ -2,7 +2,7 @@
 import { getConfig } from "@/config";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
-import { removeToken, userKey, type DataInfo } from "@/utils/auth";
+import { userKey, type DataInfo } from "@/utils/auth";
 import NProgress from "@/utils/progress";
 import { buildHierarchyTree } from "@/utils/tree";
 import { isAllEmpty, isUrl, openLink, storageLocal } from "@pureadmin/utils";
@@ -123,8 +123,8 @@ router.beforeEach((to: ToRouteType, _from, next) => {
   function toCorrectRoute() {
     whiteList.includes(to.fullPath) ? next(_from.fullPath) : next();
   }
-  if (localStorage.getItem("jwt")) {
-    // if (false) {
+  // if (localStorage.getItem("jwt")) {
+  if (false) {
     // 无权限跳转403页面
     if (to.meta?.roles && !isOneOfArray(to.meta?.roles, userInfo?.roles)) {
       next({ path: "/error/403" });
@@ -183,12 +183,12 @@ router.beforeEach((to: ToRouteType, _from, next) => {
     }
   } else {
     if (to.path !== "/portal") {
-      if (whiteList.indexOf(to.path) !== -1) {
-        next();
-      } else {
-        removeToken();
-        next({ path: "/portal" });
-      }
+      // if (whiteList.indexOf(to.path) !== -1) {
+      //   next();
+      // } else {
+      //   removeToken();
+      //   next({ path: "/portal" });
+      // }
     } else {
       next();
     }

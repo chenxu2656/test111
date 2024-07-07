@@ -17,16 +17,16 @@ import { RouterLink } from "vue-router";
           <div class="list">
             <el-icon :size="18"><Mic /></el-icon>
             <div class="list_item">
-              <RouterLink class="link">质量管理</RouterLink>
-              <RouterLink class="link">质量管理</RouterLink>
-              <RouterLink class="link">质量管理</RouterLink>
+              <RouterLink class="link" to="/">质量管理</RouterLink>
+              <RouterLink class="link" to="/">质量管理</RouterLink>
+              <RouterLink class="link" to="/">质量管理</RouterLink>
             </div>
           </div>
 
           <div class="list">
             <el-icon :size="18"><Mic /></el-icon>
             <div style="margin-left: 10px; font-size: 14px">
-              <RouterLink class="link">质量管理</RouterLink>
+              <RouterLink class="link" to="/">质量管理</RouterLink>
             </div>
           </div>
         </div>

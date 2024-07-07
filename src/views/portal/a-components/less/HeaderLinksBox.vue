@@ -43,17 +43,12 @@ function getLinkProps(item) {
 </script>
 
 <template>
-  <ainow-header-links-box>
+  <div class="header-links-box">
     <component :is="bean.type" class="title" v-bind="getLinkProps(bean)">
       {{ bean.showName }}
-      <van-icon v-if="bean.children" class="icon" name="arrow-down" />
     </component>
 
     <div v-if="bean.children" class="links">
-      <!-- <a href="http://localhost/donate/" target="_blank" rel="noopener">i am a</a>-->
-      <!-- <RouterLink to="/demo?key=hello">查询参数传参</RouterLink>-->
-      <!-- :href="item.type === 'a' ? item.path : undefined" -->
-      <!-- :to="item.type === 'RouterLink' ? item.path : undefined" -->
       <component
         :is="item.type"
         v-for="(item, index) in bean.children"
@@ -61,18 +56,16 @@ function getLinkProps(item) {
         v-bind="getLinkProps(item)"
       >
         {{ item.showName }}
-        <el-icon v-if="item.target === '_blank'">
-          <TopRight />
-        </el-icon>
+        <el-icon v-if="item.target === '_blank'"> <Search /> </el-icon>
       </component>
     </div>
-  </ainow-header-links-box>
+  </div>
 </template>
 
 <style scoped lang="less">
-@import "../../assets/main.less";
+@import "@/assets/main.less";
 
-ainow-header-links-box {
+.header-links-box {
   white-space: nowrap;
   //word-wrap: break-word;
   //word-break:keep-all;
