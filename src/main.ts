@@ -48,8 +48,12 @@ app.component("Auth", Auth);
 import { createPinia } from "pinia";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
-import VueTippy from "vue-tippy";
 
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+import VueTippy from "vue-tippy";
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component);
+}
 const pinia = createPinia();
 app.use(VueTippy);
 
@@ -68,8 +72,7 @@ getPlatformConfig(app).then(async (config) => {
     .use(MotionPlugin)
     .use(useElementPlus)
     .use(Table)
-    .use(pinia)
-    // .use(PureDescriptions)
+
     .use(useEcharts);
   app.mount("#app");
 });

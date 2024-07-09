@@ -1,27 +1,33 @@
-<script setup>
-import { Place } from '@element-plus/icons-vue'
+<script setup lang="ts">
+import logo from "@/assets/images/logo.jpg";
 
-const props = defineProps({
-  bean: {
-    type: Object,
-    default: () => {
-      return {
-        imgPath: '',
-        title: 'blog title goes here.',
-        summary:
-          'this is description about this blog in the process of improvement',
-        detailPath: '#',
-        date: ' 21st may, 2022 ',
-        author: 'admin'
-      }
-    },
-    required: true
-  }
-})
+interface Bean {
+  imgPath: string;
+  title: string;
+  summary: string;
+  detailPath: string;
+  date: string;
+  author: string;
+}
+
+const props = defineProps<{
+  bean?: Bean;
+}>();
+
+const defaultBean: Bean = {
+  imgPath: logo,
+  title: "blog title goes here.",
+  summary: "this is description about this blog in the process of improvement",
+  detailPath: "#",
+  date: "21st may, 2022",
+  author: "admin",
+};
+
+const bean = props.bean ?? defaultBean;
 </script>
 
 <template>
-  <ainow-recommend-item>
+  <div class="item">
     <div class="image">
       <img :src="bean.imgPath" alt="" />
     </div>
@@ -44,13 +50,13 @@ const props = defineProps({
         {{ bean.author }}
       </span>
     </div>
-  </ainow-recommend-item>
+  </div>
 </template>
 
 <style scoped lang="less">
-@import '@/assets/main.less';
+@import "@/assets/main.less";
 
-ainow-recommend-item {
+.item {
   display: flex;
   flex-direction: column;
   border-radius: 15px;
@@ -60,10 +66,11 @@ ainow-recommend-item {
     all 0.2s linear,
     border 0s;
   border: rgba(0, 0, 0, 0.1) solid 1px;
+  width: 25%;
 
   &:hover {
     -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0.5rem 1rem rgba(160, 152, 152, 0.2);
     background: #fff;
     border: none;
 

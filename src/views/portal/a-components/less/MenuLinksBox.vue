@@ -62,7 +62,7 @@ function getIconName(icon) {
 </script>
 
 <template>
-  <ainow-menu-links-box>
+  <div class="menu-links-box">
     <RouterLink ref="name" class="name" :to="bean.path">
       <!-- van-icon换行会导致name后多出一个空格 -->
       {{ bean.showName }}
@@ -88,13 +88,13 @@ function getIconName(icon) {
         {{ item.showName }}
       </component>
     </div>
-  </ainow-menu-links-box>
+  </div>
 </template>
 
 <style scoped lang="less">
-@import "../../assets/main.less";
+@import "@/assets/main.less";
 
-ainow-menu-links-box {
+.menu-links-box {
   white-space: nowrap;
   //word-wrap: break-word;
   //word-break:keep-all;

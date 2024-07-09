@@ -1,11 +1,11 @@
 <script setup></script>
 
 <template>
-  <ainow-divider class=""></ainow-divider>
+  <div class="divide"></div>
 </template>
 
 <style scoped lang="less">
-ainow-divider {
+.divide {
   display: block;
   height: 1px;
   background: rgba(0, 0, 0, 0.15);

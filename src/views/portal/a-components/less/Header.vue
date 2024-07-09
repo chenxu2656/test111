@@ -1,16 +1,14 @@
 <script setup>
 import { use_app_state_store } from "@/store/systemStatus.ts";
-import Logo from "@/views/portal/a-components/Logo.vue";
 import HeaderLinksBox from "@/views/portal/a-components/less/HeaderLinksBox.vue";
+import Logo from "@/views/portal/a-components/Logo.vue";
 import { storeToRefs } from "pinia";
 import { ref, watch } from "vue";
-import { RouterLink, useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 let appStates = use_app_state_store();
 const { headerState, navs } = storeToRefs(appStates);
-
-console.log(headerState, navs);
-
+console.log(navs.value);
 let router = useRouter();
 let route = useRoute();
 
@@ -174,10 +172,13 @@ window.addEventListener('resize', ()=>{
     }
 })
 */
+const goToLogin = () => {
+  router.push("/login");
+};
 </script>
 
 <template>
-  <ainow-common-header
+  <div
     ref="header"
     class="header"
     :style="{
@@ -191,30 +192,17 @@ window.addEventListener('resize', ()=>{
     @mouseover="onMouseover"
     @mouseleave="onMouseleave"
   >
-    <div ref="btnMenu" class="btn-menu" @click="menuClick">
-      <van-icon :name="menuIconName" size="1.5em" />
-    </div>
+    <div ref="btnMenu" class="btn-menu" @click="menuClick"></div>
 
     <div
-      v-if="headerState.showBehavior.includes('titleMode')"
+      v-if="!headerState.showBehavior.includes('titleMode')"
       class="content-title"
     >
       {{ headerState.title }}
     </div>
 
     <div v-else class="content-pc">
-      <div class="often">
-        <van-icon name="ellipsis" size="1.5em" />
-      </div>
-
-      <RouterLink class="search" to="/search">
-        <van-icon class="icon" name="search" size="1.5em" />
-        <div class="hint">Ctrl+K</div>
-      </RouterLink>
-
-      <div class="mine" @click="$router.push('/space')">
-        <img src="@/assets/img/imgHead.jpg" />
-      </div>
+      <div class="often"><Logo /></div>
 
       <div class="nav">
         <HeaderLinksBox
@@ -224,13 +212,18 @@ window.addEventListener('resize', ()=>{
         />
       </div>
     </div>
-
-    <Logo />
-  </ainow-common-header>
+    <div class="right_options">
+      <el-button link type="primary" @click="goToLogin">工作台</el-button>
+      <el-button link type="primary" @click="goToLogin">注册/登录</el-button>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="less">
-@import "../../assets/main.less";
+@import "@/assets/main.less";
+:deep(.el-menu) {
+  background-color: transparent;
+}
 
 .header {
   position: inherit;
@@ -335,7 +328,8 @@ window.addEventListener('resize', ()=>{
       display: flex;
       place-content: center;
       place-items: center;
-      height: 40px;
+      height: 80px;
+      width: 80px;
       @media (max-width: 450px) {
         //display: none;
       }

@@ -36,7 +36,7 @@ newNavs.unshift(aNavItem);
 </template>
 
 <style scoped lang="less">
-@import "../assets/main.less";
+@import "@/assets/main.less";
 .full-screen {
   width: 100%;
   padding: @headerHeight 0 0;

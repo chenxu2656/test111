@@ -58,6 +58,16 @@ export default [
     },
   },
   {
+    path: "/menu",
+    name: "menu",
+    component: () => import("@/views/portal/a-views/MenuView.vue"),
+    meta: {
+      title: "Menu",
+      showLink: false,
+      rank: 103,
+    },
+  },
+  {
     path: "/solve",
     name: "solve",
     component: () => import("@/views/portal/solve/index.vue"),

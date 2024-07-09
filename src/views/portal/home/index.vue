@@ -2,9 +2,10 @@
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import AISearch from "@/views/portal/home/components/AISearch.vue";
 import Aside from "@/views/portal/home/components/Aside.vue";
-import Header from "@/views/portal/home/components/Header.vue";
+// import Header from "@/views/portal/home/components/Header.vue";
 import Recommend from "@/views/portal/home/components/Recommend.vue";
 import { onMounted } from "vue";
+import Header from "../a-components/less/Header.vue";
 onMounted(() => {});
 const recommendItems = [];
 </script>
@@ -21,12 +22,7 @@ const recommendItems = [];
         </div>
       </div>
     </div>
-    <!--   -offset实现在js中添加后缀实现平滑滚动，否则与默认的hash定位冲突就会是瞬间滚动 -->
-    <section id="about-offset" class="about">
-      <div class="content">
-        <div class="detail item"></div>
-      </div>
-    </section>
+
     <div id="recommend-offset" class="recommend">
       <div class="content">
         <h2 class="title">推荐</h2>
@@ -62,8 +58,8 @@ const recommendItems = [];
   font-size: 16px;
 
   .index {
-    padding: @headerHeight 0 0 0;
-    height: 100vh;
+    padding: (@headerHeight+100px) 0 0 0;
+    // height: 100vh;
     display: flex;
     flex-direction: column;
 
@@ -225,9 +221,6 @@ const recommendItems = [];
       }
 
       .titles {
-        display: -ms-grid;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
         gap: 2rem;
 
         @media (max-width: 1300px) {
