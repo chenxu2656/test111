@@ -16,6 +16,13 @@ onMounted(() => {
     console.log(solveInfos)
   })
 })
+const formattedPrice = (price) => {  
+  if (price >= 10000) {  
+    return Math.floor(price / 10000) + '万元';  
+  } else {  
+    return Math.floor(price) + '元';  
+  }  
+};  
 
 const goToDetail = (id) => {
   // useSupplyStoreHook().supplyId=id
@@ -50,19 +57,24 @@ const goToDetail = (id) => {
         <el-image src="https://oss-hefei-a2a.openstorage.cn/iiep-prod/7a91f4730e79429c9be4bc77c1e90874.jpg"></el-image>
         <div style="float:right;height: 26vh;width: 30vw;">
        <div style="display: flex">
-<div class="titleName">{{solveInfo.achievement_name}}</div> <el-tag type="success" style="float:right">{{ solveInfo.achievement_maturity }}</el-tag>
+<div class="titleName">{{solveInfo.achievement_name}}</div> <el-tag type="success" id="tagC">{{ solveInfo.achievement_maturity }}</el-tag>
        </div> 
-        <el-text>转让方式：{{solveInfo.achievement_transfer_method}} 技术领域：{{solveInfo.achievement_category}}</el-text>           
+          <el-row>
+    <el-col :span="12"><span >转让方式：{{solveInfo.achievement_transfer_method}}</span></el-col>
+    <el-col :span="12"> <span style="width:10vw">技术领域：{{solveInfo.achievement_category}}</span> </el-col>
+  </el-row>        
         <el-text line-clamp="2">
             技术简介：{{ solveInfo.achievement_brief_introduction }}
           </el-text>
-          <p>
-            <span ><el-tag type="error">成果价格：{{solveInfo.achievement_transfer_price}}</el-tag></span>
-                <el-text style="margin-left: 6vw;font-size: 1vw;"><el-icon >
+          <el-row>
+           <el-col :span="12"> <span >成果价格：<el-tag type="error" style="font-size: 1.2vw;color:rgb(255,77,72)">{{formattedPrice(solveInfo.achievement_transfer_price)}}</el-tag></span></el-col>
+            <el-col  :span="12">
+         <el-text style="font-size: 1vw;"><el-icon>
               <Location />
             </el-icon>{{solveInfo.region}}</el-text>
               <span style="margin-left: 2vw;font-size: 1vw;">完成年份：{{ solveInfo.achievement_year }}</span>
-          </p>
+            </el-col>   
+         </el-row>
         </div>
           
         </el-card>
@@ -101,7 +113,7 @@ const goToDetail = (id) => {
 }
 .titleName{
   // padding: 10px;
-  width: 25vw;
+  width: 23vw;
   font-size:1.5vw;
   font-weight:600;
   white-space: nowrap;
@@ -124,9 +136,16 @@ const goToDetail = (id) => {
 }
 .myCard span{
   color:black;
-  font-size: 1vw;
+  font-size: 1.1vw;
+  margin-top:0.3vh;
 }
 .myCard:hover{
   color:rgb(103,194,58)
+}
+#tagC{
+  margin-left: 2vw;
+  font-size:1vw;
+  color:rgb(19,194,104);
+  margin-top: 0.5vh;
 }
 </style>

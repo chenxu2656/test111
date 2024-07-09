@@ -29,13 +29,15 @@ onMounted(() => {
     </el-descriptions-item>
     <el-descriptions-item label="成果属性：">No.1188</el-descriptions-item>
     <el-descriptions-item label="成果成熟度：">No.1188</el-descriptions-item>
-    <el-descriptions-item label="成果属性：">No.1188</el-descriptions-item>
-    <el-descriptions-item label="成果成熟度：">No.1188</el-descriptions-item>
-    <el-descriptions-item label="成果属性：">No.1188</el-descriptions-item>
-    <el-descriptions-item label="成果成熟度：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="技术领域：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="应用行业：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="所属产业：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="专利号码：">No.1188</el-descriptions-item>
   </el-descriptions>
       <el-button type="primary" style="margin-top: 3vh"
-      size="small">获得联系方式</el-button>
+      size="small">联系发布人</el-button>
+      <el-button type="primary" style="margin-top: 3vh"
+      size="small" plain>联系平台经理</el-button>
       <div style="float: right;margin-top: 3vh;">
         
         <el-text style="margin-right: 1vw;cursor: pointer"><el-icon><Warning></Warning></el-icon> 举报</el-text>  
@@ -55,16 +57,9 @@ onMounted(() => {
     </el-card>
   </div>
     <el-card class=rightC>
-       <h3>为您推荐</h3> 
+       <h3>发布人信息</h3> 
        <el-card shadow="never" v-for="i in [1,2,3,4,5]" class="recommend">
-        <div style="float:left">
-          <img src="../../../assets/img/supply.jpg" width="60px" style="margin-top:2vh"/>
-        </div>
-        <div class="recommendC">
-        <el-text truncated><b>私有化电子签章合同管理中台（签+管一体化）</b></el-text>
-        <el-text size="small" line-clamp="2">e签宝“签”+“管”一体化天印电子签章合同管理中台系统，提供印章管理、签署服务和合同管理的一体化混合云解决方案。天印电子签章系统旨在为企业的降本增效、风险管控、高效协作赋能。并通过大客户效应带动其业务上下游流量。将电子签约室与企业内部信息化系统的对接，使用独立服务器进行文件签署和存储，使用本地证书的需求广泛，适用于本地化信息系统建设较完善，对安全又较高要求的中大型企业用户。私有云的本地搭建很大程度上需要迎合企业内部的管理规范、业务场景等等，不仅仅是一套简单的本地化部署系统，而是一套整体解决方案。</el-text>
-        </div>
-       <el-divider style="margin: 10px 0"></el-divider>
+       
        </el-card>
     </el-card>
   </div>
