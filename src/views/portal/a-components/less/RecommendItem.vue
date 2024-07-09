@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import logo from "@/assets/images/logo.jpg";
-
 interface Bean {
   imgPath: string;
   title: string;
@@ -10,31 +8,49 @@ interface Bean {
   author: string;
 }
 
+interface NewBean {
+  logo: string;
+  name: string;
+  type: string;
+  description: string;
+  tags: string[];
+  exampleAvatar: string;
+  exampleName: string;
+  exampleComment: string;
+  discountPrice: string;
+  price: string;
+}
+
 const props = defineProps<{
   bean?: Bean;
+  newBean?: NewBean;
 }>();
 
-const defaultBean: Bean = {
-  imgPath: logo,
-  title: "blog title goes here.",
-  summary: "this is description about this blog in the process of improvement",
-  detailPath: "#",
-  date: "21st may, 2022",
-  author: "admin",
+const defaultBean: NewBean = {
+  logo: "@/assets/images/logo.png",
+  name: "海报设计师",
+  type: "AI 大模型",
+  description: "无情的AI作图机器，画质超乎你的想象",
+  tags: ["运营设计", "自动作图", "批量作图"],
+  exampleAvatar: "avatar",
+  exampleName: "食品加工企业市场不经理",
+  exampleComment: "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+  discountPrice: "1.99",
+  price: "29.9",
 };
 
-const bean = props.bean ?? defaultBean;
+const bean = props.newBean ?? defaultBean;
 </script>
 
 <template>
   <div class="item">
     <div class="image">
-      <img :src="bean.imgPath" alt="" />
+      <div class="header">{{ bean.type }}</div>
+      <div class="body"><img :src="bean.logo" /></div>
     </div>
     <div class="content">
-      <h1>{{ bean.title }}</h1>
-      <p>{{ bean.summary }}</p>
-      <a :href="bean.detailPath" class="detail" target="_blank">详情</a>
+      <h1>{{ bean.name }}</h1>
+      <p>{{ bean.type }}</p>
     </div>
     <div class="footer">
       <span class="item">
@@ -75,7 +91,7 @@ const bean = props.bean ?? defaultBean;
     border: none;
 
     .image {
-      padding: 1.4em 1.4em 0;
+      padding: 0.4em 0.4em 0;
       img {
         border-radius: 15px;
       }

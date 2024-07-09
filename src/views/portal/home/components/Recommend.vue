@@ -14,7 +14,9 @@ import Recommenditem from "@/views/portal/a-components/less/RecommendItem.vue";
       </div>
     </div>
     <div class="item_box">
-      <Recommenditem /><Recommenditem /><Recommenditem />
+      <Recommenditem />
+      <Recommenditem />
+      <Recommenditem />
     </div>
   </div>
 </template>
@@ -37,12 +39,12 @@ import Recommenditem from "@/views/portal/a-components/less/RecommendItem.vue";
       .moreBtn {
       }
     }
-    .item_box {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      flex-wrap: wrap;
-    }
+  }
+  .item_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 }
 </style>
