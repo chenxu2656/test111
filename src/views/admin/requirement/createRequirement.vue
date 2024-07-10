@@ -13,8 +13,8 @@
       @reset="handleReset"
     >
       <template #plus-field-images>
-        <el-upload class="avatar-uploader" :show-file-list="false">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+        <el-upload  action="/api/v1/uploadfile" class="avatar-uploader" :show-file-list="false" :on-success="handleAvatarSuccess">
+          <img v-if="state.cover_image" :src="state.cover_image" class="avatar" />
           <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
         </el-upload>
       </template>
@@ -22,11 +22,14 @@
         <div v-for="item in companyType" style="width: 100%">
           <div style="font-weight: 600">{{ item.value }}</div>
           <div style="display: flex; flex-wrap: wrap">
-            <el-checkbox
+           <el-radio-group v-model="state.type" @change="() => state.category = item.value">
+            <el-radio
               v-for="items in item.children"
+              :key="items.value"
               :label="items.value"
               style="width: 20%"
             />
+            </el-radio-group>
           </div>
         </div>
       </template>
@@ -54,6 +57,7 @@
 <script lang="ts" setup>
 import city from "@/utils/city";
 import companyType from "@/utils/companyType";
+import companyhangye from "@/utils/companyhangye";
 import { CreditCard, Plus } from "@element-plus/icons-vue";
 import {
   PlusForm,
@@ -65,15 +69,27 @@ import "plus-pro-components/es/components/form/style/css";
 import { ref } from "vue";
 const imageUrl = ref("");
 const state = ref({
-  status: "0",
-  name: "",
-  rate: 4,
-  progress: 100,
-  switch: true,
-  time: new Date().toString(),
-  img: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-});
+  name: "", // 需求名称
+  type: "", // 需求类型
+  category: "", // 需求分类
+  region: "", //需求地区
+  timeSpace: '', // 需求时间
+  start_date: "", // 开始时间
+  end_date: "", // 结束时间
+  content: "", // 需求内容
+  cover_image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+  company_name: "", // 公司名字
+  company_location: "", // 公司location
+  company_type: "", // 公司类型
+  contactName: "", // 联系人名字
+  contactPhone: "", // 联系人电话
+  createUserId: ""
 
+});
+const handleAvatarSuccess = (resp) => {
+  state.value.cover_image = resp.fileUrl
+  
+}
 const rules = {
   name: [
     {
@@ -93,11 +109,13 @@ const group: PlusFormGroupRow[] = [
   {
     title: "需求信息",
     icon: CreditCard,
+    
     columns: [
       {
         label: "需求名称",
         width: "900px",
         prop: "name",
+        
         valueType: "input",
         message: "请输入需求名称",
       },
@@ -107,14 +125,16 @@ const group: PlusFormGroupRow[] = [
       },
       {
         label: "需求城市",
-        prop: "city",
+        prop: "region",
         valueType: "cascader",
         options: city,
       },
       {
         label: "需求时间范围",
-        prop: "endTime",
+        prop: "timeSpace",
         valueType: "date-picker",
+        startProps: "start_date",
+        endProps: "end_date",
         fieldProps: {
           type: "datetimerange",
           startPlaceholder: "请选择开始时间",
@@ -156,6 +176,8 @@ const group: PlusFormGroupRow[] = [
       {
         label: "所属行业",
         prop: "company_type",
+        valueType: 'select',
+        options: companyhangye
       },
     ],
   },
@@ -173,11 +195,7 @@ const group: PlusFormGroupRow[] = [
         label: "联系电话",
         prop: "contactPhone",
         valueType: "input",
-      },
-      {
-        label: "联系邮箱",
-        prop: "contactEmail",
-      },
+      }
     ],
   },
 ];

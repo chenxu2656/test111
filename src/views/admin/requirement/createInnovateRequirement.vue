@@ -22,11 +22,14 @@
         <div v-for="item in companyType" style="width: 100%">
           <div style="font-weight: 600">{{ item.value }}</div>
           <div style="display: flex; flex-wrap: wrap">
-            <el-checkbox
+            <el-radio-group v-model="state.type" @change="() => state.category = item.value">
+            <el-radio
               v-for="items in item.children"
+              :key="items.value"
               :label="items.value"
               style="width: 20%"
             />
+            </el-radio-group>
           </div>
         </div>
       </template>
@@ -66,14 +69,19 @@ import { ref } from "vue";
 const imageUrl = ref("");
 const state = ref({
   status: "0",
-  name: "",
+  name: "", //需求名称
+  type: "", //需求类型
+  category: "", // 需求大类
   rate: 4,
   progress: 100,
   switch: true,
   time: new Date().toString(),
   img: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
 });
-
+const handleTypeChange = (category: string) => {
+  state.value.category = category;
+  console.log('state',state.value)
+};
 const rules = {
   name: [
     {
@@ -187,6 +195,7 @@ const handleChange = (values: FieldValues, prop: PlusColumn) => {
 };
 const handleSubmit = (values: FieldValues) => {
   console.log(values, "Submit");
+  console.log('handleSubmit',state )
 };
 const handleSubmitError = (err: any) => {
   console.log(err, "err");
