@@ -1,7 +1,7 @@
 <script setup>
 import { Search, CaretRight,Location } from "@element-plus/icons-vue";
 import { getSolveList } from '@/api/solve';
-// import { useSupplyStoreHook } from '@/store/modules/supply'
+import { useSolveStoreHook } from '@/store/modules/solve'
 import { ref,reactive,onMounted } from "vue";
 import router from '@/router'
 const keyWord = ref("");
@@ -16,16 +16,12 @@ onMounted(() => {
     console.log(solveInfos)
   })
 })
-const formattedPrice = (price) => {  
-  if (price >= 10000) {  
-    return Math.floor(price / 10000) + '万元';  
-  } else {  
-    return Math.floor(price) + '元';  
-  }  
-};  
+const formattedPrice = (price) => {
+  return useSolveStoreHook().formattedPrice(price)
+}
 
-const goToDetail = (id) => {
-  // useSupplyStoreHook().supplyId=id
+const goToDetail = (info) => {
+  useSolveStoreHook().solveObj=info
   // console.log(useSupplyStoreHook().supplyId)
   router.push('/solve_detail')
 }
@@ -53,7 +49,7 @@ const goToDetail = (id) => {
     <div class="allCard">
         <el-card class="myCard" v-for="solveInfo in solveInfos" 
          shadow="hover" 
-        @click="goToDetail(solveInfo.id)">
+        @click="goToDetail(solveInfo)">
         <el-image src="https://oss-hefei-a2a.openstorage.cn/iiep-prod/7a91f4730e79429c9be4bc77c1e90874.jpg"></el-image>
         <div style="float:right;height: 26vh;width: 30vw;">
        <div style="display: flex">

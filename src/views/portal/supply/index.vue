@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import Header from "@/views/portal/home/components/Header.vue";
+import Header from "../a-components/less/Header.vue";
 import MySide from "@/views/portal/supply/components/MySide.vue";
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import MainView from "./components/MainView.vue";
 </script>
-
 <template>
  <el-backtop :right="10" :bottom="10" />
 <Header></Header>
@@ -12,8 +11,7 @@ import MainView from "./components/MainView.vue";
     <el-container>
       <el-aside width="20vw"><MySide/></el-aside>
       <el-main><MainView/></el-main>
-    </el-container>
-   
+    </el-container> 
   </div>
  <CommonFooter id="declare-offset" />
   
@@ -23,7 +21,7 @@ import MainView from "./components/MainView.vue";
 <style lang="scss" scoped>
 $fullHeight:80vh;
 .all_layout{
-
+   margin-top: 11vh;
   margin-left: 10vw;
    min-height: $fullHeight;
 }

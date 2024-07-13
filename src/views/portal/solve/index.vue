@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Header from "@/views/portal/home/components/Header.vue";
+import Header from "../a-components/less/Header.vue";
 import MySide from "@/views/portal/supply/components/MySide.vue";
 import MainView from "@/views/portal/solve/components/MainView.vue";
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
@@ -20,7 +20,7 @@ import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 <style lang="scss" scoped>
 $fullHeight:80vh;
 .all_layout{
-
+  margin-top: 11vh;
   margin-left: 10vw;
    min-height: $fullHeight;
 }

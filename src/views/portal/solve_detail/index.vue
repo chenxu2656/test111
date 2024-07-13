@@ -1,17 +1,13 @@
 <script setup>
-import Header from "@/views/portal/home/components/Header.vue";
+import Header from "../a-components/less/Header.vue";
 import { Warning } from "@element-plus/icons-vue";
-import { useSupplyStoreHook } from '@/store/modules/supply'
-import { getSupplyDetail } from "@/api/supply";
-import { onMounted,reactive } from "vue";
-var supplyDetail = reactive({data:{}});
-onMounted(() => {
-  let id=useSupplyStoreHook().supplyId
-  getSupplyDetail(id).then(res => {
-    supplyDetail.data = res
-    console.log(res)
-  })
-})
+import { useSolveStoreHook } from '@/store/modules/solve'
+import { reactive } from "vue";
+const solveDetail = useSolveStoreHook().solveObj;
+const formattedPrice = (price) => {
+  return useSolveStoreHook().formattedPrice(price)
+}
+
 // import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 </script>
 <template>
@@ -20,19 +16,19 @@ onMounted(() => {
  <div class="all_layout">
   <div class="all_card">
     <el-card>
-      <el-descriptions title="User Info">
-    <el-descriptions-item label="成果年份：">2021</el-descriptions-item>
-    <el-descriptions-item label="价格：">18100000000元</el-descriptions-item>
-    <el-descriptions-item label="转让方式：">Suzhou</el-descriptions-item>
+      <el-descriptions :title="solveDetail.achievement_name">
+    <el-descriptions-item label="成果年份：">{{solveDetail.achievement_year}}</el-descriptions-item>
+    <el-descriptions-item label="价格：">{{formattedPrice(solveDetail.achievement_transfer_price)}}</el-descriptions-item>
+    <el-descriptions-item label="转让方式：">{{solveDetail.achievement_transfer_method}}</el-descriptions-item>
     <el-descriptions-item label="成果类别：">
-      <el-tag size="small">School</el-tag>
+      <el-tag size="small">{{ solveDetail.achievement_category }}</el-tag>
     </el-descriptions-item>
-    <el-descriptions-item label="成果属性：">No.1188</el-descriptions-item>
-    <el-descriptions-item label="成果成熟度：">No.1188</el-descriptions-item>
-    <el-descriptions-item label="技术领域：">No.1188</el-descriptions-item>
-    <el-descriptions-item label="应用行业：">No.1188</el-descriptions-item>
-    <el-descriptions-item label="所属产业：">No.1188</el-descriptions-item>
-    <el-descriptions-item label="专利号码：">No.1188</el-descriptions-item>
+    <el-descriptions-item label="成果属性：">{{solveDetail.achievement_attribute}}</el-descriptions-item>
+    <el-descriptions-item label="成果成熟度：">{{solveDetail.achievement_maturity}}</el-descriptions-item>
+    <el-descriptions-item label="技术领域：">{{solveDetail.technology_field}}</el-descriptions-item>
+    <el-descriptions-item label="应用行业：">{{solveDetail.main_application_industry}}</el-descriptions-item>
+    <el-descriptions-item label="所属产业：">{{ solveDetail.industry_sector }}</el-descriptions-item>
+    <el-descriptions-item label="专利号码：">{{solveDetail.patent_number}}</el-descriptions-item>
   </el-descriptions>
       <el-button type="primary" style="margin-top: 3vh"
       size="small">联系发布人</el-button>
@@ -44,23 +40,21 @@ onMounted(() => {
         IP来自安徽省</div>
     </el-card>
     <el-card class="bottomC">
-     <h3>对接记录</h3> 
-     <div>
-<el-steps style="max-width: 55vw;margin-top: 5vh" :active="2" align-center>
-    <el-step title="企业发布" description="2024-03-31 17:02:55" />
-    <el-step title="平台上线" description="2024-03-31 20:02:55" />
-    <el-step title="成功对接" description="" />
-    <el-step title="需求关闭" description="" />
-  </el-steps>
-     </div>
-    
+     <h3>技术简介</h3> 
+     <el-text>{{solveDetail.achievement_brief_introduction}}</el-text>
+    <p class="file">附件：无</p>
     </el-card>
   </div>
     <el-card class=rightC>
        <h3>发布人信息</h3> 
-       <el-card shadow="never" v-for="i in [1,2,3,4,5]" class="recommend">
-       
-       </el-card>
+       <el-text><p>发布人：{{solveDetail.contact_person}}</p>
+       <p>所属单位：{{solveDetail.company_name}}</p></el-text>
+      <h3 style="margin-top:3vh">对接记录</h3>
+       <el-table :data="tableData" style="width: 100%" max-height="250">
+    <el-table-column  prop="date" label="对接ID" width="100" />
+    <el-table-column prop="name" label="对接方" width="80" />
+    <el-table-column prop="state" label="目前状态" width="80" />
+       </el-table>
     </el-card>
   </div>
  <!-- <CommonFooter id="declare-offset" /> -->
@@ -71,6 +65,7 @@ $fullHeight:80vh;
   margin-left: 10vw;
    min-height: $fullHeight;
    display: flex;
+     margin-top: 11vh;
 }
   .all_card{
     width: 55vw;
@@ -83,7 +78,7 @@ $fullHeight:80vh;
   .bottomC{
     width: 55vw;
     margin-top: 2vh;
-    height: 32vh;
+    min-height: 25vh;
   }
   .rightC{
     width: 24vw;
@@ -104,11 +99,11 @@ $fullHeight:80vh;
   // background: #E5E5E5;
   background: rgb(245,247,250);
 }
-
-  .recommendC{
-    margin-left: 6vw;
-  }
-  .recommend {
-    --el-card-padding:5px
-  }
+.rightC p{
+  margin:1vh 0vh;
+  font-size: 1.1vw;
+}
+.file{
+  margin-top:2vh;
+}
 </style>

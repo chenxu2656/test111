@@ -56,19 +56,19 @@ export const use_app_state_store = defineStore("app_state_store", () => {
     {
       showName: "供需服务",
       type: "RouterLink",
-      path: "/supply",
+      path: "",
       children: [
         {
           showName: "企业需求大厅",
-          path: "https://gitee.com/ainowr/official-website-template",
+          type: "RouterLink",
+          path: "/supply",
           icon: {
             name: "page-template",
           },
-          type: "a",
           target: "_blank",
         },
         {
-          showName: "解决方案大厅",
+          showName: "商品服务大厅",
           path: "https://juejin.cn/post/7338214297572835380",
           icon: {
             name: "pay-code-one",
@@ -78,11 +78,11 @@ export const use_app_state_store = defineStore("app_state_store", () => {
         },
         {
           showName: "科技创新需求",
-          path: "/pages/example/index/",
+          type: "RouterLink",
+          path: "/solve",
           icon: {
             name: "page-template",
           },
-          type: "a",
           target: "_blank",
         },
       ],

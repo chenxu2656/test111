@@ -1,5 +1,5 @@
 <script setup>
-import Header from "@/views/portal/home/components/Header.vue";
+import Header from "../a-components/less/Header.vue";
 import { Warning } from "@element-plus/icons-vue";
 import { useSupplyStoreHook } from '@/store/modules/supply'
 import { getSupplyDetail } from "@/api/supply";
@@ -77,6 +77,7 @@ $fullHeight:80vh;
   margin-left: 10vw;
    min-height: $fullHeight;
    display: flex;
+  margin-top: 11vh;
 }
   .all_card{
     width: 55vw;
