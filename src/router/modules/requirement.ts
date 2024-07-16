@@ -11,6 +11,15 @@ export default {
     rank: 10,
   },
   children: [
+  {
+      path: "/requirement/requirementManage",
+      name: "需求管理",
+      component: () =>
+        import("@/views/admin/requirement/requirementManagement.vue"),
+      meta: {
+        title: "需求管理",
+      },
+    },
     {
       path: "/requirement/createrequirement",
       name: "发布需求",
@@ -18,7 +27,7 @@ export default {
         import("@/views/admin/requirement/createRequirement.vue"),
       meta: {
         title: "发布需求",
-        showLink: false,
+        // showLink: false,
       },
     },
     {
@@ -31,15 +40,7 @@ export default {
         showLink: false,
       },
     },
-    {
-      path: "/requirement/requirementManage",
-      name: "需求管理",
-      component: () =>
-        import("@/views/admin/requirement/requirementManagement.vue"),
-      meta: {
-        title: "需求管理",
-      },
-    },
+    
     {
       path: "/requirement/innovate",
       name: "创新需求管理",
@@ -47,6 +48,7 @@ export default {
         import("@/views/admin/requirement/innovateRequirementManagement.vue"),
       meta: {
         title: "创新需求管理",
+        showLink: false,
       },
     },
   ],

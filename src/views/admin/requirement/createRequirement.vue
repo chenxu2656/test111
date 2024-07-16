@@ -2,12 +2,15 @@
   <div class="flex gap-8">
     <PlusForm
       v-model="state"
+      ref=""
       :group="group"
       :rules="rules"
       style="width: 1000px"
       label-width="100px"
+      @submit="handleSubmit"
       label-position="right"
       submit-text="发布"
+      class="flex-grow"
       :has-reset="false"
     >
       <template #plus-field-images>
@@ -43,7 +46,7 @@
           </div>
         </div>
       </template>
-      <template #footer>
+      <template #footer="{handleSubmit}">
         <div
           class="footer"
           style="width: 100%; display: flex; justify-content: center"
@@ -51,13 +54,13 @@
           <el-button
             type="primary"
             style="width: 200px"
-            @click="handleSubmit(state)"
+            @click="handleSubmit"
             >发布需求</el-button
           >
         </div>
       </template>
     </PlusForm>
-    <el-card class="flex-grow">
+    <el-card style="width: 600px;">
       <div class="flex justify-between">
         <div class="text-xl font-semibold">您可能关注的解决方案</div>
         <div class="text-lg">更多>></div>
@@ -78,6 +81,7 @@
 </template>
 
 <script lang="ts" setup>
+import router from "@/router";
 import city from "@/utils/city";
 import companyType from "@/utils/companyType";
 import companyhangye from "@/utils/companyhangye";
@@ -85,6 +89,7 @@ import { http } from "@/utils/http";
 import { CreditCard, Plus } from "@element-plus/icons-vue";
 import { cloneDeep } from "@pureadmin/utils";
 import dayjs from "dayjs";
+import { ElMessage, type FormInstance } from "element-plus";
 import {
   PlusForm,
   type FieldValues,
@@ -93,6 +98,7 @@ import {
 } from "plus-pro-components";
 import "plus-pro-components/es/components/form/style/css";
 import { ref } from "vue";
+const ruleFormRef = ref<FormInstance>();
 const state = ref({
   name: "", // 需求名称
   type: "", // 需求类型
@@ -102,7 +108,7 @@ const state = ref({
   start_date: "", // 开始时间
   end_date: "", // 结束时间
   content: "", // 需求内容
-  cover_image: "",
+  cover_image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
   company_name: "", // 公司名字
   company_location: "", // 公司location
   company_type: "", // 公司类型
@@ -118,15 +124,82 @@ const rules = {
     {
       required: true,
       message: "请输入名称",
-    },
+    }
   ],
-  tag: [
+  type: [
     {
       required: true,
-      message: "请输入标签",
+      message: "请输入需求类型",
     },
   ],
-};
+  category: [
+    {
+      required: true,
+      message: "请输入需求分类",
+    },
+  ],
+  region: [
+    {
+      required: true,
+      message: "请输入需求地区",
+    },
+  ],
+  start_date: [
+    {
+      required: true,
+      message: "请输入开始时间",
+    },
+  ],
+  end_date: [
+    {
+      required: true,
+      message: "请输入结束时间",
+    },
+  ],
+  content: [
+    {
+      required: true,
+      message: "请输入需求内容",
+    },
+  ],
+  cover_image: [
+    {
+      required: true,
+      message: "请上传封面图",
+    },
+  ],
+  company_name: [
+    {
+      required: true,
+      message: "请输入企业名称",
+    },
+  ],
+  company_location: [
+    {
+      required: true,
+      message: "请输入企业所在地",
+    },
+  ],
+  company_type: [
+    {
+      required: true,
+      message: "请输入企业类型",
+    },
+  ],
+  contactName: [
+    {
+      required: true,
+      message: "请输入联系人名字",
+    },
+  ],
+  contactPhone: [
+    {
+      required: true,
+      message: "请输入联系人电话",
+    },
+  ],
+}
+
 
 const group: PlusFormGroupRow[] = [
   {
@@ -153,7 +226,7 @@ const group: PlusFormGroupRow[] = [
         options: city,
       },
       {
-        label: "需求时间范围",
+        label: "需求时间",
         prop: "timeSpace",
         valueType: "date-picker",
         startProps: "start_date",
@@ -226,38 +299,25 @@ const group: PlusFormGroupRow[] = [
 const handleChange = (values: FieldValues, prop: PlusColumn) => {
   console.log(values, prop, "change");
 };
-const handleSubmit = (values: FieldValues) => {
-  // 处理数据
-  // 处理开始日期 和 结束日期
-  let submitValue = cloneDeep(values);
-  // 日期格式转换成 YYYY-MM-DD
-
-  submitValue.start_date = dayjs(submitValue.timeSpace[0]).format("YYYY-MM-DD");
-  submitValue.end_date = dayjs(submitValue.timeSpace[1]).format("YYYY-MM-DD");
-  delete submitValue.timeSpace;
-  // submitValue.company_location =  数组最后一项
-  submitValue.company_location =
-    submitValue.company_location[submitValue.company_location.length - 1];
-  submitValue.region = submitValue.region[submitValue.region.length - 1];
-  submitValue = {
-    name: "111111",
-    type: "软件开发",
-    category: "研发",
-    region: "120103",
-    start_date: "2024-07-09",
-    end_date: "2024-08-29",
-    content: "123",
-    cover_image:
-      "https://yiliaoqixie-1253997872.cos.ap-nanjing.myqcloud.com/5783de21-d604-4815-96e7-1a1a36e791e9",
-    company_name: "123",
-    company_location: "120102",
-    company_type: "医疗器械销售",
-    contactName: "123",
-    contactPhone: "123",
-    createUserId: "ddc42355-d9ca-4a75-ae2b-5ea4ba344b73",
-  };
-  console.log("submitValue", submitValue);
-  http.request<any>("post", "/api/v1/requirements", { data: submitValue });
+const handleSubmit = async(values: FieldValues) => {
+      let submitValue = cloneDeep(values);
+      // 日期格式转换成 YYYY-MM-DD
+      submitValue.start_date = dayjs(submitValue.timeSpace[0]).format("YYYY-MM-DD");
+      submitValue.end_date = dayjs(submitValue.timeSpace[1]).format("YYYY-MM-DD");
+      delete submitValue.timeSpace;
+      // submitValue.company_location =  数组最后一项
+      submitValue.company_location =
+        submitValue.company_location[submitValue.company_location.length - 1];
+      submitValue.region = submitValue.region[submitValue.region.length - 1];
+      console.log("submitValue", submitValue);
+  const resp = await http.request<any>("post", "/api/v1/requirements", { data: submitValue });
+  console.log('resp', resp)
+      if (resp.id) {
+       router.push('/requirement/requirementManage')
+      } else {
+        ElMessage.error("提交失败,请重试");
+  }
+      
 };
 const handleSubmitError = (err: any) => {
   console.log(err, "err");
