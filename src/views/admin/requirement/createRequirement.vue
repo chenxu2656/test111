@@ -4,17 +4,24 @@
       v-model="state"
       :group="group"
       :rules="rules"
-      @change="handleChange"
       style="width: 1000px"
       label-width="100px"
       label-position="right"
-      @submit="handleSubmit"
-      @submit-error="handleSubmitError"
-      @reset="handleReset"
+      submit-text="发布"
+      :has-reset="false"
     >
       <template #plus-field-images>
-        <el-upload  action="/api/v1/uploadfile" class="avatar-uploader" :show-file-list="false" :on-success="handleAvatarSuccess">
-          <img v-if="state.cover_image" :src="state.cover_image" class="avatar" />
+        <el-upload
+          action="/api/v1/uploadfile"
+          class="avatar-uploader"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+        >
+          <img
+            v-if="state.cover_image"
+            :src="state.cover_image"
+            class="avatar"
+          />
           <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
         </el-upload>
       </template>
@@ -22,15 +29,31 @@
         <div v-for="item in companyType" style="width: 100%">
           <div style="font-weight: 600">{{ item.value }}</div>
           <div style="display: flex; flex-wrap: wrap">
-           <el-radio-group v-model="state.type" @change="() => state.category = item.value">
-            <el-radio
-              v-for="items in item.children"
-              :key="items.value"
-              :label="items.value"
-              style="width: 20%"
-            />
+            <el-radio-group
+              v-model="state.type"
+              @change="() => (state.category = item.value)"
+            >
+              <el-radio
+                v-for="items in item.children"
+                :value="items.value"
+                :label="items.value"
+                style="width: 20%"
+              />
             </el-radio-group>
           </div>
+        </div>
+      </template>
+      <template #footer>
+        <div
+          class="footer"
+          style="width: 100%; display: flex; justify-content: center"
+        >
+          <el-button
+            type="primary"
+            style="width: 200px"
+            @click="handleSubmit(state)"
+            >发布需求</el-button
+          >
         </div>
       </template>
     </PlusForm>
@@ -58,7 +81,10 @@
 import city from "@/utils/city";
 import companyType from "@/utils/companyType";
 import companyhangye from "@/utils/companyhangye";
+import { http } from "@/utils/http";
 import { CreditCard, Plus } from "@element-plus/icons-vue";
+import { cloneDeep } from "@pureadmin/utils";
+import dayjs from "dayjs";
 import {
   PlusForm,
   type FieldValues,
@@ -67,29 +93,26 @@ import {
 } from "plus-pro-components";
 import "plus-pro-components/es/components/form/style/css";
 import { ref } from "vue";
-const imageUrl = ref("");
 const state = ref({
   name: "", // 需求名称
   type: "", // 需求类型
   category: "", // 需求分类
   region: "", //需求地区
-  timeSpace: '', // 需求时间
+  timeSpace: "", // 需求时间
   start_date: "", // 开始时间
   end_date: "", // 结束时间
   content: "", // 需求内容
-  cover_image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+  cover_image: "",
   company_name: "", // 公司名字
   company_location: "", // 公司location
   company_type: "", // 公司类型
   contactName: "", // 联系人名字
   contactPhone: "", // 联系人电话
-  createUserId: ""
-
+  createUserId: JSON.parse(localStorage.getItem("userInfo")).id,
 });
 const handleAvatarSuccess = (resp) => {
-  state.value.cover_image = resp.fileUrl
-  
-}
+  state.value.cover_image = resp.fileUrl;
+};
 const rules = {
   name: [
     {
@@ -109,15 +132,15 @@ const group: PlusFormGroupRow[] = [
   {
     title: "需求信息",
     icon: CreditCard,
-    
+
     columns: [
       {
         label: "需求名称",
         width: "900px",
         prop: "name",
-        
         valueType: "input",
         message: "请输入需求名称",
+        pleaseEnter: "111",
       },
       {
         label: "需求类型",
@@ -176,8 +199,8 @@ const group: PlusFormGroupRow[] = [
       {
         label: "所属行业",
         prop: "company_type",
-        valueType: 'select',
-        options: companyhangye
+        valueType: "select",
+        options: companyhangye,
       },
     ],
   },
@@ -195,7 +218,7 @@ const group: PlusFormGroupRow[] = [
         label: "联系电话",
         prop: "contactPhone",
         valueType: "input",
-      }
+      },
     ],
   },
 ];
@@ -204,7 +227,37 @@ const handleChange = (values: FieldValues, prop: PlusColumn) => {
   console.log(values, prop, "change");
 };
 const handleSubmit = (values: FieldValues) => {
-  console.log(values, "Submit");
+  // 处理数据
+  // 处理开始日期 和 结束日期
+  let submitValue = cloneDeep(values);
+  // 日期格式转换成 YYYY-MM-DD
+
+  submitValue.start_date = dayjs(submitValue.timeSpace[0]).format("YYYY-MM-DD");
+  submitValue.end_date = dayjs(submitValue.timeSpace[1]).format("YYYY-MM-DD");
+  delete submitValue.timeSpace;
+  // submitValue.company_location =  数组最后一项
+  submitValue.company_location =
+    submitValue.company_location[submitValue.company_location.length - 1];
+  submitValue.region = submitValue.region[submitValue.region.length - 1];
+  submitValue = {
+    name: "111111",
+    type: "软件开发",
+    category: "研发",
+    region: "120103",
+    start_date: "2024-07-09",
+    end_date: "2024-08-29",
+    content: "123",
+    cover_image:
+      "https://yiliaoqixie-1253997872.cos.ap-nanjing.myqcloud.com/5783de21-d604-4815-96e7-1a1a36e791e9",
+    company_name: "123",
+    company_location: "120102",
+    company_type: "医疗器械销售",
+    contactName: "123",
+    contactPhone: "123",
+    createUserId: "ddc42355-d9ca-4a75-ae2b-5ea4ba344b73",
+  };
+  console.log("submitValue", submitValue);
+  http.request<any>("post", "/api/v1/requirements", { data: submitValue });
 };
 const handleSubmitError = (err: any) => {
   console.log(err, "err");

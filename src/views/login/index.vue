@@ -1,110 +1,138 @@
 <script setup lang="ts">
-import { getVCode, verifyVcode } from '@/api/user'
-import darkIcon from '@/assets/svg/dark.svg?component'
-import dayIcon from '@/assets/svg/day.svg?component'
-import { useRenderIcon } from '@/components/ReIcon/src/hooks'
-import { useDataThemeChange } from '@/layout/hooks/useDataThemeChange'
-import { useLayout } from '@/layout/hooks/useLayout'
-import { useNav } from '@/layout/hooks/useNav'
-import { getTopMenu, initRouter } from '@/router/utils'
-import { message } from '@/utils/message'
-import User from '@iconify-icons/ri/user-3-fill'
-import { ElMessage, type FormInstance } from 'element-plus'
-import { onBeforeUnmount, onMounted, reactive, ref, toRaw } from 'vue'
-import { useRouter } from 'vue-router'
-import Motion from './utils/motion'
-import { loginRules } from './utils/rule'
-import { bg, illustration } from './utils/static'
-const buttonCon = ref('获取验证码')
-const registerInfo = ref({})
-const isDisabled = ref(false)
+import { createAccount, getAccount, getVCode, verifyVcode } from "@/api/user";
+import darkIcon from "@/assets/svg/dark.svg?component";
+import dayIcon from "@/assets/svg/day.svg?component";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
+import { useLayout } from "@/layout/hooks/useLayout";
+import { useNav } from "@/layout/hooks/useNav";
+import { getTopMenu, initRouter } from "@/router/utils";
+import { message } from "@/utils/message";
+import Iphone from "@iconify-icons/ep/iphone";
+import Lock from "@iconify-icons/ri/lock-fill";
+import User from "@iconify-icons/ri/user-3-fill";
+import { ElMessage, type FormInstance } from "element-plus";
+import { onBeforeUnmount, onMounted, reactive, ref, toRaw } from "vue";
+import { useRouter } from "vue-router";
+import Motion from "./utils/motion";
+import { loginRules } from "./utils/rule";
+import { bg, illustration } from "./utils/static";
+const buttonCon = ref("获取验证码");
+const registerInfo = ref({});
+const isDisabled = ref(false);
 defineOptions({
-  name: 'Login'
-})
-const router = useRouter()
-const loading = ref(false)
-const ruleFormRef = ref<FormInstance>()
+  name: "Login",
+});
+const router = useRouter();
+const loading = ref(false);
+const ruleFormRef = ref<FormInstance>();
+const registerRuleFormRef = ref<FormInstance>();
+const { initStorage } = useLayout();
+const showRegister = ref(false);
+initStorage();
 
-const { initStorage } = useLayout()
-initStorage()
-
-const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange()
-dataThemeChange(overallStyle.value)
-const { title } = useNav()
+const { dataTheme, overallStyle, dataThemeChange } = useDataThemeChange();
+dataThemeChange(overallStyle.value);
+const { title } = useNav();
 
 const ruleForm = reactive({
-  phoneNumber: '',
-  verificationCode: ''
-})
+  phoneNumber: "",
+  verificationCode: "",
+});
+
+const registerRuleForm = reactive({
+  username: "",
+  phoneNumber: "",
+  password: "",
+});
 
 /** 使用公共函数，避免`removeEventListener`失效 */
 function onkeypress({ code }: KeyboardEvent) {
-  if (code === 'Enter') {
-    onLogin(ruleFormRef.value)
+  if (code === "Enter") {
+    onLogin(ruleFormRef.value);
   }
 }
 onMounted(() => {
-  window.document.addEventListener('keypress', onkeypress)
-})
+  window.document.addEventListener("keypress", onkeypress);
+});
 
 onBeforeUnmount(() => {
-  window.document.removeEventListener('keypress', onkeypress)
-})
+  window.document.removeEventListener("keypress", onkeypress);
+});
 const sendCode = () => {
-  ruleFormRef.value.validateField('phoneNumber', async (valid, fields) => {
+  ruleFormRef.value.validateField("phoneNumber", async (valid, fields) => {
     if (valid) {
-      isDisabled.value = true
-      let time = 60
-      getVCode(ruleForm.phoneNumber).then(resp => {
-        ElMessage.success('验证码发送成功')
-        registerInfo.value = resp
-        console.log('registerInfo', registerInfo.value)
-      })
+      isDisabled.value = true;
+      let time = 60;
+      getVCode(ruleForm.phoneNumber).then((resp) => {
+        ElMessage.success("验证码发送成功");
+        registerInfo.value = resp;
+        console.log("registerInfo", registerInfo.value);
+      });
       const timer = setInterval(() => {
         if (time === 0) {
-          clearInterval(timer)
-          isDisabled.value = false
-          buttonCon.value = '获取验证码'
+          clearInterval(timer);
+          isDisabled.value = false;
+          buttonCon.value = "获取验证码";
         } else {
-          buttonCon.value = `${time}s`
-          time--
+          buttonCon.value = `${time}s`;
+          time--;
         }
-      }, 1000)
+      }, 1000);
     } else {
-      ElMessage.error('请输入手机号')
+      ElMessage.error("请输入手机号");
     }
-  })
-}
+  });
+};
+const loginSuccess = () => {
+  return initRouter().then(() => {
+    console.log("getTopMenu(true)", getTopMenu(true));
+    router.push("/welcome").then(() => {
+      message("登录成功", { type: "success" });
+    });
+  });
+};
 const verifyCode = (phone: string, code: string) => {
-  ruleFormRef.value.validate(async valid => {
+  ruleFormRef.value.validate(async (valid) => {
     if (valid) {
       verifyVcode(phone, code)
-        .then(resp => {
+        .then(async (resp) => {
           if (resp.access_token) {
-            localStorage.setItem('jwt', resp.access_token)
-            return initRouter().then(() => {
-              console.log('getTopMenu(true)', getTopMenu(true))
-              router.push('/welcome').then(() => {
-                message('登录成功', { type: 'success' })
-              })
-            })
+            if (registerInfo.value?.user_exist) {
+              getAccount(phone).then((resp) => {
+                localStorage.setItem("userInfo", JSON.stringify(resp));
+              });
+              localStorage.setItem("jwt", resp.access_token);
+              loginSuccess();
+            } else {
+              registerRuleForm.phoneNumber = phone;
+              showRegister.value = true;
+            }
           } else {
-            message('验证码错误，登录失败', { type: 'error' })
+            message("验证码错误，登录失败", { type: "error" });
           }
         })
         .catch(() => {
-          message('验证码错误，登录失败', { type: 'error' })
-        })
+          message("验证码错误，登录失败", { type: "error" });
+        });
     } else {
-      return false
+      return false;
     }
-  })
-}
+  });
+};
+const clickRegister = async (userInfo: any) => {
+  const resp = await createAccount(registerRuleForm);
+  if (resp.message === "注册成功") {
+    localStorage.setItem("userInfo", JSON.stringify(resp.user_info));
+    localStorage.setItem("jwt", resp.access_token);
+    loginSuccess();
+  }
+};
 </script>
 
 <template>
   <div class="select-none">
-    <img :src="bg" class="wave" />
+    <img :src="bg" class="wave" style="z-index: 10" />
     <div class="flex-c absolute right-5 top-3">
       <!-- 主题 -->
       <el-switch
@@ -115,8 +143,8 @@ const verifyCode = (phone: string, code: string) => {
         @change="dataThemeChange"
       />
     </div>
-    <div class="login-container">
-      <div class="img">
+    <div class="login-container" style="background-color: white">
+      <div class="img" style="z-index: 100">
         <component :is="toRaw(illustration)" />
       </div>
       <div class="login-box">
@@ -132,7 +160,9 @@ const verifyCode = (phone: string, code: string) => {
           </Motion>
 
           <el-form
+            v-if="!showRegister"
             ref="ruleFormRef"
+            style="z-index: 1000; position: relative"
             :model="ruleForm"
             :rules="loginRules"
             size="large"
@@ -143,8 +173,8 @@ const verifyCode = (phone: string, code: string) => {
                   {
                     required: true,
                     message: '请输入手机号',
-                    trigger: 'blur'
-                  }
+                    trigger: 'blur',
+                  },
                 ]"
                 prop="phoneNumber"
               >
@@ -164,8 +194,8 @@ const verifyCode = (phone: string, code: string) => {
                   {
                     required: true,
                     message: '请输入验证码',
-                    trigger: 'blur'
-                  }
+                    trigger: 'blur',
+                  },
                 ]"
               >
                 <div class="w-full flex justify-between">
@@ -200,6 +230,93 @@ const verifyCode = (phone: string, code: string) => {
               </el-button>
             </Motion>
           </el-form>
+          <el-form
+            v-if="showRegister"
+            ref="registerRuleFormRef"
+            :model="registerRuleForm"
+            :rules="loginRules"
+            size="large"
+            style="z-index: 1000; position: relative"
+          >
+            <Motion :delay="100">
+              <el-form-item
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入手机号',
+                    trigger: 'blur',
+                  },
+                ]"
+                prop="phoneNumber"
+              >
+                <el-input
+                  v-model="registerRuleForm.phoneNumber"
+                  disabled
+                  clearable
+                  placeholder="请输入手机号"
+                  :prefix-icon="useRenderIcon(Iphone)"
+                />
+              </el-form-item>
+              <el-form-item
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入用户名',
+                    trigger: 'blur',
+                  },
+                ]"
+                prop="phoneNumber"
+              >
+                <el-input
+                  v-model="registerRuleForm.username"
+                  clearable
+                  placeholder="用户名"
+                  :prefix-icon="useRenderIcon(User)"
+                />
+              </el-form-item>
+              <el-form-item
+                :rules="[
+                  {
+                    required: true,
+                    message: '请输入密码',
+                    trigger: 'blur',
+                  },
+                ]"
+                prop="phoneNumber"
+              >
+                <el-input
+                  v-model="registerRuleForm.password"
+                  clearable
+                  placeholder="请输入密码"
+                  :prefix-icon="useRenderIcon(Lock)"
+                />
+              </el-form-item>
+            </Motion>
+
+            <Motion :delay="250">
+              <el-button
+                class="w-full mt-4"
+                size="default"
+                type="primary"
+                :loading="loading"
+                @click="clickRegister(registerRuleForm)"
+              >
+                创建新用户
+              </el-button>
+            </Motion>
+            <Motion :delay="250">
+              <el-button
+                class="w-full mt-4"
+                size="default"
+                type="primary"
+                plain
+                :loading="loading"
+                @click="showRegister = false"
+              >
+                返回
+              </el-button>
+            </Motion>
+          </el-form>
         </div>
       </div>
     </div>
@@ -207,7 +324,7 @@ const verifyCode = (phone: string, code: string) => {
 </template>
 
 <style scoped>
-@import url('@/style/login.css');
+@import url("@/style/login.css");
 </style>
 
 <style lang="scss" scoped>
