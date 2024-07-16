@@ -43,7 +43,7 @@ import Recommenditem from "@/views/portal/a-components/less/RecommendItem.vue";
   .item_box {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     flex-wrap: wrap;
   }
 }

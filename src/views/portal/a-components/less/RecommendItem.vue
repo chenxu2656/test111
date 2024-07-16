@@ -27,7 +27,7 @@ const props = defineProps<{
 }>();
 
 const defaultBean: NewBean = {
-  logo: "@/assets/images/logo.png",
+  logo: "./src/assets/img/1.png",
   name: "海报设计师",
   type: "AI 大模型",
   description: "无情的AI作图机器，画质超乎你的想象",
@@ -44,27 +44,20 @@ const bean = props.newBean ?? defaultBean;
 
 <template>
   <div class="item">
-    <div class="image">
-      <div class="header">{{ bean.type }}</div>
-      <div class="body"><img :src="bean.logo" /></div>
-    </div>
-    <div class="content">
-      <h1>{{ bean.name }}</h1>
-      <p>{{ bean.type }}</p>
-    </div>
-    <div class="footer">
-      <span class="item">
-        <el-icon>
-          <component theme="outline" :is="'icon-' + 'calendar'" />
-        </el-icon>
-        {{ bean.date }}
-      </span>
-      <span class="item">
-        <el-icon>
-          <component theme="outline" :is="'icon-' + 'avatar'" />
-        </el-icon>
-        {{ bean.author }}
-      </span>
+    <div class="header">
+      <div class="type">
+        <span class="type_name">{{ bean.type }}</span>
+      </div>
+      <div class="logo">
+        <img class="img" :src="bean.logo" alt="" />
+        <div class="name">{{ bean.name }}</div>
+      </div>
+      <div class="info">
+        <div class="desc">{{ bean.description }}</div>
+        <div class="tags" v-for="tag in bean.tags">
+          <span class="tag">{{ tag }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -98,89 +91,70 @@ const bean = props.newBean ?? defaultBean;
     }
   }
 
-  .image {
-    width: 100%;
-    height: 200px;
-    transition:
-      all 0.2s linear,
-      boder 0s;
-
-    img {
-      height: 100%;
-      width: 100%;
-      transition: all 0.2s linear;
-    }
-  }
-
-  .content {
-    flex: 1;
+  .header {
     display: flex;
     flex-direction: column;
-    place-content: center;
-    place-items: center;
-    padding: 1em 1em;
-
-    h1 {
-      font-size: 1.5em;
-      line-height: 1.6em;
-      text-transform: capitalize;
-    }
-
-    p {
-      flex: 1;
+    .type {
       width: 100%;
-      padding: 1rem 0;
-      line-height: 1.1;
-      color: #666;
-      text-align: center;
-      margin-bottom: 0;
-    }
-
-    .detail {
-      display: inline-block;
-      width: fit-content;
-
-      font-size: 1em;
-      padding: 0.3em 1.5em;
-      border: @light-theme-color solid 1px;
-      color: @light-font-color;
-
-      &:hover {
-        background: @light-theme-color;
-        color: white;
+      text-align: right;
+      padding-top: 5px;
+      padding-right: 5px;
+      .type_name {
+        width: fit-content;
+        padding: 0.2em 0.4em;
+        background-color: #e7f7f0;
+        border-radius: 5px;
+        color: #15975d;
+        font-size: 14px;
+        font-weight: 600;
       }
     }
-  }
-
-  .footer {
-    padding: 0.8em 0.6em;
-    font-size: 0.9em;
-    height: 50px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    //background: #FFF;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-
-    .item {
-      text-transform: capitalize;
-      color: #222;
+    .logo {
       display: flex;
-      place-items: center;
-      place-content: center;
+      flex-direction: row;
+      .img {
+        width: 60px;
+        height: 60px;
+        margin-left: 20px;
+        border-radius: 15px;
+      }
 
-      i {
-        height: 100%;
-        display: flex;
-        place-items: center;
-        place-content: center;
-        margin-right: 0.2em;
+      .name {
+        max-width: 100%;
+        overflow: hidden;
+        transition: all ease-in-out 0.3s;
+        color: #15975d;
+        font-size: 20px;
+        line-height: 32px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-left: 20px;
+        font-weight: 800;
+      }
+    }
+    .info {
+      padding: 0 20px;
+      margin-top: 10px;
+      .desc {
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        word-break: break-all;
+        font-size: 14px;
+        color: #333;
+      }
+      .tags {
+        display: inline-flex;
+        .tag {
+          margin-right: 10px;
+          background-color: #ecf9f3;
+          color: #15975d;
+          font-size: 14px;
+          font-weight: 600;
+          padding: 2px 5px;
+          border-radius: 5px;
+        }
       }
     }
   }
