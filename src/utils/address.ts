@@ -1,6 +1,6 @@
-import cityList from './city';
+import cityList from "./city";
 export const getAddressByCode = (code: string) => {
-for (const region of cityList) {
+  for (const region of cityList) {
     if (region.value === code) {
       return region.label;
     }
@@ -17,10 +17,10 @@ for (const region of cityList) {
       }
     }
   }
-  return 'Code not found';
-}
+  return code;
+};
 
-export const getCodeByAddress = (address:string)=> {
+export const getCodeByAddress = (address: string) => {
   for (const region of cityList) {
     if (region.label === address) {
       return region.value;
@@ -38,5 +38,5 @@ export const getCodeByAddress = (address:string)=> {
       }
     }
   }
-  return 'Address not found';
-}
+  return "Address not found";
+};
