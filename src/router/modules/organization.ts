@@ -15,15 +15,25 @@ export default {
       path: "/organization/manage",
       name: "组织管理",
       component: () =>
-        import("@/views/admin/organization/organizationManage.vue"),
+        import("@/views/admin/organization/organizationManage/index.vue"),
       meta: {
         title: "基本信息",
       },
-    },{
+    },
+    {
+      path: "/organization/create",
+      name: "创建组织",
+      component: () =>
+        import("@/views/admin/organization/createOrganization/index.vue"),
+      meta: {
+        title: "创建组织",
+        showLink: false,
+      },
+    },
+    {
       path: "/organization/member",
       name: "成员管理",
-      component: () =>
-        import("@/views/admin/organization/MemberManage.vue"),
+      component: () => import("@/views/admin/organization/member/index.vue"),
       meta: {
         title: "成员管理",
       },

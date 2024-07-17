@@ -46,21 +46,18 @@
           </div>
         </div>
       </template>
-      <template #footer="{handleSubmit}">
+      <template #footer="{ handleSubmit }">
         <div
           class="footer"
           style="width: 100%; display: flex; justify-content: center"
         >
-          <el-button
-            type="primary"
-            style="width: 200px"
-            @click="handleSubmit"
+          <el-button type="primary" style="width: 200px" @click="handleSubmit"
             >发布需求</el-button
           >
         </div>
       </template>
     </PlusForm>
-    <el-card style="width: 600px;">
+    <el-card style="width: 600px">
       <div class="flex justify-between">
         <div class="text-xl font-semibold">您可能关注的解决方案</div>
         <div class="text-lg">更多>></div>
@@ -84,7 +81,6 @@
 import router from "@/router";
 import city from "@/utils/city";
 import companyType from "@/utils/companyType";
-import companyhangye from "@/utils/companyhangye";
 import { http } from "@/utils/http";
 import { CreditCard, Plus } from "@element-plus/icons-vue";
 import { cloneDeep } from "@pureadmin/utils";
@@ -108,7 +104,8 @@ const state = ref({
   start_date: "", // 开始时间
   end_date: "", // 结束时间
   content: "", // 需求内容
-  cover_image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+  cover_image:
+    "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
   company_name: "", // 公司名字
   company_location: "", // 公司location
   company_type: "", // 公司类型
@@ -124,7 +121,7 @@ const rules = {
     {
       required: true,
       message: "请输入名称",
-    }
+    },
   ],
   type: [
     {
@@ -198,8 +195,7 @@ const rules = {
       message: "请输入联系人电话",
     },
   ],
-}
-
+};
 
 const group: PlusFormGroupRow[] = [
   {
@@ -273,7 +269,7 @@ const group: PlusFormGroupRow[] = [
         label: "所属行业",
         prop: "company_type",
         valueType: "select",
-        options: companyhangye,
+        options: companyType,
       },
     ],
   },
@@ -299,25 +295,26 @@ const group: PlusFormGroupRow[] = [
 const handleChange = (values: FieldValues, prop: PlusColumn) => {
   console.log(values, prop, "change");
 };
-const handleSubmit = async(values: FieldValues) => {
-      let submitValue = cloneDeep(values);
-      // 日期格式转换成 YYYY-MM-DD
-      submitValue.start_date = dayjs(submitValue.timeSpace[0]).format("YYYY-MM-DD");
-      submitValue.end_date = dayjs(submitValue.timeSpace[1]).format("YYYY-MM-DD");
-      delete submitValue.timeSpace;
-      // submitValue.company_location =  数组最后一项
-      submitValue.company_location =
-        submitValue.company_location[submitValue.company_location.length - 1];
-      submitValue.region = submitValue.region[submitValue.region.length - 1];
-      console.log("submitValue", submitValue);
-  const resp = await http.request<any>("post", "/api/v1/requirements", { data: submitValue });
-  console.log('resp', resp)
-      if (resp.id) {
-       router.push('/requirement/requirementManage')
-      } else {
-        ElMessage.error("提交失败,请重试");
+const handleSubmit = async (values: FieldValues) => {
+  let submitValue = cloneDeep(values);
+  // 日期格式转换成 YYYY-MM-DD
+  submitValue.start_date = dayjs(submitValue.timeSpace[0]).format("YYYY-MM-DD");
+  submitValue.end_date = dayjs(submitValue.timeSpace[1]).format("YYYY-MM-DD");
+  delete submitValue.timeSpace;
+  // submitValue.company_location =  数组最后一项
+  submitValue.company_location =
+    submitValue.company_location[submitValue.company_location.length - 1];
+  submitValue.region = submitValue.region[submitValue.region.length - 1];
+  console.log("submitValue", submitValue);
+  const resp = await http.request<any>("post", "/api/v1/requirements", {
+    data: submitValue,
+  });
+  console.log("resp", resp);
+  if (resp.id) {
+    router.push("/requirement/requirementManage");
+  } else {
+    ElMessage.error("提交失败,请重试");
   }
-      
 };
 const handleSubmitError = (err: any) => {
   console.log(err, "err");

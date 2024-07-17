@@ -26,7 +26,6 @@ export default {
       component: () => import("@/views/admin/service/createTech.vue"),
       meta: {
         title: "发布科技成果",
-        showLink: false,
       },
     },
     {
@@ -36,6 +35,6 @@ export default {
       meta: {
         title: "解决企业需求",
       },
-    }
+    },
   ],
 } satisfies RouteConfigsTable;

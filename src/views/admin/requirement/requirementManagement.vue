@@ -8,16 +8,16 @@ import { useRouter } from "vue-router";
 const searchField = ref("");
 const limit = ref(10);
 const router = useRouter();
-const dataList = ref([])
+const dataList = ref([]);
 const pagination = ref<PaginationProps>({
   pageSize: 10,
   currentPage: 1,
-  align: 'right',
+  align: "right",
   total: 0,
-  layout: 'total, prev, pager, next, jumper',
+  layout: "total, prev, pager, next, jumper",
   background: true,
-  small: false
-})
+  small: false,
+});
 defineOptions({
   name: "403",
 });
@@ -59,33 +59,36 @@ const columns = [
 ];
 const getRequirementList = async (pageNumber: number) => {
   const params = {
-        skip: (pageNumber-1) * limit.value,
-        limit: limit.value,
+    skip: (pageNumber - 1) * limit.value,
+    limit: limit.value,
+    uid: JSON.parse(localStorage.getItem("userInfo")).id,
+  };
+  if (searchField.value && searchField.value.length >= 3) {
+    params.keyword = searchField.value;
   }
-  if (searchField.value && searchField.value.length >=3) {
-    params.keyword = searchField.value
-  }
-  const resp = await http.request<any>('get', '/api/v1/requirements/list', {
-      params: {
-       ...params
-      }
-  })
-  console.log('resp', resp)
-  pagination.value.total = resp.length
-  dataList.value = resp.data
-
-}
+  const resp = await http.request<any>("get", "/api/v1/requirements/list", {
+    params: {
+      ...params,
+    },
+  });
+  console.log("resp", resp);
+  pagination.value.total = resp.length;
+  dataList.value = resp.data;
+};
 const onCurrentChange = async () => {
-  await getRequirementList(pagination.value.currentPage)
-}
-onMounted(async() => {
-  await getRequirementList(1)
-})
-watch(() => searchField.value, async () => {
-  if (searchField.value.length === 0) {
-    await getRequirementList(1)
-  }
-})
+  await getRequirementList(pagination.value.currentPage);
+};
+onMounted(async () => {
+  await getRequirementList(1);
+});
+watch(
+  () => searchField.value,
+  async () => {
+    if (searchField.value.length === 0) {
+      await getRequirementList(1);
+    }
+  },
+);
 </script>
 
 <template>
@@ -102,7 +105,12 @@ watch(() => searchField.value, async () => {
                 v-model="searchField"
               ></el-input>
             </el-form-item>
-            <el-button type="primary" :disabled="searchField.length <3" @click="getRequirementList(1)">查询</el-button>
+            <el-button
+              type="primary"
+              :disabled="searchField.length < 3"
+              @click="getRequirementList(1)"
+              >查询</el-button
+            >
           </el-form>
         </el-card>
         <el-card class="box-card my-5">
@@ -119,24 +127,24 @@ watch(() => searchField.value, async () => {
             @page-current-change="onCurrentChange"
             :columns="columns"
             :pagination="pagination"
-            style="height: 500px;"
+            style="height: 500px"
           >
-        <template #region="{ row }">
-          {{getAddressByCode(row.region)}}
-        </template>
-        <template #duration="{ row }">
-          {{row.start_date}} - {{ row.end_date }}
-        </template>
-         <template #content="{ row }">
-          {{row.content}}
-        </template>
-         <template #action="{ row }">
-          <div class="actions flex gap-5 justify-center" >
-            <el-icon color="red"><Delete/></el-icon>
-            <el-icon color="#409eff"><Edit/></el-icon>
-          </div>
-        </template>
-        </PureTable>
+            <template #region="{ row }">
+              {{ getAddressByCode(row.region) }}
+            </template>
+            <template #duration="{ row }">
+              {{ row.start_date }} - {{ row.end_date }}
+            </template>
+            <template #content="{ row }">
+              {{ row.content }}
+            </template>
+            <template #action="{ row }">
+              <div class="actions flex gap-5 justify-center">
+                <el-icon color="red"><Delete /></el-icon>
+                <el-icon color="#409eff"><Edit /></el-icon>
+              </div>
+            </template>
+          </PureTable>
         </el-card>
       </el-col>
     </el-row>
