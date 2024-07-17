@@ -33,7 +33,7 @@ export default {
     {
       path: "/organization/member",
       name: "成员管理",
-      component: () => import("@/views/admin/organization/MemberManage.vue"),
+      component: () => import("@/views/admin/organization/member/index.vue"),
       meta: {
         title: "成员管理",
       },
