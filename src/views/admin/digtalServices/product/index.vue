@@ -7,7 +7,8 @@ import { ElMessageBox } from "element-plus";
 import { nextTick, onMounted, ref } from "vue";
 import ListCard from "./components/ListCard.vue";
 import ListDialogForm from "./components/ListDialogForm.vue";
-
+import { http } from "@/utils/http";
+import router from "@/router";
 defineOptions({
   name: "CardList",
 });
@@ -35,15 +36,26 @@ const pagination = ref({ current: 1, pageSize: 12, total: 0 });
 
 const productList = ref([]);
 const dataLoading = ref(true);
-
+const getCardList = async (pageNumber: number) => {
+  const resp = await http.request<any>("get", "/api/v1/products/search", {
+    params: {
+      limit: 10,
+      skip: (pageNumber - 1) * 10,
+      uid: localStorage.getItem("orgId"),
+    },
+  });
+  console.log("resp", resp);
+  return resp;
+};
 const getCardListData = async () => {
   try {
-    const { data } = await getCardList();
-    productList.value = [];
+    const { data, length } = await getCardList(1);
+    productList.value = data;
     pagination.value = {
       ...pagination.value,
-      total: data.list.length,
+      total: length,
     };
+    console.log("pagination", pagination.value);
   } catch (e) {
     console.log(e);
   } finally {
@@ -96,7 +108,7 @@ const handleManageProduct = (product) => {
     <div class="w-full flex justify-between mb-4">
       <el-button
         :icon="useRenderIcon(AddFill)"
-        @click="formDialogVisible = true"
+        @click="router.push('/digtalServiceservice/create')"
       >
         新建产品
       </el-button>
@@ -129,7 +141,7 @@ const handleManageProduct = (product) => {
               pagination.pageSize * pagination.current,
             )
             .filter((v) =>
-              v.name.toLowerCase().includes(searchValue.toLowerCase()),
+              v.product_name.toLowerCase().includes(searchValue.toLowerCase()),
             ).length === 0
         "
         :description="`${searchValue} 产品不存在`"
@@ -143,7 +155,9 @@ const handleManageProduct = (product) => {
                 pagination.pageSize * pagination.current,
               )
               .filter((v) =>
-                v.name.toLowerCase().includes(searchValue.toLowerCase()),
+                v.product_name
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase()),
               )"
             :key="index"
             :xs="24"

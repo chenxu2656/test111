@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-8">
+  <div class="flex gap-8" v-if="orgId">
     <PlusForm
       v-model="state"
       ref="ruleFormRef"
@@ -69,6 +69,7 @@
       </div>
     </el-card>
   </div>
+  <noOrganization v-else />
 </template>
 
 <script lang="ts" setup>
@@ -80,15 +81,20 @@ import {
 import { Plus } from "@element-plus/icons-vue";
 import { cloneDeep } from "@pureadmin/utils";
 import type { UploadUserFile } from "element-plus";
-import { type FormInstance } from "element-plus";
+import router from "@/router";
+import { http } from "@/utils/http";
+import noOrganization from "../components/noOrganization.vue";
+import { type FormInstance, ElMessage } from "element-plus";
 import {
   PlusForm,
   type FieldValues,
   type PlusFormGroupRow,
 } from "plus-pro-components";
+
 import "plus-pro-components/es/components/form/style/css";
 import { ref } from "vue";
 import EditorBase from "./components/EditorBase.vue";
+const orgId = ref(localStorage.getItem("orgId"));
 const ruleFormRef = ref<FormInstance>();
 const fileList = ref<UploadUserFile[]>([]);
 
@@ -104,13 +110,13 @@ const state = ref({
   product_spec: "",
   sku: "",
   validity_period: "",
-  product_status: "在售",
+  product_status: 1,
   delivery_method: "不限",
   payment_method: "不限",
   sale_region: "不限制区域",
   service_phone: "",
   creator_id: JSON.parse(localStorage.getItem("userInfo")).id,
-  org_id: "",
+  org_id: orgId,
   product_value: "default",
   product_scene: "",
 });
@@ -210,14 +216,14 @@ const group: PlusFormGroupRow[] = [
 const handleSubmit = async (values: FieldValues) => {
   let submitValue = cloneDeep(values);
   console.log("submitValue", submitValue);
-  // const resp = await http.request<any>("post", "/api/v1/products", {
-  //   data: submitValue,
-  // });
-  // if (resp.id) {
-  //   router.push("/products/manage");
-  // } else {
-  //   ElMessage.error("提交失败，请重试");
-  // }
+  const resp = await http.request<any>("post", "/api/v1/products", {
+    data: submitValue,
+  });
+  if (resp.id) {
+    router.push("/digtalServiceservice/manage");
+  } else {
+    ElMessage.error("提交失败，请重试");
+  }
 };
 </script>
 

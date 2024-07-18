@@ -11,21 +11,21 @@ export default {
     rank: 30,
   },
   children: [
-    // {
-    //   path: "/digtalServiceservice/manage",
-    //   name: "数字化服务管理",
-    //   component: () => import("@/views/admin/digtalServices/product/index.vue"),
-    //   meta: {
-    //     title: "服务管理",
-    //   },
-    // },
+    {
+      path: "/digtalServiceservice/manage",
+      name: "数字化服务管理",
+      component: () => import("@/views/admin/digtalServices/product/index.vue"),
+      meta: {
+        title: "产品管理",
+      },
+    },
     {
       path: "/digtalServiceservice/create",
       name: "增加数字化服务",
       component: () =>
         import("@/views/admin/digtalServices/createproduct/createProduct.vue"),
       meta: {
-        title: "服务管理",
+        title: "发布数字化服务",
       },
     },
     {

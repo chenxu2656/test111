@@ -1,6 +1,6 @@
 {
   "Version": "5.7.0",
-  "Title": "PureAdmin",
+  "Title": "医疗器械创业供给平台",
   "FixedHeader": true,
   "HiddenSideBar": false,
   "MultiTagsCache": false,
@@ -22,5 +22,6 @@
   "CachingAsyncRoutes": false,
   "TooltipEffect": "light",
   "ResponsiveStorageNameSpace": "responsive-",
-  "MenuSearchHistory": 6
+  "MenuSearchHistory": 6,
+  "COMPANY": "合肥任也科技有限公司"
 }
