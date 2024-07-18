@@ -32,7 +32,7 @@ const defaultBean: NewBean = {
   type: "AI 大模型",
   description: "无情的AI作图机器，画质超乎你的想象",
   tags: ["运营设计", "自动作图", "批量作图"],
-  exampleAvatar: "avatar",
+  exampleAvatar: "./src/assets/img/people.jpg",
   exampleName: "食品加工企业市场不经理",
   exampleComment: "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
   discountPrice: "1.99",
@@ -59,6 +59,25 @@ const bean = props.newBean ?? defaultBean;
         </div>
       </div>
     </div>
+    <div class="comment">
+      <div class="comment_box">
+        <div class="avatar">
+          <img class="img" :src="bean.exampleAvatar" alt="" />
+          <div class="name">{{ bean.exampleName }}</div>
+        </div>
+
+        <div class="comment_con">{{ bean.exampleComment }}</div>
+      </div>
+    </div>
+    <div class="price">
+      <div class="price_box">
+        <span class="discount_price">￥{{ bean.discountPrice }}</span>
+        <span class="old_price">￥{{ bean.price }}</span>
+      </div>
+      <div class="button">
+        <el-button type="primary">立即体验</el-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -75,20 +94,13 @@ const bean = props.newBean ?? defaultBean;
     all 0.2s linear,
     border 0s;
   border: rgba(0, 0, 0, 0.1) solid 1px;
-  width: 25%;
+  width: 330px;
 
   &:hover {
     -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
     box-shadow: 0 0.5rem 1rem rgba(160, 152, 152, 0.2);
     background: #fff;
     border: none;
-
-    .image {
-      padding: 0.4em 0.4em 0;
-      img {
-        border-radius: 15px;
-      }
-    }
   }
 
   .header {
@@ -157,6 +169,88 @@ const bean = props.newBean ?? defaultBean;
         }
       }
     }
+  }
+  .comment {
+    width: 100%;
+    height: 120px;
+    margin-top: 10px;
+    .comment_box {
+      width: 95%;
+      margin: 0 auto;
+      background-color: #d3d3d3;
+      border-radius: 10px;
+      padding: 10px;
+      .avatar {
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        .img {
+          border-radius: 100px;
+          width: 30px;
+        }
+        .name {
+          width: 250px;
+          padding-left: 10px;
+          font-size: 16px;
+          color: #333;
+          font-weight: 600;
+        }
+      }
+
+      .comment_con {
+        padding-top: 10px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* 限制为两行 */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal; /* 允许换行 */
+        width: 100%; /* 根据需要调整宽度 */
+        font-size: 14px;
+        color: #333;
+      }
+    }
+  }
+  .price {
+    border-top: 1px solid #d3d3d3;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    .price_box {
+      margin-left: 20px;
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+
+      .discount_price {
+        width: 100%;
+        font-size: 24px;
+        color: #15975d;
+        font-weight: 800;
+      }
+      .old_price {
+        width: 100%;
+        font-size: 14px;
+        color: #666;
+        text-decoration: line-through;
+        padding-left: 10px;
+      }
+    }
+    .button {
+      width: 45%;
+
+      text-align: right;
+      display: none;
+    }
+  }
+}
+.item:hover {
+  .button {
+    display: block;
   }
 }
 </style>

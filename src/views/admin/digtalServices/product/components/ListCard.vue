@@ -8,7 +8,7 @@ import userAvatarIcon from "@/assets/svg/user_avatar.svg?component";
 import More2Fill from "@iconify-icons/ri/more-2-fill";
 
 defineOptions({
-  name: "ReCard"
+  name: "ReCard",
 });
 
 interface CardProductType {
@@ -20,8 +20,8 @@ interface CardProductType {
 
 const props = defineProps({
   product: {
-    type: Object as PropType<CardProductType>
-  }
+    type: Object as PropType<any>,
+  },
 });
 
 const emit = defineEmits(["manage-product", "delete-item"]);
@@ -36,12 +36,12 @@ const handleClickDelete = (product: CardProductType) => {
 
 const cardClass = computed(() => [
   "list-card-item",
-  { "list-card-item__disabled": !props.product.isSetup }
+  { "list-card-item__disabled": !props.product.product_status },
 ]);
 
 const cardLogoClass = computed(() => [
   "list-card-item_detail--logo",
-  { "list-card-item_detail--logo__disabled": !props.product.isSetup }
+  { "list-card-item_detail--logo__disabled": !props.product.product_status },
 ]);
 </script>
 
@@ -50,24 +50,20 @@ const cardLogoClass = computed(() => [
     <div class="list-card-item_detail bg-bg_color">
       <el-row justify="space-between">
         <div :class="cardLogoClass">
-          <shopIcon v-if="product.type === 1" />
-          <calendarIcon v-if="product.type === 2" />
-          <serviceIcon v-if="product.type === 3" />
-          <userAvatarIcon v-if="product.type === 4" />
-          <laptopIcon v-if="product.type === 5" />
+          <el-avatar shape="square" size="large" :src="product.product_image" />
         </div>
         <div class="list-card-item_detail--operation">
           <el-tag
-            :color="product.isSetup ? '#00a870' : '#eee'"
+            :color="product.product_status ? '#00a870' : '#eee'"
             effect="dark"
             class="mx-1 list-card-item_detail--operation--tag"
           >
-            {{ product.isSetup ? "已启用" : "已停用" }}
+            {{ product.product_status ? "已上架" : "下架" }}
           </el-tag>
-          <el-dropdown trigger="click" :disabled="!product.isSetup">
+          <el-dropdown trigger="click">
             <IconifyIconOffline :icon="More2Fill" class="text-[24px]" />
             <template #dropdown>
-              <el-dropdown-menu :disabled="!product.isSetup">
+              <el-dropdown-menu :disabled="!product.product_status">
                 <el-dropdown-item @click="handleClickManage(product)">
                   管理
                 </el-dropdown-item>
@@ -80,10 +76,19 @@ const cardLogoClass = computed(() => [
         </div>
       </el-row>
       <p class="list-card-item_detail--name text-text_color_primary">
-        {{ product.name }}
+        {{ product.product_name }} - ({{ product.product_type }})
+      </p>
+      <p class="list-card-item_detail--name text-text_color_primary">
+        原价： ${{ product.price }}
+      </p>
+      <p
+        class="list-card-item_detail--name text-text_color_primary"
+        style="color: red"
+      >
+        现价： ${{ product.discount_price }}
       </p>
       <p class="list-card-item_detail--desc text-text_color_regular">
-        {{ product.description }}
+        {{ product.product_description }}
       </p>
     </div>
   </div>

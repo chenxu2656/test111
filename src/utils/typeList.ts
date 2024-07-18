@@ -160,15 +160,15 @@ export const productTypeList = [
 export const productStatusList = [
   {
     label: "在售",
-    value: "1",
+    value: 1,
   },
   {
     label: "草稿",
-    value: "0",
+    value: 0,
   },
   {
     label: "下架",
-    value: "2",
+    value: 2,
   },
 ];
 // 增加组织类型     MEDICAL_COMPANY = "医疗企业"

@@ -78,6 +78,8 @@
 </template>
 
 <script lang="ts" setup>
+import router from "@/router";
+import { http } from "@/utils/http";
 import { company_size, organizationTypeList } from "@/utils/typeList";
 import { Plus } from "@element-plus/icons-vue";
 import { cloneDeep } from "@pureadmin/utils";
@@ -199,6 +201,24 @@ const group: PlusFormGroupRow[] = [
 const handleSubmit = async (values: FieldValues) => {
   let submitValue = cloneDeep(values);
   console.log("submitValue", submitValue);
+  const resp = await http.request<any>("post", "/api/v1/organizations", {
+    data: submitValue,
+  });
+  if (resp.id) {
+    localStorage.setItem('orgId', resp.id)
+    // 把自己添加到组织
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const memberResp = await http.request<any>("post", "/api/v1/organizationMembers", {
+      data: {
+      "name": userInfo.username,
+      "contact_phone": userInfo.phoneNumber,
+      "role": "1", // 1 管理员
+      "organization_id": resp.id,
+      "user_id":userInfo.id
+      }
+  });
+     router.push('/organization/manage')
+  }
   // Assume here we call the API to submit data
 };
 </script>

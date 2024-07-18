@@ -6,7 +6,7 @@ export default {
   redirect: "/account/manage",
   meta: {
     icon: "ri:team-line",
-    // showLink: false,
+    showLink: false,
     title: "账户信息",
     rank: 50,
   },
@@ -14,16 +14,15 @@ export default {
     {
       path: "/account/manage",
       name: "基本信息",
-      component: () =>
-        import("@/views/admin/account/AccountManage.vue"),
+      component: () => import("@/views/admin/account/AccountManage.vue"),
       meta: {
         title: "基本信息",
       },
-    },{
+    },
+    {
       path: "/account/expert",
       name: "专家认证",
-      component: () =>
-        import("@/views/admin/account/expertManage.vue"),
+      component: () => import("@/views/admin/account/expertManage.vue"),
       meta: {
         title: "专家认证",
       },
