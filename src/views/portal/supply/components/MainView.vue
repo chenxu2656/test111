@@ -1,5 +1,6 @@
 <script setup>
 import { Search, CaretRight,Location } from "@element-plus/icons-vue";
+import {getAddressByCode} from '@/utils/address';
 import { useSupplyStoreHook } from '@/store/modules/supply'
 import { ref,onMounted,computed } from "vue";
 import router from '@/router'
@@ -51,8 +52,8 @@ const goToLogin = () => {
       
     </div>
     <div class="allCard">
-        <el-card class="myCard" v-for="supplyInfo in supplyInfos" 
-         shadow="hover" 
+        <el-card class="myCard" v-for="supplyInfo,index in supplyInfos" 
+         shadow="hover" :key="index"
         @click="goToDetail(supplyInfo.id)">
           <div class="titleName">{{supplyInfo.name}}</div>
             <el-text line-clamp="2" style="font-size: 2.2vh;margin-top:1vh;min-height: 6vh;">
@@ -60,11 +61,11 @@ const goToLogin = () => {
   </el-text>
  
    <el-row style="margin-top:1vh">
-    <el-col :span="12"> <span ><el-tag type="info">{{supplyInfo.type}}</el-tag></span></el-col>
-    <el-col :span="12"> <el-text style="font-size: 12px;"><el-icon >
+    <el-col :span="10"> <span ><el-tag type="info">{{supplyInfo.type}}</el-tag></span></el-col>
+    <el-col :span="14"> <el-text style="font-size: 12px;"><el-icon >
       <Location />
-    </el-icon>{{supplyInfo.region}}</el-text>
-      <span style="margin-left: 2vw;font-size: 12px;">{{ supplyInfo.start_date }}</span></el-col>
+    </el-icon>{{getAddressByCode(supplyInfo.region)}}</el-text>
+      <span style="margin-left: 1vw;font-size: 12px;">{{ supplyInfo.start_date }}</span></el-col>
   </el-row>  
         </el-card>
     </div>

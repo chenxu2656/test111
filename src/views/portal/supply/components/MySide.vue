@@ -1,70 +1,111 @@
 <script setup>
-import { reactive } from 'vue'
-import { useSupplyStoreHook } from '@/store/modules/supply'
+import { reactive } from 'vue';
+import { useSupplyStoreHook } from '@/store/modules/supply';
+import city from "@/utils/city";
+import companyType from "@/utils/companyType";
 const form = reactive({
   categorySelect: '全部',
-  typeFlag: '全部',
-  regionFlag:'全部',
-  category: ['全部', '企业需求', '科研需求'],
-  type: ['全部', '研发', '生产', '供应链', '采购', '销售', '管理', '服务', '其他'],
-  region:['全部','合肥','芜湖','蚌埠','淮南','马鞍山','淮北','铜陵','安庆','黄山','滁州','阜阳','宿州','六安','亳州','池州','宣城','其他']
+  typeFlag: '',
+  currentCategory:'',
+  regionFlag:'',
+  provinceFlag:'全部',
+  currentProvince:''
 })
 const categoryChange = (item) => {
   form.categorySelect = item;
+  form.typeFlag=''
   useSupplyStoreHook().setCategory(item)
 }
 const typeChange = (item) => {
   form.typeFlag = item;
+  form.categorySelect=form.currentCategory
    useSupplyStoreHook().setType(item)
 }
+const showType=(item)=>{
+  form.currentCategory=item
+}
+const showCity=(item)=>{
+  form.currentProvince=item
+}
 const regionChange = (item) => {
-  form.regionFlag = item;
-  useSupplyStoreHook().setRegion(item)
+  form.regionFlag = item.label;
+  form.provinceFlag=form.currentProvince
+  useSupplyStoreHook().setRegion(item.value)
+}
+const getAllRegion=()=>{
+  form.provinceFlag='全部'
+  form.regionFlag=''
+  useSupplyStoreHook().setRegion('全部')
 }
 const reset = () => {
   form.categorySelect = '全部'
-  form.typeFlag=  '全部'
-  form.regionFlag = '全部'
+  form.provinceFlag=  '全部'
+  form.regionFlag = ''
+  form.form.typeFlag=''
   useSupplyStoreHook().reset();
 }
 </script>
 <template>
   <div class="full_side">
-    <div class="sort">
+    <!-- <div class="sort">
       <h4>分类</h4>
       <el-button v-for="item in form.category" type='primary' 
       size="small" @click="categoryChange(item)"
       :plain="form.categorySelect!=item">{{ item }}</el-button>
       <el-divider style="padding-bottom: 0;margin-bottom: 0;"></el-divider>
-    </div>
+    </div> -->
     <div class="sort">
-      <h4>类型</h4>
-      <el-button v-for="item in form.type" type='success' 
-      size="small" @click="typeChange(item)"
-      :plain="form.typeFlag!=item">{{ item }}</el-button>
+      <h4>需求类型</h4>
+      <el-button type='success' 
+      size="small" @click="categoryChange('全部')"
+      :plain="form.categorySelect!='全部'">全部</el-button>
+      <el-popover placement="right" :width="300" trigger="click" v-for="items in companyType" :key="items" >
+      <template #reference>
+        <el-button  type='success' size="small" @click="showType(items.value)"
+      :plain="form.categorySelect!=items.label">{{ items.label }}</el-button>
+      </template>
+      <el-button type='success' 
+      size="small" @click="categoryChange(items.label);form.typeFlag = '全部';"
+      :plain="form.typeFlag!='全部'">全部</el-button>
+      <el-button v-for="item in items.children" type='success' 
+      size="small" @click="typeChange(item.label)" :key="item"
+      :plain="form.typeFlag!=item.label">{{ item.label }}</el-button>
+    </el-popover>
       <el-divider style="padding-bottom: 0;margin-bottom: 0;"></el-divider>
     </div>
+
      <div class="sort">
-      <h4>所属地区</h4>
-      <el-button v-for="item in form.region" type='warning' 
-      size="small" @click="regionChange(item)"
-      :plain="form.regionFlag!=item">{{ item }}</el-button>
+      <h4>需求地区</h4>
+      <el-button type='warning' 
+      size="small" @click="getAllRegion"
+      :plain="form.provinceFlag!='全部'">全部</el-button>
+      <el-popover placement="right" :width="250" trigger="click" v-for="items in city" :key="items" >
+      <template #reference>
+        <el-button  type='warning' size="small" @click="showCity(items.label)"
+      :plain="form.provinceFlag!=items.label">{{ items.label }}</el-button>
+      </template>
+      <el-button v-for="item in items.children" type='warning' 
+      size="small" @click="regionChange(item)" :key="item"
+      :plain="form.regionFlag!=item.label">{{ item.label }}</el-button>
+    </el-popover>
       <el-divider style="padding-bottom: 0;margin-bottom: 0;"></el-divider>
     </div>
-    <el-button type="primary" style="margin-top: 3vh;width:15vw;margin-left:2.5vw" @click="reset">全部重置</el-button>
+    <el-button type="primary" style="margin: 3vh 2.5vw;width:15vw;" @click="reset">全部重置</el-button>
   </div>
 </template>
 <style scoped lang="less">
 .full_side{
   background-color: white;
-  min-height: 95vh;
+  min-height: auto;
 }
 .el-button{
   margin-left: 12px;
   margin-top:5px
 }
 .sort{
+
   margin:0 1vw;
+//  display: flex;
 }
 .full_side h4{
   padding-top: 3vh;
