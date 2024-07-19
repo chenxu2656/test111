@@ -1,26 +1,31 @@
 <script setup>
 import { reactive } from 'vue'
+import { useSupplyStoreHook } from '@/store/modules/supply'
 const form = reactive({
   categorySelect: '全部',
   typeFlag: '全部',
   regionFlag:'全部',
-  category: ['全部', '企业方面', '科研方面'],
+  category: ['全部', '企业需求', '科研需求'],
   type: ['全部', '研发', '生产', '供应链', '采购', '销售', '管理', '服务', '其他'],
-  region:['全部','合肥市','芜湖市','蚌埠市','淮南市','马鞍山市','淮北市','铜陵市','安庆市','黄山市','滁州市','阜阳市','宿州市','六安市','亳州市','池州市','宣城市','其他']
+  region:['全部','合肥','芜湖','蚌埠','淮南','马鞍山','淮北','铜陵','安庆','黄山','滁州','阜阳','宿州','六安','亳州','池州','宣城','其他']
 })
 const categoryChange = (item) => {
   form.categorySelect = item;
+  useSupplyStoreHook().setCategory(item)
 }
 const typeChange = (item) => {
   form.typeFlag = item;
+   useSupplyStoreHook().setType(item)
 }
 const regionChange = (item) => {
   form.regionFlag = item;
+  useSupplyStoreHook().setRegion(item)
 }
 const reset = () => {
   form.categorySelect = '全部'
   form.typeFlag=  '全部'
-  form.regionFlag=  '全部'
+  form.regionFlag = '全部'
+  useSupplyStoreHook().reset();
 }
 </script>
 <template>

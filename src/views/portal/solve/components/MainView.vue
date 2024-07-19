@@ -11,7 +11,8 @@ var size = ref(11);
 var solveInfos =reactive([]);
 onMounted(() => {
   getSolveList().then(res => {
-     solveInfos.splice(0, solveInfos.length, ...res);
+    console.log(res)
+     solveInfos.splice(0, solveInfos.length, ...res.data);
       size = res.length;
     console.log(solveInfos)
   })
