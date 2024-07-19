@@ -10,7 +10,7 @@
 </template>
 
 <style scoped lang="less">
-@import '../assets/main.less';
+@import '@/assets/main.less';
 
 .full-screen {
   color: red;

@@ -37,7 +37,7 @@ const onChange = index => {
 </template>
 
 <style scoped lang="less">
-@import '../assets/main.less';
+@import '@/assets/main.less';
 .bottom-nav-bar {
   margin: 0 auto;
   position: fixed;
