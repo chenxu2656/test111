@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import router from "@/router";
+interface Bean {
+  imgPath: string;
+  title: string;
+  summary: string;
+  detailPath: string;
+  date: string;
+  author: string;
+}
+
 interface NewBean {
   logo: string;
   name: string;
@@ -12,7 +20,9 @@ interface NewBean {
   discountPrice: string;
   price: string;
 }
+
 const props = defineProps<{
+  bean?: Bean;
   newBean?: NewBean;
 }>();
 
@@ -30,39 +40,23 @@ const defaultBean: NewBean = {
 };
 
 const bean = props.newBean ?? defaultBean;
-
-const goTo = () => {
-  router.push("/detail");
-};
 </script>
 
 <template>
-  <div class="item" @click="goTo">
+  <div class="item">
     <div class="header">
-      <div class="type">
-        <span class="type_name">{{ bean.type }}</span>
-      </div>
       <div class="logo">
         <img class="img" :src="bean.logo" alt="" />
         <div class="name">{{ bean.name }}</div>
       </div>
       <div class="info">
-        <div class="desc">{{ bean.description }}</div>
         <div class="tags" v-for="tag in bean.tags">
           <span class="tag">{{ tag }}</span>
         </div>
+        <div class="desc">{{ bean.description }}</div>
       </div>
     </div>
-    <div class="comment">
-      <div class="comment_box">
-        <div class="avatar">
-          <img class="img" :src="bean.exampleAvatar" alt="" />
-          <div class="name">{{ bean.exampleName }}</div>
-        </div>
 
-        <div class="comment_con">{{ bean.exampleComment }}</div>
-      </div>
-    </div>
     <div class="price">
       <div class="price_box">
         <span class="discount_price">￥{{ bean.discountPrice }}</span>
@@ -89,7 +83,8 @@ const goTo = () => {
     border 0s;
   border: rgba(0, 0, 0, 0.1) solid 1px;
   width: 24%;
-  margin: 15px 5px;
+  margin: 20px 5px 0px 5px;
+  background-color: #fff;
 
   &:hover {
     -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
@@ -101,24 +96,11 @@ const goTo = () => {
   .header {
     display: flex;
     flex-direction: column;
-    .type {
-      width: 100%;
-      text-align: right;
-      padding-top: 5px;
-      padding-right: 5px;
-      .type_name {
-        width: fit-content;
-        padding: 0.2em 0.4em;
-        background-color: #e7f7f0;
-        border-radius: 5px;
-        color: #15975d;
-        font-size: 14px;
-        font-weight: 600;
-      }
-    }
+
     .logo {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
+      padding-top: 15px;
       .img {
         width: 60px;
         height: 60px;
@@ -137,6 +119,7 @@ const goTo = () => {
         white-space: nowrap;
         padding-left: 20px;
         font-weight: 800;
+        margin-top: 15px;
       }
     }
     .info {
@@ -150,6 +133,7 @@ const goTo = () => {
         word-break: break-all;
         font-size: 14px;
         color: #333;
+        margin-bottom: 15px;
       }
       .tags {
         display: inline-flex;
@@ -165,49 +149,7 @@ const goTo = () => {
       }
     }
   }
-  .comment {
-    width: 100%;
-    height: 120px;
-    margin-top: 10px;
-    .comment_box {
-      width: 95%;
-      margin: 0 auto;
-      background-color: #f7f8fa;
-      border-radius: 10px;
-      padding: 10px;
-      .avatar {
-        height: 30px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        .img {
-          border-radius: 100px;
-          width: 30px;
-        }
-        .name {
-          width: 250px;
-          padding-left: 10px;
-          font-size: 16px;
-          color: #333;
-          font-weight: 600;
-        }
-      }
 
-      .comment_con {
-        padding-top: 10px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* 限制为两行 */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: normal; /* 允许换行 */
-        width: 100%; /* 根据需要调整宽度 */
-        font-size: 14px;
-        color: #333;
-      }
-    }
-  }
   .price {
     border-top: 1px solid #d3d3d3;
     height: 100px;

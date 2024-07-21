@@ -38,6 +38,26 @@ export default [
     },
   },
   {
+    path: "/search",
+    name: "Search",
+    component: () => import("@/views/portal/search/index.vue"),
+    meta: {
+      title: "Search",
+      showLink: false,
+      rank: 103,
+    },
+  },
+  {
+    path: "/detail",
+    name: "Detail",
+    component: () => import("@/views/portal/server_detail/index.vue"),
+    meta: {
+      title: "Detail",
+      showLink: false,
+      rank: 103,
+    },
+  },
+  {
     path: "/supply",
     name: "Supply",
     component: () => import("@/views/portal/supply/index.vue"),

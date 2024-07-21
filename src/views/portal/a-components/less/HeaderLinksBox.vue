@@ -83,6 +83,8 @@ function getLinkProps(item) {
   &:hover {
     .title {
       color: @light-font-hover-color;
+      font-size: 14px;
+      font-weight: 600;
 
       .icon {
         .transform-rotate(180deg);

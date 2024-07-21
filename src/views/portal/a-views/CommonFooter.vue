@@ -51,7 +51,7 @@ let footerLinks = ref({
   ],
   copyright: [
     {
-      showName: "© 2023-2030 ainowr.com 版权所有 (made by ainow)",
+      showName: "© 2023-2030 版权所有 (made by 合肥任也科技有限公司)",
       type: "div",
     },
     // {showName: '经营许可证:浙B2-xxx-x', path: '#', type: 'a',},
@@ -60,13 +60,13 @@ let footerLinks = ref({
   pnsp: [
     // {showName: '备案中', path: '#', type: 'RouterLink',},
     {
-      showName: "桂公网安备45032302000124号",
+      showName: "皖公网安备asdaoiksdjaop号",
       path: "https://beian.mps.gov.cn/#/query/webSearch",
       type: "a",
       target: "_blank",
     },
     {
-      showName: "蜀ICP备2024060727号",
+      showName: "蜀ICP备asdoip0923opdija727号",
       path: "http://beian.miit.gov.cn/",
       type: "a",
       target: "_blank",
@@ -96,7 +96,6 @@ function getLinkProps(item) {
   <!-- common-footer -->
   <div class="footer">
     <div class="content">
-      <Divider />
       <div class="first">
         <div class="codes">
           <div class="code">
@@ -107,7 +106,7 @@ function getLinkProps(item) {
                 :is="'icon-' + 'two-dimensional-code-two'"
               />
             </el-icon>
-            <p>扫一扫，关注公众号</p>
+            <!-- <p>扫一扫，关注公众号</p> -->
           </div>
         </div>
       </div>

@@ -2,6 +2,10 @@
 import More from "@/assets/svg/more.svg?component";
 import { Mic } from "@element-plus/icons-vue";
 import { RouterLink } from "vue-router";
+import Divider from "@/views/portal/a-components/less/Divider.vue";
+import { useHomeStore } from "@/store/modules/home";
+
+const homeStore = useHomeStore();
 </script>
 <template>
   <el-container class="home-page">
@@ -17,8 +21,15 @@ import { RouterLink } from "vue-router";
           <div class="list">
             <el-icon :size="18"><Mic /></el-icon>
             <div class="list_item">
+              <RouterLink
+                class="link"
+                to="/search"
+                @click="homeStore.setclickedTag('质量管理')"
+                >质量管理</RouterLink
+              >
+              <Divider />
               <RouterLink class="link" to="/">质量管理</RouterLink>
-              <RouterLink class="link" to="/">质量管理</RouterLink>
+              <Divider />
               <RouterLink class="link" to="/">质量管理</RouterLink>
             </div>
           </div>
@@ -26,7 +37,12 @@ import { RouterLink } from "vue-router";
           <div class="list">
             <el-icon :size="18"><Mic /></el-icon>
             <div style="margin-left: 10px; font-size: 14px">
-              <RouterLink class="link" to="/">质量管理</RouterLink>
+              <RouterLink
+                class="link"
+                to="/search"
+                @click="homeStore.setclickedTag('')"
+                >质量管理</RouterLink
+              >
             </div>
           </div>
         </div>
@@ -55,20 +71,25 @@ export default {
 
 <style lang="scss" scoped>
 .home-page {
+  padding: 20px;
   display: flex;
   flex-direction: row;
   width: 100%;
-  background-color: #f9f9f9;
+  background-color: #fff;
   color: #333;
 
   .menu-container {
-    background-color: #f9f9f9;
+    background-color: #fff;
     border-right: 1px solid #ebebeb;
-    padding: 20px 0;
 
     .left {
       width: 94%;
+      height: 100%;
       margin: 0 auto;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 20px;
+
       .left_top {
         display: flex;
         justify-content: space-between;
@@ -100,8 +121,7 @@ export default {
             align-content: center;
             justify-content: space-around;
             flex-direction: row;
-            .link {
-            }
+
             .link:hover {
               background-color: #fff;
               color: #01b862;

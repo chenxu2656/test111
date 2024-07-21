@@ -2,12 +2,152 @@
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import AISearch from "@/views/portal/home/components/AISearch.vue";
 import Aside from "@/views/portal/home/components/Aside.vue";
-// import Header from "@/views/portal/home/components/Header.vue";
+
 import Recommend from "@/views/portal/home/components/Recommend.vue";
 import { onMounted } from "vue";
-import Header from "../a-components/less/Header.vue";
+import Header from "@/views/portal/a-components/less/Header.vue";
 onMounted(() => {});
-const recommendItems = [];
+
+const bean1 = {
+  title: "MAAS新应用，玩转AI新技术",
+  subTitle: "能交给AI工具的，就别自己埋头苦干！",
+  searchTag: "AI大模型",
+  data: [
+    {
+      logo: "./src/assets/img/1.png",
+      name: "海报设计师",
+      type: "AI 大模型",
+      description: "无情的AI作图机器，画质超乎你的想象",
+      tags: ["运营设计", "自动作图", "批量作图"],
+      exampleAvatar: "./src/assets/img/people.jpg",
+      exampleName: "食品加工企业市场不经理",
+      exampleComment:
+        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+      discountPrice: "1.99",
+      price: "29.9",
+    },
+    {
+      logo: "./src/assets/img/1.png",
+      name: "海报设计师",
+      type: "AI 大模型",
+      description: "无情的AI作图机器，画质超乎你的想象",
+      tags: ["运营设计", "自动作图", "批量作图"],
+      exampleAvatar: "./src/assets/img/people.jpg",
+      exampleName: "食品加工企业市场不经理",
+      exampleComment:
+        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+      discountPrice: "1.99",
+      price: "29.9",
+    },
+    {
+      logo: "./src/assets/img/1.png",
+      name: "海报设计师",
+      type: "AI 大模型",
+      description: "无情的AI作图机器，画质超乎你的想象",
+      tags: ["运营设计", "自动作图", "批量作图"],
+      exampleAvatar: "./src/assets/img/people.jpg",
+      exampleName: "食品加工企业市场不经理",
+      exampleComment:
+        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+      discountPrice: "1.99",
+      price: "29.9",
+    },
+  ],
+};
+
+const bean2 = {
+  title: "羚羊精选，1.5折起！",
+  subTitle: "软件/硬件/服务，满足企业数字化多样需求",
+  searchTag: "AI大模型",
+  data: [
+    {
+      logo: "./src/assets/img/1.png",
+      name: "海报设计师",
+      type: "AI 大模型",
+      description: "无情的AI作图机器，画质超乎你的想象",
+      tags: ["运营设计", "自动作图", "批量作图"],
+      exampleAvatar: "./src/assets/img/people.jpg",
+      exampleName: "食品加工企业市场不经理",
+      exampleComment:
+        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+      discountPrice: "1.99",
+      price: "29.9",
+    },
+    {
+      logo: "./src/assets/img/1.png",
+      name: "海报设计师",
+      type: "AI 大模型",
+      description: "无情的AI作图机器，画质超乎你的想象",
+      tags: ["运营设计", "自动作图", "批量作图"],
+      exampleAvatar: "./src/assets/img/people.jpg",
+      exampleName: "食品加工企业市场不经理",
+      exampleComment:
+        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+      discountPrice: "1.99",
+      price: "29.9",
+    },
+    {
+      logo: "./src/assets/img/1.png",
+      name: "海报设计师",
+      type: "AI 大模型",
+      description: "无情的AI作图机器，画质超乎你的想象",
+      tags: ["运营设计", "自动作图", "批量作图"],
+      exampleAvatar: "./src/assets/img/people.jpg",
+      exampleName: "食品加工企业市场不经理",
+      exampleComment:
+        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+      discountPrice: "1.99",
+      price: "29.9",
+    },
+  ],
+};
+
+const bean3 = {
+  title: "软件服务包，数字化0元购",
+  subTitle: "政府买单，帮助中小企业轻松开启数字化",
+  searchTag: "AI大模型",
+  data: [
+    {
+      logo: "./src/assets/img/1.png",
+      name: "海报设计师",
+      type: "AI 大模型",
+      description: "无情的AI作图机器，画质超乎你的想象",
+      tags: ["运营设计", "自动作图", "批量作图"],
+      exampleAvatar: "./src/assets/img/people.jpg",
+      exampleName: "食品加工企业市场不经理",
+      exampleComment:
+        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+      discountPrice: "1.99",
+      price: "29.9",
+    },
+    {
+      logo: "./src/assets/img/1.png",
+      name: "海报设计师",
+      type: "AI 大模型",
+      description: "无情的AI作图机器，画质超乎你的想象",
+      tags: ["运营设计", "自动作图", "批量作图"],
+      exampleAvatar: "./src/assets/img/people.jpg",
+      exampleName: "食品加工企业市场不经理",
+      exampleComment:
+        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+      discountPrice: "1.99",
+      price: "29.9",
+    },
+    {
+      logo: "./src/assets/img/1.png",
+      name: "海报设计师",
+      type: "AI 大模型",
+      description: "无情的AI作图机器，画质超乎你的想象",
+      tags: ["运营设计", "自动作图", "批量作图"],
+      exampleAvatar: "./src/assets/img/people.jpg",
+      exampleName: "食品加工企业市场不经理",
+      exampleComment:
+        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
+      discountPrice: "1.99",
+      price: "29.9",
+    },
+  ],
+};
 </script>
 
 <template>
@@ -25,17 +165,36 @@ const recommendItems = [];
 
     <div id="recommend-offset" class="recommend">
       <div class="content">
-        <h2 class="title">推荐</h2>
         <div class="titles">
-          <Recommend />
+          <Recommend :bean="bean1" />
+        </div>
+      </div>
+    </div>
+    <div id="recommend-offset" class="recommend new_bg">
+      <div class="content">
+        <div class="titles">
+          <Recommend :bean="bean2" />
+        </div>
+      </div>
+    </div>
+    <div id="recommend-offset" class="recommend">
+      <div class="content">
+        <div class="titles">
+          <Recommend :bean="bean3" />
         </div>
       </div>
     </div>
 
     <div id="contact-offset" class="contact">
       <div class="content">
-        <h2 class="title">联系/加入我们</h2>
-        <div class="contact-info-container" />
+        <h2 class="title">数字化标杆案例</h2>
+        <div class="contact-info-container">
+          <el-carousel :interval="4000" type="card" height="200px">
+            <el-carousel-item v-for="item in 6" :key="item">
+              <h3 text="2xl" justify="center">{{ item }}</h3>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
       </div>
     </div>
 
@@ -58,10 +217,11 @@ const recommendItems = [];
   font-size: 16px;
 
   .index {
-    padding: (@headerHeight+100px) 0 0 0;
+    padding: (@headerHeight+50px) 0 0 0;
     // height: 100vh;
     display: flex;
     flex-direction: column;
+    background: url("@/assets/img/bg.png") no-repeat center top;
 
     .content {
       .m-reactive-box;
@@ -236,23 +396,25 @@ const recommendItems = [];
       }
     }
   }
+  .new_bg {
+    background: url(@/assets/img/recomm_bg.jpg) no-repeat center top;
+  }
 
   .contact {
     width: 100%;
     background-color: white;
     padding: 10px 8px 10px;
     text-align: center;
-
+    background: url(@/assets/img/more_bg.jpg) no-repeat center top;
+    // background-size: auto 616px;
     .content {
       .m-reactive-box;
 
       .contact-info-container {
-        display: -ms-grid;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1em 2em;
-        margin-bottom: 1rem;
-
+        width: 100%;
+        padding-bottom: 50px;
+        background: url(@/assets/img/more_bg.jpg) no-repeat center top;
+        background-size: auto 616px;
         @media (max-width: 1000px) {
           grid-template-columns: repeat(3, 1fr);
         }
@@ -270,6 +432,24 @@ const recommendItems = [];
         max-height: 50vh;
       }
     }
+    .title {
+      color: #fff;
+    }
   }
+}
+.el-carousel__item h3 {
+  color: #475669;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+  text-align: center;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
 }
 </style>

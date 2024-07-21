@@ -89,8 +89,7 @@ function transparentAnimation() {
     appStates.$patch({
       headerState: {
         bgc: "transparent",
-
-        color: "#dfdfdf",
+        color: "#101010",
       },
     });
   }
@@ -119,7 +118,7 @@ function onMouseleave() {
     headerHeight.value = "70px";
     appStates.$patch({
       headerState: {
-        color: "#dfdfdf",
+        color: "#101010",
         bgc: "transparent",
       },
     });
@@ -192,8 +191,6 @@ const goToLogin = () => {
     @mouseover="onMouseover"
     @mouseleave="onMouseleave"
   >
-    <div ref="btnMenu" class="btn-menu" @click="menuClick"></div>
-
     <div
       v-if="!headerState.showBehavior.includes('titleMode')"
       class="content-title"
@@ -212,9 +209,14 @@ const goToLogin = () => {
         />
       </div>
     </div>
+    <div style="flex-grow: 1"></div>
     <div class="right_options">
-      <el-button link type="primary" @click="goToLogin">工作台</el-button>
-      <el-button link type="primary" @click="goToLogin">注册/登录</el-button>
+      <el-button link type="primary" class="work" @click="goToLogin"
+        >工作台</el-button
+      >
+      <el-button type="primary" class="login" @click="goToLogin"
+        >注册/登录</el-button
+      >
     </div>
   </div>
 </template>
@@ -365,7 +367,14 @@ const goToLogin = () => {
       }
     }
   }
-
+  .right_options {
+    .work {
+      color: #13ae68;
+    }
+    .login {
+      background-color: #13ae68;
+    }
+  }
   .content-title {
     width: 100%;
     display: flex;

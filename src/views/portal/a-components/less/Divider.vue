@@ -7,8 +7,9 @@
 <style scoped lang="less">
 .divide {
   display: block;
-  height: 1px;
+  height: 20px;
+  width: 2px;
   background: rgba(0, 0, 0, 0.15);
-  margin: 10px 0;
+  margin: 2px 0;
 }
 </style>
