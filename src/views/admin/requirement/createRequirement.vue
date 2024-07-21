@@ -238,9 +238,7 @@ const group: PlusFormGroupRow[] = [
         prop: "content",
         valueType: "textarea",
         fieldProps: {
-          maxlength: 10,
-          showWordLimit: true,
-          autosize: { minRows: 2, maxRows: 4 },
+          autosize: { minRows: 4, maxRows: 10 },
         },
       },
       {
