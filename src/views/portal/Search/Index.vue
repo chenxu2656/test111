@@ -5,6 +5,7 @@ import Header from "@/views/portal/a-components/less/Header.vue";
 import SearchItem from "@/views/portal/a-components/less/SearchItem.vue";
 import { Search } from "@element-plus/icons-vue";
 import { onMounted, ref } from "vue";
+import { getServerDetail } from "./api";
 
 const homeStore = useHomeStore();
 const radio1 = ref<string>(""); // 假设初始值为空字符串
@@ -26,7 +27,7 @@ const updateItems = () => {
 };
 
 // 模拟每段时间（例如每5秒）更新一次内容
-onMounted(() => {
+onMounted(async () => {
   setInterval(() => {
     updateItems();
   }, 5000);

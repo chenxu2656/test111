@@ -1,50 +1,18 @@
 <script setup lang="ts">
 import Recommenditem from "@/views/portal/a-components/less/RecommendItem.vue";
+
 interface Bean {
   title: string;
   subTitle: string;
   searchTag: string;
-  data: Object;
+  data: Array<any>;
 }
 const props = defineProps<{
   bean?: Bean;
 }>();
 
-const defaultBean: Bean = {
-  title: "MAAS新应用，玩转AI新技术",
-  subTitle: "能交给AI工具的，就别自己埋头苦干！",
-  searchTag: "AI大模型",
-  data: [
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-  ],
-};
+const bean = props.bean;
 
-const bean = props.bean ?? defaultBean;
 const goTo = (tag: string) => {
   console.log(tag);
 };
@@ -65,7 +33,7 @@ const goTo = (tag: string) => {
       <Recommenditem
         v-for="(item, index) in bean.data"
         :key="index"
-        :data="item"
+        :bean="item"
       />
     </div>
   </div>

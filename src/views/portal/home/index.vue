@@ -2,152 +2,45 @@
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import AISearch from "@/views/portal/home/components/AISearch.vue";
 import Aside from "@/views/portal/home/components/Aside.vue";
-
+import { getHomeDisplayList } from "./api";
 import Recommend from "@/views/portal/home/components/Recommend.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import Header from "@/views/portal/a-components/less/Header.vue";
-onMounted(() => {});
 
-const bean1 = {
+const bean1 = ref({
   title: "MAAS新应用，玩转AI新技术",
   subTitle: "能交给AI工具的，就别自己埋头苦干！",
   searchTag: "AI大模型",
-  data: [
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-  ],
-};
+  data: [],
+});
 
-const bean2 = {
+const bean2 = ref({
   title: "羚羊精选，1.5折起！",
   subTitle: "软件/硬件/服务，满足企业数字化多样需求",
   searchTag: "AI大模型",
-  data: [
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-  ],
-};
+  data: [],
+});
 
-const bean3 = {
+const bean3 = ref({
   title: "软件服务包，数字化0元购",
   subTitle: "政府买单，帮助中小企业轻松开启数字化",
   searchTag: "AI大模型",
-  data: [
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-    {
-      logo: "./src/assets/img/1.png",
-      name: "海报设计师",
-      type: "AI 大模型",
-      description: "无情的AI作图机器，画质超乎你的想象",
-      tags: ["运营设计", "自动作图", "批量作图"],
-      exampleAvatar: "./src/assets/img/people.jpg",
-      exampleName: "食品加工企业市场不经理",
-      exampleComment:
-        "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-      discountPrice: "1.99",
-      price: "29.9",
-    },
-  ],
-};
+  data: [],
+});
+
+onMounted(async () => {
+  const reap1 = await getHomeDisplayList("营销管理");
+  bean1.value.data = reap1.data;
+  console.log(bean1.value);
+
+  // const reap2 = await getHomeDisplayList("销售管理");
+  // bean2.value.data = reap2.data;
+  // console.log(bean2.value);
+
+  // const reap3 = await getHomeDisplayList("智能管理");
+  // bean3.value.data = reap3.data;
+  // console.log(bean3.value);
+});
 </script>
 
 <template>

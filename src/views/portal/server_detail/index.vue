@@ -1,80 +1,47 @@
 <script setup lang="ts">
 import Header from "@/views/portal/a-components/less/Header.vue";
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
-interface NewBean {
-  logo: string;
-  name: string;
-  type: string;
-  scope: string;
-  description: string;
-  tags: string[];
-  exampleAvatar: string;
-  exampleName: string;
-  exampleComment: string;
-  discountPrice: string;
-  price: string;
-  functionality_version: string[];
-  quantity_specifications: string[];
-  validity_period: string[];
-  deployment_methods: string;
-  saleable_range: string;
-  telephone: string;
-  merchant_message: string;
-}
-const props = defineProps<{
-  newBean?: NewBean;
-}>();
+import { onMounted, ref } from "vue";
+import { getServerDetail } from "./api";
+import { useHomeStore } from "@/store/modules/home";
+const homeStore = useHomeStore();
 
-const defaultBean: NewBean = {
-  logo: "./src/assets/img/1.png",
-  name: "海报设计师",
-  type: "AI 大模型",
-  description: "无情的AI作图机器，画质超乎你的想象",
-  tags: ["运营设计", "自动作图", "批量作图"],
-  exampleAvatar: "./src/assets/img/people.jpg",
-  exampleName: "食品加工企业市场不经理",
-  exampleComment: "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-  discountPrice: "1.99",
-  price: "29.9",
-  scope: "适用个人",
-  functionality_version: ["运营设计", "自动作图", "批量作图"],
-  quantity_specifications: ["运营设计", "自动作图", "批量作图"],
-  validity_period: ["运营设计", "自动作图", "批量作图"],
-  deployment_methods: "",
-  saleable_range: "",
-  telephone: "",
-  merchant_message: "支持定制，更多需求，欢迎咨询！",
-};
+const server_info = ref(null);
 
-const bean = props.newBean ?? defaultBean;
+onMounted(async () => {
+  const resp = await getServerDetail(homeStore.clickedService);
+
+  server_info.value = resp;
+  console.log(server_info.value);
+});
 </script>
 
 <template>
   <el-backtop :right="10" :bottom="10" />
   <Header />
-  <div class="index">
+  <div class="index" v-if="server_info">
     <div class="content">
       <div class="pic_box">
-        <img :src="bean.logo" class="img" />
+        <img :src="server_info.product_image" class="img" />
       </div>
       <div class="introduce">
         <div class="title_box">
-          <div class="name">{{ bean.name }}</div>
-          <div class="scope">{{ bean.scope }}</div>
+          <div class="name">{{ server_info.product_name }}</div>
+          <div class="scope">{{ server_info.product_type }}</div>
         </div>
         <div class="price_box">
-          <span class="discount_price">￥{{ bean.discountPrice }}</span>
-          <span class="old_price">原价￥{{ bean.price }}</span>
+          <span class="discount_price">￥{{ server_info.discount_price }}</span>
+          <span class="old_price">原价￥{{ server_info.price }}</span>
         </div>
         <div class="server_desc">
-          {{ bean.description }}
+          {{ server_info.product_description }}
         </div>
         <div class="functionality_version">
           <div class="label">功能版本：</div>
           <div class="options">
             <div
               class="option"
-              v-for="(item, index) in bean.functionality_version"
+              v-for="(item, index) in server_info.product_images"
               :key="index"
             >
               {{ item }}
@@ -86,7 +53,7 @@ const bean = props.newBean ?? defaultBean;
           <div class="options">
             <div
               class="option"
-              v-for="(item, index) in bean.quantity_specifications"
+              v-for="(item, index) in server_info.product_images"
               :key="index"
             >
               {{ item }}
@@ -98,7 +65,7 @@ const bean = props.newBean ?? defaultBean;
           <div class="options">
             <div
               class="option"
-              v-for="(item, index) in bean.validity_period"
+              v-for="(item, index) in server_info.product_images"
               :key="index"
             >
               {{ item }}
@@ -129,10 +96,10 @@ const bean = props.newBean ?? defaultBean;
       </div>
     </div>
   </div>
-  <div class="details">
+  <div class="details" v-if="server_info">
     <div class="content">
       <div class="title">商品介绍</div>
-      <div>{{}}</div>
+      <div v-html="server_info.product_scene"></div>
     </div>
   </div>
   <CommonFooter id="declare-offset" />
@@ -287,5 +254,13 @@ const bean = props.newBean ?? defaultBean;
 }
 .details {
   .m-reactive-box;
+  .content {
+    .title {
+      border-left: #13ae68 4px solid;
+      padding-left: 20px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
 }
 </style>
