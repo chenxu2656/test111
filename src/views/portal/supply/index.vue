@@ -5,7 +5,7 @@ import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import MainView from "./components/MainView.vue";
 </script>
 <template>
- <el-backtop :right="10" :bottom="10" />
+ <el-backtop :right="10" :bottom="10"/>
 <Header></Header>
  <div class="all_layout">
     <el-container>
@@ -21,11 +21,16 @@ import MainView from "./components/MainView.vue";
 <style lang="scss" scoped>
 $fullHeight:80vh;
 .all_layout{
-   margin-top: 11vh;
-  margin-left: 10vw;
+  // margin-top: 11vh;
+  background-color: white;
    min-height: $fullHeight;
+}
+.el-container{
+  margin-left: 10vw;
+   padding-top: 70px;
 }
   .el-main{
     padding: 0;
+    
   }
 </style>

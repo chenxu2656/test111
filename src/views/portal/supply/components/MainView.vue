@@ -1,5 +1,5 @@
 <script setup>
-import { Search, CaretRight,Location } from "@element-plus/icons-vue";
+import { Search, CaretRight,Location,Right } from "@element-plus/icons-vue";
 import {getAddressByCode} from '@/utils/address';
 import { useSupplyStoreHook } from '@/store/modules/supply'
 import { ref,onMounted,computed } from "vue";
@@ -53,19 +53,25 @@ const goToLogin = () => {
     </div>
     <div class="allCard">
         <el-card class="myCard" v-for="supplyInfo,index in supplyInfos" 
-         shadow="hover" :key="index"
+         shadow="none" :key="index"
         @click="goToDetail(supplyInfo.id)">
-          <div class="titleName">{{supplyInfo.name}}</div>
-            <el-text line-clamp="2" style="font-size: 2.2vh;margin-top:1vh;min-height: 6vh;">
+        <el-row>
+          <el-col :span="22"><div class="titleName">{{supplyInfo.name}}</div></el-col>
+          <el-col :span="2"><el-icon class="myIcon">
+      <Right />
+    </el-icon></el-col>
+        </el-row>
+          
+            <el-text line-clamp="2" class="cardText">
     {{ supplyInfo.content }}
   </el-text>
  
-   <el-row style="margin-top:1vh">
-    <el-col :span="10"> <span ><el-tag type="info">{{supplyInfo.type}}</el-tag></span></el-col>
-    <el-col :span="14"> <el-text style="font-size: 12px;"><el-icon >
+   <el-row class="bottomD" >
+    <el-col :span="11"> <el-tag type="info"><span >{{supplyInfo.type}}</span></el-tag></el-col>
+    <el-col :span="13"> <el-text><el-icon >
       <Location />
     </el-icon>{{getAddressByCode(supplyInfo.region)}}</el-text>
-      <span style="margin-left: 1vw;font-size: 12px;">{{ supplyInfo.start_date }}</span></el-col>
+      <span class='bottomDate'>{{ supplyInfo.start_date }}</span></el-col>
   </el-row>  
         </el-card>
     </div>
@@ -82,7 +88,7 @@ const goToLogin = () => {
 </template>
 <style scoped lang='less'>
 .picture{
-  background-image: url("https://www.huayun.com/upload/image/20210727/08ecbfb624707943dcfc79b4208f2a55.jpg");
+  background-image: url("https://preprod.lingyangplat.com/antelope-static-resource/website/images/second-page-banners/banner-demand-EDF2FA.jpg");
   background-size: 100% 100%;
   width:60vw;
   height: 40vh;
@@ -96,16 +102,20 @@ const goToLogin = () => {
   margin-left: 5vw;
 }
 .titleName{
-  // padding: 10px;
   font-size:1.5vw;
   font-weight:600;
+  width:100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.myIcon{
+  font-size:1.5vw;
+  font-weight:600;
+  margin-top: 1vh;
+}
 .allCard{
   width:60vw;
-
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
@@ -115,6 +125,9 @@ const goToLogin = () => {
   margin-top:4vh;
   height: 26vh;
   cursor: pointer;
+  border-width: 0.5px;
+  --el-card-padding: 15px;
+
 }
 .myCard .el-text{
   padding-top: 0vh;
@@ -123,6 +136,28 @@ const goToLogin = () => {
   color:black;
 }
 .myCard:hover{
-  color:rgb(103,194,58)
+  color:rgb(103,194,58);
+  border-color: rgb(103,194,58);
+}
+.cardText{
+  font-size: 2.2vh;
+  margin-top:1vh;
+  min-height: 8vh;
+  line-height: 4vh;
+}
+.bottomD{
+  margin-top:1vh;
+}
+
+.bottomD .el-text{
+  font-size: 1.7vh;
+  line-height:4vh;
+  vertical-align: middle;
+}
+.bottomDate{
+  margin-left:1vw;
+  font-size: 1.7vh;
+  line-height:4vh;
+  vertical-align: middle;
 }
 </style>
