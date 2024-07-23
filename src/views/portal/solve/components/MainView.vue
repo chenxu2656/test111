@@ -26,6 +26,9 @@ const goToDetail = (info) => {
   // console.log(useSupplyStoreHook().supplyId)
   router.push('/solve_detail')
 }
+const cancelHtml=(item)=>{
+  return item.replace(/<[^>]*>?/gm, '');  
+}
 </script>
 <template>
   <div>
@@ -49,19 +52,24 @@ const goToDetail = (info) => {
     </div>
     <div class="allCard">
         <el-card class="myCard" v-for="solveInfo in solveInfos" 
-         shadow="hover" 
+         shadow="none" 
         @click="goToDetail(solveInfo)">
-        <el-image src="https://oss-hefei-a2a.openstorage.cn/iiep-prod/7a91f4730e79429c9be4bc77c1e90874.jpg"></el-image>
+        <el-image :src="solveInfo.achievement_image"></el-image>
         <div style="float:right;height: 26vh;width: 30vw;">
        <div style="display: flex">
 <div class="titleName">{{solveInfo.achievement_name}}</div> <el-tag type="success" id="tagC">{{ solveInfo.achievement_maturity }}</el-tag>
        </div> 
           <el-row>
     <el-col :span="12"><span >转让方式：{{solveInfo.achievement_transfer_method}}</span></el-col>
-    <el-col :span="12"> <span style="width:10vw">技术领域：{{solveInfo.achievement_category}}</span> </el-col>
-  </el-row>        
-        <el-text line-clamp="2">
-            技术简介：{{ solveInfo.achievement_brief_introduction }}
+    <el-col :span="12"><el-tooltip effect="light" :content="solveInfo.achievement_category" placement="bottom"> 
+      <el-text line-clamp="1">
+      <span style="width:10vw">技术领域：{{solveInfo.achievement_category}}</span> </el-text> 
+      </el-tooltip>
+    </el-col>
+  </el-row>      
+   
+        <el-text line-clamp="2" >  
+          技术简介：{{ cancelHtml(solveInfo.achievement_brief_introduction) }}  
           </el-text>
           <el-row>
            <el-col :span="12"> <span >成果价格：<el-tag type="error" style="font-size: 1.2vw;color:rgb(255,77,72)">{{formattedPrice(solveInfo.achievement_transfer_price)}}</el-tag></span></el-col>
@@ -91,7 +99,7 @@ const goToDetail = (info) => {
 </template>
 <style scoped lang='less'>
 .picture{
-    background-image: url("https://www.huayun.com/upload/image/20210727/08ecbfb624707943dcfc79b4208f2a55.jpg");
+  background-image: url("https://preprod.lingyangplat.com/antelope-static-resource/website/images/second-page-banners/banner-demand-EDF2FA.jpg");
   background-size: 100% 100%;
   width:60vw;
   height: 40vh;
@@ -127,6 +135,7 @@ const goToDetail = (info) => {
   margin-top:4vh;
   height: 26vh;
   cursor: pointer;
+  border-width: 0.5px;
 }
 .myCard .el-text{
   padding-top: 0vh;
@@ -137,7 +146,8 @@ const goToDetail = (info) => {
   margin-top:0.3vh;
 }
 .myCard:hover{
-  color:rgb(103,194,58)
+  color:rgb(103,194,58);
+  border-color:rgb(103,194,58);
 }
 #tagC{
   margin-left: 2vw;
