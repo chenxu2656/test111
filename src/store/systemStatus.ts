@@ -67,17 +67,17 @@ export const use_app_state_store = defineStore("app_state_store", () => {
           },
           target: "_blank",
         },
+        // {
+        //   showName: "商品服务大厅",
+        //   path: "https://juejin.cn/post/7338214297572835380",
+        //   icon: {
+        //     name: "pay-code-one",
+        //   },
+        //   type: "a",
+        //   target: "_blank",
+        // },
         {
-          showName: "商品服务大厅",
-          path: "https://juejin.cn/post/7338214297572835380",
-          icon: {
-            name: "pay-code-one",
-          },
-          type: "a",
-          target: "_blank",
-        },
-        {
-          showName: "科技创新需求",
+          showName: "科技创新产品",
           type: "RouterLink",
           path: "/solve",
           icon: {

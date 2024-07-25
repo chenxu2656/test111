@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import {  store } from '../utils'
-import { getSupplyList } from '@/api/supply'
+import { getSupplyList,getRandomRequirments } from '@/api/supply'
 export const useSupplyStore = defineStore({
   id: 'pure-supply',
   state:()=> ({
@@ -51,6 +51,12 @@ export const useSupplyStore = defineStore({
         this.supplyList = res.data;
         this.supplyLength = res.length;
         console.log(res);
+      })
+    },
+    //获取三个随机同品类需求
+    getRandomRequirments(category:string){
+      getRandomRequirments(category).then(res=>{
+        return res.data
       })
     }
   }

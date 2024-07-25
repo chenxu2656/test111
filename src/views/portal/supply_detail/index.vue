@@ -3,13 +3,15 @@ import Header from "../a-components/less/Header.vue";
 import { Warning } from "@element-plus/icons-vue";
 import { useSupplyStoreHook } from '@/store/modules/supply'
 import { getSupplyDetail } from "@/api/supply";
-import { onMounted,reactive } from "vue";
+import { onMounted,reactive,ref } from "vue";
 var supplyDetail = reactive({data:{}});
+const textarea=ref("")
 onMounted(() => {
   let id=useSupplyStoreHook().supplyId
   getSupplyDetail(id).then(res => {
     supplyDetail.data = res
-    console.log(res)
+    // console.log(res)
+    
   })
 })
 // import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
@@ -19,7 +21,7 @@ onMounted(() => {
 <Header></Header>
  <div class="all_layout">
   <div class="all_card">
-    <el-card>
+    <el-card  shadow="never">
       <h2>
         {{supplyDetail.data.name}}
       </h2>
@@ -42,7 +44,7 @@ onMounted(() => {
         <el-text style="margin-right: 1vw;cursor: pointer"><el-icon><Warning></Warning></el-icon> 举报</el-text>  
         IP来自安徽省</div>
     </el-card>
-    <el-card class="bottomC">
+    <el-card class="bottomC" shadow="never">
      <h3>对接记录</h3> 
      <div>
 <el-steps style="max-width: 55vw;margin-top: 5vh" :active="2" align-center>
@@ -55,9 +57,9 @@ onMounted(() => {
     
     </el-card>
   </div>
-    <el-card class=rightC>
+    <el-card class=rightC  shadow="never">
        <h3>为您推荐</h3> 
-       <el-card shadow="never" v-for="i in [1,2,3,4,5]" class="recommend">
+       <el-card shadow="never" v-for="i in [1,2,3]" class="recommend" :key="i">
         <div style="float:left">
           <img src="../../../assets/img/supply.jpg" width="60px" style="margin-top:2vh"/>
         </div>
@@ -69,15 +71,40 @@ onMounted(() => {
        </el-card>
     </el-card>
   </div>
+  <div  class="chatBoard" >
+    <el-card class="chatCard" shadow="never">
+      <h3>留言</h3> 
+      <el-input v-model="textarea" maxlength="200"
+    class="message" placeholder="请留下精彩留言" :rows="4"
+    show-word-limit type="textarea"/>
+    <el-button type="success" size="small" style="float:right;margin-top: 2vh">发送</el-button>
+    </el-card>
+  </div>
+  
  <!-- <CommonFooter id="declare-offset" /> -->
 </template>
 <style lang="scss" scoped>
-$fullHeight:80vh;
+$fullHeight:72vh;
+$chatHeight:33vh;
 .all_layout{
   margin-left: 10vw;
    min-height: $fullHeight;
    display: flex;
   margin-top: 11vh;
+}
+.chatBoard{
+  margin-left: 10vw;
+  width:80vw;
+  min-height: $chatHeight+5vh;
+  // margin-bottom: 10vh;
+}
+.chatCard{
+  min-height: $chatHeight;
+}
+.message{
+  width: 77vw;
+  margin-top: 2vh;
+  // line-height:4vh;
 }
   .all_card{
     width: 55vw;
