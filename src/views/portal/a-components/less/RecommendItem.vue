@@ -100,12 +100,15 @@ const goTo = (id: string) => {
   border: rgba(0, 0, 0, 0.1) solid 1px;
   width: 24%;
   margin: 15px 5px;
+  background-color: #fff;
 
   &:hover {
     -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
     box-shadow: 0 0.5rem 1rem rgba(160, 152, 152, 0.2);
     background: #fff;
     border: none;
+    // 向上浮动一下
+    transform: translateY(-5px);
   }
 
   .header {
@@ -234,7 +237,7 @@ const goTo = (id: string) => {
       .discount_price {
         width: 100%;
         font-size: 24px;
-        color: #15975d;
+        color: #ff4d48;
         font-weight: 800;
       }
       .old_price {

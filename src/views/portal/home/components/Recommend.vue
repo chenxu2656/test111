@@ -36,6 +36,7 @@ const goTo = (tag: string) => {
       </div>
       <div class="more">
         <div class="moreBtn" @click="goTo(bean.searchTag)">点击查看更多</div>
+        <span class="green-animate-arrow"></span>
       </div>
     </div>
     <div class="item_box">
@@ -53,29 +54,59 @@ const goTo = (tag: string) => {
   width: 100%;
   .title_box {
     width: 100%;
-    height: 160px;
+    height: 140px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
-    margin-bottom: 20px;
     .left {
       .title {
-        font-weight: 800;
+        color: #1b1e22;
         font-size: 32px;
-        width: 100%;
+        line-height: 52px;
+        font-weight: 600;
+        font-family:
+          PingFang SC,
+          PingFang SC-Semibold;
       }
       .subTitle {
+        color: #565d66;
+        font-size: 16px;
         font-weight: 400;
-        font-size: 20px;
-        width: 100%;
+        line-height: 28px;
       }
     }
     .more {
+      width: 150px;
+      cursor: pointer;
+      align-items: center;
+      display: flex;
       .moreBtn {
         font-weight: 600;
         color: #1ab970;
       }
+      .green-animate-arrow {
+        display: inline-block;
+        margin-left: 10px;
+        right: 0;
+        width: 16px;
+        height: 16px;
+        transition: all ease-in-out 0.3s;
+        border-radius: 8px;
+        background-color: #13ae68;
+        background-image: url(@/assets/svg/arrow-left-white.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        vertical-align: middle;
+      }
+    }
+  }
+  .more:hover {
+    .moreBtn {
+      font-weight: 800;
+    }
+    .green-animate-arrow {
+      width: 32px;
     }
   }
   .item_box {

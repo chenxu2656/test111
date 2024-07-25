@@ -209,9 +209,12 @@ onMounted(() => {
 
           .like_item {
             margin: 0 12px;
-            padding: 3px 5px;
+            padding: 0 5px;
             background-color: #fff;
             border-radius: 10px;
+            line-height: 30px;
+            height: 30px;
+            width: fit-content;
           }
         }
       }

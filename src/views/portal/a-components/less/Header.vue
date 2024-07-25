@@ -369,10 +369,13 @@ const goToLogin = () => {
   }
   .right_options {
     .work {
-      color: #13ae68;
+      color: #333;
+      font-weight: 600;
+      margin-right: 40px;
     }
     .login {
       background-color: #13ae68;
+      font-weight: 600;
     }
   }
   .content-title {

@@ -29,17 +29,17 @@ const bean3 = ref({
 });
 
 onMounted(async () => {
-  const reap1 = await getHomeDisplayList("营销管理");
+  const reap1 = await getHomeDisplayList("供应链管理");
   bean1.value.data = reap1.data;
   console.log(bean1.value);
 
-  // const reap2 = await getHomeDisplayList("销售管理");
-  // bean2.value.data = reap2.data;
-  // console.log(bean2.value);
+  const reap2 = await getHomeDisplayList("营销管理");
+  bean2.value.data = reap2.data;
+  console.log(bean2.value);
 
-  // const reap3 = await getHomeDisplayList("智能管理");
-  // bean3.value.data = reap3.data;
-  // console.log(bean3.value);
+  const reap3 = await getHomeDisplayList("解决方案");
+  bean3.value.data = reap3.data;
+  console.log(bean3.value);
 });
 </script>
 
@@ -84,7 +84,7 @@ onMounted(async () => {
         <div class="contact-info-container">
           <el-carousel :interval="4000" type="card" height="200px">
             <el-carousel-item v-for="item in 6" :key="item">
-              <h3 text="2xl" justify="center">{{ item }}</h3>
+              <img src="https://picsum.photos/1000/300" alt="" srcset="" />
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -106,15 +106,16 @@ onMounted(async () => {
 .full-screen {
   .m-bg;
   width: 100%;
-  min-height: 100vh;
+  // min-height: 100vh;
   font-size: 16px;
 
   .index {
     padding: (@headerHeight+50px) 0 0 0;
-    // height: 100vh;
+    height: 700px;
     display: flex;
     flex-direction: column;
     background: url("@/assets/img/bg.png") no-repeat center top;
+    margin-bottom: 200px;
 
     .content {
       .m-reactive-box;
@@ -154,115 +155,11 @@ onMounted(async () => {
         }
       }
     }
-
-    .music-player {
-      width: 100%;
-      height: fit-content;
-    }
-  }
-
-  .about {
-    width: 100%;
-    background-color: white;
-    padding: 0 8px 15px;
-
-    .content {
-      .m-reactive-box;
-      min-height: 60vh;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-
-      place-content: center;
-      place-items: center;
-
-      color: @light-font-color;
-
-      @media (max-width: 650px) {
-        grid-template-columns: 1fr;
-      }
-
-      img {
-        width: 60%;
-        @media (max-width: 300px) {
-          width: 100%;
-        }
-      }
-
-      .detail {
-        width: 100%;
-        place-self: center;
-
-        h2 {
-          line-height: 100%;
-          padding: 0.8em 0;
-        }
-
-        P {
-          padding: 0;
-          font-size: 1em;
-          color: #666;
-        }
-
-        .more {
-          display: inline-block;
-          margin: 0px 0px 0;
-          font-size: 1em;
-          padding: 10px 18px;
-          border: @light-theme-color solid 1px;
-          color: inherit;
-
-          &:hover {
-            background: @light-theme-color;
-            color: white;
-          }
-        }
-
-        .icons {
-          display: -webkit-box;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-          gap: 0.5em 1em;
-
-          margin: 20px 0px 15px;
-
-          .icon {
-            display: flex;
-            flex-direction: column;
-            place-items: center;
-            background: #eee;
-            text-align: center;
-            -webkit-box-flex: 1;
-            -ms-flex: 1 1 8em;
-            flex: 1 1 8em;
-            padding: 5px 0;
-            border-radius: 15px;
-
-            i {
-              font-size: 3rem;
-              color: @light-theme-color;
-
-              span {
-                display: flex;
-                place-items: center;
-                place-content: center;
-              }
-            }
-
-            h3 {
-              text-transform: capitalize;
-              color: #222;
-            }
-          }
-        }
-      }
-    }
   }
 
   .recommend {
     width: 100%;
-    background-color: #eee;
+    background-color: #fafbfc;
     padding: 10px 24px 20px;
 
     .content {
