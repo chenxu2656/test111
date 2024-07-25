@@ -1,65 +1,59 @@
 <script setup lang="ts">
-interface Bean {
-  imgPath: string;
-  title: string;
-  summary: string;
-  detailPath: string;
-  date: string;
-  author: string;
-}
-
 interface NewBean {
-  logo: string;
-  name: string;
-  type: string;
-  description: string;
+  id: string;
+  product_category: string;
+  product_type: string;
+  product_image: string;
+  product_images: string[];
+  product_name: string;
+  price: string;
+  discount_price: string;
+  product_description: string;
+  product_spec: string;
+  sku: string;
+  validity_period: string;
+  product_status: number;
+  delivery_method: string;
+  payment_method: string;
+  sale_region: string;
+  service_phone: string;
+  ctime: string;
+  mtime: string;
+  creator_id: string;
+  org_id: string;
+  product_value: string;
+  product_scene: string;
   tags: string[];
   exampleAvatar: string;
-  exampleName: string;
   exampleComment: string;
-  discountPrice: string;
-  price: string;
+  exampleName: string;
 }
 
 const props = defineProps<{
-  bean?: Bean;
-  newBean?: NewBean;
+  data?: NewBean;
 }>();
 
-const defaultBean: NewBean = {
-  logo: "./src/assets/img/1.png",
-  name: "海报设计师",
-  type: "AI 大模型",
-  description: "无情的AI作图机器，画质超乎你的想象",
-  tags: ["运营设计", "自动作图", "批量作图"],
-  exampleAvatar: "./src/assets/img/people.jpg",
-  exampleName: "食品加工企业市场不经理",
-  exampleComment: "不要学设计软件，不要学设计软件不要学设计软件不要学设计软件",
-  discountPrice: "1.99",
-  price: "29.9",
-};
-
-const bean = props.newBean ?? defaultBean;
+const bean = props.data;
 </script>
 
 <template>
   <div class="item">
     <div class="header">
       <div class="logo">
-        <img class="img" :src="bean.logo" alt="" />
-        <div class="name">{{ bean.name }}</div>
+        <img class="img" :src="bean.product_image" alt="" />
+        <div class="name">{{ bean.product_name }}</div>
       </div>
       <div class="info">
         <div class="tags" v-for="tag in bean.tags">
           <span class="tag">{{ tag }}</span>
         </div>
-        <div class="desc">{{ bean.description }}</div>
+        <div class="desc">{{ bean.product_description }}</div>
       </div>
     </div>
 
     <div class="price">
       <div class="price_box">
-        <span class="discount_price">￥{{ bean.discountPrice }}</span>
+        <span class="discount_price">￥{{ bean.discount_price }}</span>
         <span class="old_price">￥{{ bean.price }}</span>
       </div>
       <div class="button">

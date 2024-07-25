@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import Recommenditem from "@/views/portal/a-components/less/RecommendItem.vue";
+import { useHomeStore } from "@/store/modules/home";
+import router from "@/router";
 
+const homeStore = useHomeStore();
 interface Bean {
   title: string;
   subTitle: string;
@@ -14,7 +17,13 @@ const props = defineProps<{
 const bean = props.bean;
 
 const goTo = (tag: string) => {
-  console.log(tag);
+  homeStore.setclickedTag(tag);
+  router.push({
+    path: "/search",
+    // query: {
+    //   tag: tag,
+    // },
+  });
 };
 </script>
 

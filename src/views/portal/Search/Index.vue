@@ -4,11 +4,12 @@ import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import Header from "@/views/portal/a-components/less/Header.vue";
 import SearchItem from "@/views/portal/a-components/less/SearchItem.vue";
 import { Search } from "@element-plus/icons-vue";
-import { onMounted, ref } from "vue";
-import { getServerDetail } from "./api";
+import { onMounted, ref, watch } from "vue";
+import { getSearchList } from "./api";
 
 const homeStore = useHomeStore();
-const radio1 = ref<string>(""); // 假设初始值为空字符串
+const radioCategory = ref<string>("");
+const radioPrice = ref<string>("");
 const items = ref<string[]>([
   "初始内容1",
   "初始内容2",
@@ -16,7 +17,19 @@ const items = ref<string[]>([
   "初始内容4",
 ]);
 
-// 模拟动态更新内容
+// Function to fetch search results
+const fetchSearchResults = async (searchParam: string) => {
+  try {
+    const response = await getSearchList(searchParam, 0);
+    // Handle the response and update items
+
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching search results:", error);
+  }
+};
+
+// Update items dynamically every 5 seconds
 const updateItems = () => {
   items.value = [
     "更新后的内容1",
@@ -26,8 +39,17 @@ const updateItems = () => {
   ];
 };
 
-// 模拟每段时间（例如每5秒）更新一次内容
+const searchList = ref([]);
+
 onMounted(async () => {
+  // Check if clickedTag has a value and fetch search results
+  if (homeStore.clickedTag) {
+    searchList.value = await fetchSearchResults(homeStore.clickedTag);
+  } else {
+    await fetchSearchResults(""); // Default search
+  }
+
+  // Set an interval to update items dynamically
   setInterval(() => {
     updateItems();
   }, 5000);
@@ -45,8 +67,12 @@ const handleInputChange = () => {
     alert("Minimum price should not be greater than maximum price");
   }
 };
-</script>
 
+// Watch for changes in radioCategory and trigger search
+watch(radioCategory, (newValue) => {
+  fetchSearchResults(newValue);
+});
+</script>
 <template>
   <el-backtop :right="10" :bottom="10" />
   <Header />
@@ -83,24 +109,26 @@ const handleInputChange = () => {
       <div class="category">
         <div class="filter_name">商品分类</div>
         <div class="filter_options">
-          <el-radio-group v-model="radio1" size="large">
-            <el-radio-button label="全部" value="1" />
-            <el-radio-button label="供应链管理" value="New York" />
-            <el-radio-button label="供应链管理" value="Washington" />
-            <el-radio-button label="供应链管理" value="Los Angeles" />
-            <el-radio-button label="供应链管理" value="Chicago" />
+          <el-radio-group v-model="radioCategory" size="large" @change="">
+            <el-radio-button label="全部" value="" />
+            <el-radio-button label="供应链管理" value="供应链管理" />
+            <el-radio-button label="解决方案" value="解决方案" />
+            <el-radio-button label="经营管理" value="经营管理" />
+            <el-radio-button label="商务服务" value="商务服务" />
+            <el-radio-button label="生产制造" value="生产制造" />
+            <el-radio-button label="营销管理" value="营销管理" />
           </el-radio-group>
         </div>
       </div>
       <div class="category">
         <div class="filter_name">价格范围</div>
         <div class="filter_options">
-          <el-radio-group v-model="radio1" size="large">
-            <el-radio-button label="全部" value="1" />
-            <el-radio-button label="免费" value="New York" />
-            <el-radio-button label="0-2000" value="Washington" />
-            <el-radio-button label="2000-5000" value="Los Angeles" />
-            <el-radio-button label="5000-7000" value="Chicago" />
+          <el-radio-group v-model="radioPrice" size="large" @change="">
+            <el-radio-button label="全部" value="" />
+            <el-radio-button label="免费" value="免费" />
+            <el-radio-button label="0-2000" value="0-2000" />
+            <el-radio-button label="2000-5000" value="2000-5000" />
+            <el-radio-button label="5000-7000" value="5000-7000" />
           </el-radio-group>
           <el-input
             v-model="minPrice"
@@ -127,20 +155,7 @@ const handleInputChange = () => {
       </div>
     </div>
     <div class="search_result">
-      <SearchItem></SearchItem>
-      <SearchItem></SearchItem>
-      <SearchItem></SearchItem>
-      <SearchItem></SearchItem>
-
-      <SearchItem></SearchItem>
-      <SearchItem></SearchItem>
-      <SearchItem></SearchItem>
-      <SearchItem></SearchItem>
-      <SearchItem></SearchItem>
-      <SearchItem></SearchItem>
-
-      <SearchItem></SearchItem>
-      <SearchItem></SearchItem>
+      <SearchItem v-for="(item, index) in searchList" :data="item" />
     </div>
     <div class="pagination">
       <el-pagination background layout="prev, pager, next" :total="1000" />

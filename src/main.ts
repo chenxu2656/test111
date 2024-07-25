@@ -8,6 +8,7 @@ import { createApp, type Directive } from "vue";
 import App from "./App.vue";
 import { getPlatformConfig } from "./config";
 import router from "./router";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 // import PureDescriptions from "@pureadmin/descriptions";
 
 // 引入重置样式
@@ -55,6 +56,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 app.use(VueTippy);
 
 getPlatformConfig(app).then(async (config) => {
