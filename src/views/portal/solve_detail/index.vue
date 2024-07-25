@@ -2,7 +2,6 @@
 import Header from "../a-components/less/Header.vue";
 import { Warning } from "@element-plus/icons-vue";
 import { useSolveStoreHook } from '@/store/modules/solve'
-import { reactive } from "vue";
 const solveDetail = useSolveStoreHook().solveObj;
 const formattedPrice = (price) => {
   return useSolveStoreHook().formattedPrice(price)
@@ -35,7 +34,6 @@ const formattedPrice = (price) => {
       <el-button type="primary" style="margin-top: 3vh"
       size="small" plain>联系平台经理</el-button>
       <div style="float: right;margin-top: 3vh;">
-        
         <el-text style="margin-right: 1vw;cursor: pointer"><el-icon><Warning></Warning></el-icon> 举报</el-text>  
         IP来自安徽省</div>
     </el-card>
