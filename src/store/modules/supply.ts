@@ -4,13 +4,14 @@ import { getSupplyList,getRandomRequirments } from '@/api/supply'
 export const useSupplyStore = defineStore({
   id: 'pure-supply',
   state:()=> ({
-    supplyId: '123',
+    supplyId: '3632b75c-b717-4bd6-9d0e-789eaa0883d7',
     current_page: 1,
     keyWord:'',
     category: '',
     type: '',
     region: '',
     supplyList: [],
+    randomList:[],
     supplyLength:0,
   }),
   actions: {
@@ -56,7 +57,7 @@ export const useSupplyStore = defineStore({
     //获取三个随机同品类需求
     getRandomRequirments(category:string){
       getRandomRequirments(category).then(res=>{
-        return res.data
+        this.randomList = res.data
       })
     }
   }

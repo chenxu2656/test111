@@ -38,7 +38,6 @@ const goToLogin = () => {
         <h2>需求大厅</h2>
         <el-input
           v-model="keyWord"
-          style="max-width: 30vw; height: 6vh"
           placeholder="请输入关键词"
           class="input-with-select"
         >
@@ -48,8 +47,7 @@ const goToLogin = () => {
         </el-input>
         <el-button
           type="success"
-          @click="goToLogin"
-          style="margin-left: 3vw; height: 6vh"
+          @click="goToLogin" class="offerBt"
           >需求发布 <el-icon :size="20"><CaretRight /></el-icon
         ></el-button>
       </div>
@@ -79,7 +77,7 @@ const goToLogin = () => {
         <el-row class="bottomD">
           <el-col :span="11">
             <el-tag type="info"
-              ><span>{{ supplyInfo.type }}</span></el-tag
+              ><span class="tagText">{{ supplyInfo.type }}</span></el-tag
             ></el-col
           >
           <el-col :span="13">
@@ -105,6 +103,9 @@ const goToLogin = () => {
   </div>
 </template>
 <style scoped lang="less">
+@big:calc((1rem + 1vw)*0.7);
+@middle:calc((1rem + 1vw)*0.5);
+@small:calc((1rem + 1vw)*0.4);
 .picture {
   background-image: url("https://preprod.lingyangplat.com/antelope-static-resource/website/images/second-page-banners/banner-demand-EDF2FA.jpg");
   background-size: 100% 100%;
@@ -112,15 +113,29 @@ const goToLogin = () => {
   height: 40vh;
 }
 .picture h2 {
-  font-size: 2.5vw;
+  font-size: calc(1rem + 1vw);
   padding-top: 10vh;
   padding-bottom: 8vh;
 }
 .search {
   margin-left: 5vw;
 }
+.pageSet{
+  margin: 5vh 0 5vh 25vw;
+  font-size:@middle
+}
+.input-with-select{
+  max-width: 30vw;
+   height: 6vh;
+   font-size:@middle;
+}
+.offerBt{
+  margin-left: 3vw; 
+  height: 6vh;
+  font-size:@middle;
+}
 .titleName {
-  font-size: 1.5vw;
+  font-size: @big;
   font-weight: 600;
   width: 100%;
   white-space: nowrap;
@@ -128,9 +143,12 @@ const goToLogin = () => {
   text-overflow: ellipsis;
 }
 .myIcon {
-  font-size: 1.5vw;
+  font-size: @big;
   font-weight: 600;
   margin-top: 1vh;
+}
+.tagText{
+  font-size:@middle;
 }
 .allCard {
   width: 60vw;
@@ -157,7 +175,7 @@ const goToLogin = () => {
   border-color: rgb(103, 194, 58);
 }
 .cardText {
-  font-size: 2.2vh;
+  font-size: @middle;
   margin-top: 1vh;
   min-height: 8vh;
   line-height: 4vh;
@@ -167,13 +185,13 @@ const goToLogin = () => {
 }
 
 .bottomD .el-text {
-  font-size: 1.7vh;
+  font-size: @small;
   line-height: 4vh;
   vertical-align: middle;
 }
 .bottomDate {
   margin-left: 1vw;
-  font-size: 1.7vh;
+  font-size: @small;
   line-height: 4vh;
   vertical-align: middle;
 }

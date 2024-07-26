@@ -94,16 +94,18 @@ const reset = () => {
   </div>
 </template>
 <style scoped lang="less">
+@fontsize1:calc((1rem + 1vw)*0.5);
 .full_side{
   background-color: white;
   min-height: auto;
+  font-size: @fontsize1;
 }
 .el-button{
   margin-left: 12px;
-  margin-top:5px
+  margin-top:5px;
+  font-size: @fontsize1;
 }
 .sort{
-
   margin:0 1vw;
 //  display: flex;
 }
@@ -111,5 +113,6 @@ const reset = () => {
   padding-top: 3vh;
     margin-left: 12px;
   padding-bottom: 2vh;
+  font-size: calc((1rem + 1vw)*0.6);
 }
 </style>

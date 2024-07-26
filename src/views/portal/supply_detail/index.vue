@@ -1,19 +1,36 @@
 <script setup>
 import Header from "../a-components/less/Header.vue";
 import { Warning } from "@element-plus/icons-vue";
-import { useSupplyStoreHook } from '@/store/modules/supply'
+import { useSupplyStoreHook } from '@/store/modules/supply';
+import { getAddressByCode } from "@/utils/address";
 import { getSupplyDetail } from "@/api/supply";
 import { onMounted,reactive,ref } from "vue";
 var supplyDetail = reactive({data:{}});
 const textarea=ref("")
+var category="";
+var supplyInfos = computed(() => {
+  return useSupplyStoreHook().randomList;
+});
 onMounted(() => {
   let id=useSupplyStoreHook().supplyId
   getSupplyDetail(id).then(res => {
-    supplyDetail.data = res
-    // console.log(res)
-    
+  supplyDetail.data = res
+  console.log(res)
+  category=res.category
+  useSupplyStoreHook().getRandomRequirments(category)
   })
 })
+const changeRecommends=()=>{
+  useSupplyStoreHook().getRandomRequirments(category)
+}
+const checkAddress=(address)=>{
+  let content=getAddressByCode(address);
+  if (content === undefined) {  
+    // 可以在这里返回一个默认值、抛出错误或进行其他处理  
+    return null; // 或者 ''，取决于你的需求  
+  }  
+  return content.split('-')[0];  
+}
 // import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 </script>
 <template>
@@ -30,7 +47,7 @@ onMounted(() => {
         需求类型：{{ supplyDetail.data.type }}
       </el-text>
       <el-text style="margin-left: 10vw">
-        需求区域：{{ supplyDetail.data.region }}
+        需求区域：{{ getAddressByCode(supplyDetail.data.region) }}
       </el-text>
       <p>
         需求内容：
@@ -42,7 +59,7 @@ onMounted(() => {
       <div style="float: right;margin-top: 3vh;">
         
         <el-text style="margin-right: 1vw;cursor: pointer"><el-icon><Warning></Warning></el-icon> 举报</el-text>  
-        IP来自安徽省</div>
+        IP来自{{checkAddress(supplyDetail.data.company_location)}}</div>
     </el-card>
     <el-card class="bottomC" shadow="never">
      <h3>对接记录</h3> 
@@ -58,14 +75,16 @@ onMounted(() => {
     </el-card>
   </div>
     <el-card class=rightC  shadow="never">
-       <h3>为您推荐</h3> 
-       <el-card shadow="never" v-for="i in [1,2,3]" class="recommend" :key="i">
+      <div style="display:flex"> <h3>为您推荐</h3> 
+        <el-button type="primary" size="small" style="margin-left:2vw" @click="changeRecommends()">
+          换一批</el-button></div>
+       <el-card shadow="never" v-for="i in supplyInfos" class="recommend" :key="i">
         <div style="float:left">
           <img src="../../../assets/img/supply.jpg" width="60px" style="margin-top:2vh"/>
         </div>
         <div class="recommendC">
-        <el-text truncated><b>私有化电子签章合同管理中台（签+管一体化）</b></el-text>
-        <el-text size="small" line-clamp="2">e签宝“签”+“管”一体化天印电子签章合同管理中台系统，提供印章管理、签署服务和合同管理的一体化混合云解决方案。天印电子签章系统旨在为企业的降本增效、风险管控、高效协作赋能。并通过大客户效应带动其业务上下游流量。将电子签约室与企业内部信息化系统的对接，使用独立服务器进行文件签署和存储，使用本地证书的需求广泛，适用于本地化信息系统建设较完善，对安全又较高要求的中大型企业用户。私有云的本地搭建很大程度上需要迎合企业内部的管理规范、业务场景等等，不仅仅是一套简单的本地化部署系统，而是一套整体解决方案。</el-text>
+        <el-text truncated><b>{{i.name}}</b></el-text>
+        <el-text size="small" line-clamp="2">{{i.content}}</el-text>
         </div>
        <el-divider style="margin: 10px 0"></el-divider>
        </el-card>
