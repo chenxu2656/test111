@@ -91,7 +91,7 @@ const cancelHtml=(item)=>{
       :size="size"
       :disabled="disabled"
       layout="prev, pager, next, jumper"
-      :total="2"
+      :total="5"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
