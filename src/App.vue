@@ -6,27 +6,30 @@
 </template>
 
 <script lang="ts">
-import { ReDialog } from '@/components/ReDialog'
-import { ElConfigProvider } from 'element-plus'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import { defineComponent } from 'vue'
+import { ReDialog } from "@/components/ReDialog";
+import { ElConfigProvider } from "element-plus";
+import zhCn from "element-plus/es/locale/lang/zh-cn";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'app',
+  name: "app",
   components: {
     [ElConfigProvider.name]: ElConfigProvider,
-    ReDialog
+    ReDialog,
   },
   computed: {
     currentLocale() {
-      return zhCn
-    }
-  }
-})
+      return zhCn;
+    },
+  },
+});
 </script>
 
 <style lang="scss">
 body {
+  font-family:
+    PingFang SC,
+    PingFang SC-Semibold;
   background-image: linear-gradient(
     to top,
     #c4c5c7 0%,

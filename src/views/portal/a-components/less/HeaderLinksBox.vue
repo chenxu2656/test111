@@ -56,7 +56,7 @@ function getLinkProps(item) {
         v-bind="getLinkProps(item)"
       >
         {{ item.showName }}
-        <el-icon v-if="item.target === '_blank'"> <Search /> </el-icon>
+        <el-icon v-if="item.target === '_blank'"> <TopRight /></el-icon>
       </component>
     </div>
   </div>
@@ -72,18 +72,37 @@ function getLinkProps(item) {
   font-weight: 500;
 
   height: @headerHeight;
-  width: fit-content;
+  width: 100px;
 
   display: flex;
   justify-content: center;
   place-items: center;
   position: relative;
   z-index: 200;
-
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #333;
+    transform-origin: 0% 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+  &:hover::after {
+    transform: translateY(-50%) rotate(270deg);
+    border-color: transparent #333 transparent transparent;
+    top: 70%;
+    left: 100%;
+  }
   &:hover {
     .title {
       color: @light-font-hover-color;
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 600;
 
       .icon {
@@ -127,17 +146,21 @@ function getLinkProps(item) {
     border-radius: 6px;
     display: flex;
     place-items: center;
+    font-family:
+      PingFang SC,
+      PingFang SC-Semibold;
+    font-weight: 600;
 
     &.title:hover {
-      background-color: transparent;
+      color: #0ac067;
     }
 
     &.router-link-exact-active {
-      color: @light-font-select-color;
+      color: #333;
     }
 
     &.router-link-active {
-      color: @light-font-select-color;
+      color: #333;
     }
   }
 }

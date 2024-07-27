@@ -1,10 +1,12 @@
 <script setup>
 import More from "@/assets/svg/more.svg?component";
-import { Mic } from "@element-plus/icons-vue";
+import { Mic, CaretRight } from "@element-plus/icons-vue";
 import { RouterLink } from "vue-router";
 import Divider from "@/views/portal/a-components/less/Divider.vue";
 import { useHomeStore } from "@/store/modules/home";
 
+import { useRouter } from "vue-router";
+const router = useRouter();
 const homeStore = useHomeStore();
 </script>
 <template>
@@ -13,9 +15,19 @@ const homeStore = useHomeStore();
       <div class="left">
         <div class="left_top">
           <span class="name">分类</span>
-          <span class="link">
-            <el-icon><More /></el-icon>所有商品></span
+          <span
+            class="link"
+            @click="
+              () => {
+                homeStore.setclickedTag('');
+                router.push('/search');
+              }
+            "
           >
+            <el-icon><More /></el-icon
+            ><span style="padding: 0 3px">所有商品</span
+            ><el-icon><CaretRight /></el-icon
+          ></span>
         </div>
         <div class="left_con">
           <div class="list">
@@ -52,7 +64,11 @@ const homeStore = useHomeStore();
     <el-main>
       <el-carousel :interval="5000" arrow="always">
         <el-carousel-item v-for="item in 4" :key="item">
-          <h3 text="2xl" justify="center">{{ item }}</h3>
+          <img
+            src="https://picsum.photos/seed/picsum/1000/300?random=2"
+            alt=""
+            srcset=""
+          />
         </el-carousel-item>
       </el-carousel>
     </el-main>
@@ -77,6 +93,9 @@ export default {
   width: 100%;
   background-color: #fff;
   color: #333;
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 
   .menu-container {
     background-color: #fff;
@@ -99,7 +118,7 @@ export default {
         }
         .link {
           color: #01b862;
-
+          cursor: pointer;
           display: flex;
           flex-direction: row;
           align-items: center;
