@@ -76,15 +76,15 @@ const reset = () => {
 
      <div class="sort">
       <h4>需求地区</h4>
-      <el-button type='warning' 
+      <el-button type='success' 
       size="small" @click="getAllRegion"
       :plain="form.provinceFlag!='全部'">全部</el-button>
       <el-popover placement="right" :width="250" trigger="click" v-for="items in city" :key="items" >
       <template #reference>
-        <el-button  type='warning' size="small" @click="showCity(items.label)"
+        <el-button  type='success' size="small" @click="showCity(items.label)"
       :plain="form.provinceFlag!=items.label">{{ items.label }}</el-button>
       </template>
-      <el-button v-for="item in items.children" type='warning' 
+      <el-button v-for="item in items.children" type='success' 
       size="small" @click="regionChange(item)" :key="item"
       :plain="form.regionFlag!=item.label">{{ item.label }}</el-button>
     </el-popover>
@@ -104,6 +104,7 @@ const reset = () => {
   margin-left: 12px;
   margin-top:5px;
   font-size: @fontsize1;
+  border-width: 0;
 }
 .sort{
   margin:0 1vw;

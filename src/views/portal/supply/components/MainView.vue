@@ -89,13 +89,13 @@ const goToLogin = () => {
       </el-card>
     </div>
     <el-pagination
+    class="pageSet"
       v-model:current-page="currentPage"
       default-page-size
       :disabled="disabled"
       layout="prev, pager, next, jumper"
       :total="total"
       @current-change="handleCurrentChange"
-      style="margin: 5vh 0 5vh 25vw"
     />
   </div>
 </template>
@@ -192,4 +192,9 @@ const goToLogin = () => {
   line-height: 4vh;
   vertical-align: middle;
 }
+.pageSet{
+  margin: 5vh 0 5vh 25vw;
+  font-size:@middle;
+}
+
 </style>

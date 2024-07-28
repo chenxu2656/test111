@@ -68,11 +68,11 @@ const cancelHtml=(item)=>{
     </el-col>
   </el-row>      
    
-        <el-text line-clamp="2" >  
+        <el-text line-clamp="2" class="introduceBrief">  
           技术简介：{{ cancelHtml(solveInfo.achievement_brief_introduction) }}  
           </el-text>
           <el-row class="bottomC">
-           <el-col :span="10"> <span >成果价格：<el-tag type="error" style="font-size: 1.2vw;color:rgb(255,77,72)">{{formattedPrice(solveInfo.achievement_transfer_price)}}</el-tag></span></el-col>
+           <el-col :span="10"> <span >成果价格：<el-tag type="error" class="price" style="font-size:calc((1rem + 1vw)*0.6);border-width:0;color:rgb(255,77,72);">{{formattedPrice(solveInfo.achievement_transfer_price)}}</el-tag></span></el-col>
             <el-col  :span="14">
          <el-text class="iconF"><el-icon>
               <Location />
@@ -149,9 +149,17 @@ const cancelHtml=(item)=>{
 }
 .myCard .el-text{
   padding-top: 0vh;
+  font-size: @middle;
+}
+.introduceBrief{
+  font-size: @middle;
+  line-height: 3vh;
+  min-height: 6vh;
 }
 .myCard span{
   color:black;
+  // min-height: 8vh;
+  // line-height:3vh;
   font-size: @middle;
   margin-top:0.3vh;
 }
@@ -165,9 +173,6 @@ const cancelHtml=(item)=>{
   color:rgb(19,194,104);
   margin-top: 0.5vh;
 }
-.bottomC{
-  margin-top:3vh;
-}
 .iconF{
   font-size:@small;
 }
@@ -180,4 +185,9 @@ const cancelHtml=(item)=>{
   font-size:@small;
   margin-left: 2vw;
 }
+.pageSet{
+  margin: 5vh 0 5vh 25vw;
+  font-size:@middle;
+}
+
 </style>
