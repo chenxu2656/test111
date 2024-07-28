@@ -17,6 +17,7 @@ import { useRouter } from "vue-router";
 import Motion from "./utils/motion";
 import { loginRules } from "./utils/rule";
 import { bg, illustration } from "./utils/static";
+import { http } from "@/utils/http";
 const buttonCon = ref("获取验证码");
 const registerInfo = ref({});
 const isDisabled = ref(false);
@@ -84,10 +85,20 @@ const sendCode = () => {
     }
   });
 };
-const loginSuccess = () => {
+const loginSuccess = async() => {
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+  const org_resp = await http.request<any>(
+      "get",
+      `/api/v1/organizationMembers/user/${userInfo.id}`,
+    );
+  if (org_resp.id) {
+        localStorage.setItem("org_id", org_resp.organization_id);
+        localStorage.setItem("orgInfo", JSON.stringify(org_resp))
+  }
   return initRouter().then(() => {
     console.log("getTopMenu(true)", getTopMenu(true));
-    router.push("/welcome").then(() => {
+    router.push("/welcome").then(async() => {
+      
       message("登录成功", { type: "success" });
     });
   });

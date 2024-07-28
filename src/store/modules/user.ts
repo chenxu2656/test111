@@ -74,6 +74,9 @@ export const useUserStore = defineStore({
     /** 前端登出（不调用接口） */
     logOut() {
       localStorage.removeItem('jwt')
+      localStorage.removeItem('userInfo')
+      localStorage.removeItem('org_id')
+      localStorage.removeItem('orgInfo')
       router.push('/login')
     }
   }

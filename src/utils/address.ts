@@ -1,4 +1,4 @@
-import cityList from "./city";
+import cityList from "./cityfull";
 export const getAddressByCode = (code: string) => {
   for (const region of cityList) {
     if (region.value === code) {

@@ -16,7 +16,7 @@ onMounted(async () => {
   console.log(server_info.value);
 });
 const buynow = () => {
-  router.push("/orderconfirm");
+  router.push(`/orderconfirm?productid=${server_info.value.id}`);
 };
 </script>
 
