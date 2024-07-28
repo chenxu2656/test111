@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Recommenditem from "@/views/portal/a-components/less/RecommendItem.vue";
 import { useHomeStore } from "@/store/modules/home";
-import router from "@/router";
-
+import { useRouter } from "vue-router";
+const router = useRouter();
 const homeStore = useHomeStore();
 interface Bean {
   title: string;
@@ -20,9 +20,6 @@ const goTo = (tag: string) => {
   homeStore.setclickedTag(tag);
   router.push({
     path: "/search",
-    // query: {
-    //   tag: tag,
-    // },
   });
 };
 </script>
@@ -31,17 +28,19 @@ const goTo = (tag: string) => {
   <div class="recommed">
     <div class="title_box">
       <div class="left">
-        <div class="title">{{ bean.title }}</div>
-        <div class="subTitle">{{ bean.subTitle }}</div>
+        <div class="title">{{ bean?.title }}</div>
+        <div class="subTitle">{{ bean?.subTitle }}</div>
       </div>
       <div class="more">
-        <div class="moreBtn" @click="goTo(bean.searchTag)">点击查看更多</div>
+        <div class="moreBtn" @click="goTo(bean?.searchTag as string)">
+          点击查看更多
+        </div>
         <span class="green-animate-arrow"></span>
       </div>
     </div>
     <div class="item_box">
       <Recommenditem
-        v-for="(item, index) in bean.data"
+        v-for="(item, index) in bean?.data"
         :key="index"
         :bean="item"
       />

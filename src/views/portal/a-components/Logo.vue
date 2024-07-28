@@ -4,7 +4,7 @@ import { RouterLink } from "vue-router";
 
 <template>
   <RouterLink class="ainow-logo" to="/">
-    <img src="@/assets/images/logo.png" />
+    <img src="@/assets/images/logo_with_name.png" />
   </RouterLink>
 </template>
 
@@ -14,8 +14,8 @@ import { RouterLink } from "vue-router";
   color: inherit;
   font-size: 1.4rem;
   font-weight: bold;
-  height: 80px;
-  width: 80px;
+  height: 70px;
+  width: auto;
   display: flex;
   place-items: center;
   &:hover {
@@ -25,7 +25,6 @@ import { RouterLink } from "vue-router";
   img {
     height: 100%;
     width: 100%;
-    margin-right: 3px;
   }
 }
 </style>

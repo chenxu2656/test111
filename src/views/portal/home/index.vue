@@ -4,30 +4,13 @@ import AISearch from "@/views/portal/home/components/AISearch.vue";
 import Aside from "@/views/portal/home/components/Aside.vue";
 import { getHomeDisplayList } from "./api";
 import Recommend from "@/views/portal/home/components/Recommend.vue";
-import { onMounted, ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import Header from "@/views/portal/a-components/less/Header.vue";
-
-const bean1 = ref({
-  title: "MAAS新应用，玩转AI新技术",
-  subTitle: "能交给AI工具的，就别自己埋头苦干！",
-  searchTag: "供应链管理",
-  data: [],
-});
-
-const bean2 = ref({
-  title: "羚羊精选，1.5折起！",
-  subTitle: "软件/硬件/服务，满足企业数字化多样需求",
-  searchTag: "营销管理",
-  data: [],
-});
-
-const bean3 = ref({
-  title: "软件服务包，数字化0元购",
-  subTitle: "政府买单，帮助中小企业轻松开启数字化",
-  searchTag: "解决方案",
-  data: [],
-});
-
+import { useHomeStore } from "@/store/modules/home";
+import { storeToRefs } from "pinia";
+const homeStore = useHomeStore();
+const { bean1, bean2, bean3, searchTags, activeIndex } =
+  storeToRefs(useHomeStore());
 onMounted(async () => {
   const reap1 = await getHomeDisplayList("供应链管理");
   bean1.value.data = reap1.data;
@@ -41,11 +24,59 @@ onMounted(async () => {
   bean3.value.data = reap3.data;
   console.log(bean3.value);
 });
+
+const display = ref("none");
+const showOriginalNav = ref(false);
+function handleScroll() {
+  //window.innerHeight为屏幕高度或者 假设导航栏高度是60px，就把window.innerHeight替换成60
+  const navHeight = 80;
+  if (window.scrollY >= navHeight) {
+    display.value = "block"; // 根据需要改变颜色
+  } else {
+    display.value = "none"; // 根据需要改变颜色
+  }
+}
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+const handleScroll1 = () => {
+  const scrollPosition = window.scrollY + 80; // Adjust offset as needed
+
+  searchTags.value.forEach((section, index) => {
+    const sectionElement = document.getElementById(section.id);
+    if (sectionElement) {
+      const sectionTop = sectionElement.offsetTop;
+      const sectionHeight = sectionElement.offsetHeight;
+      if (
+        scrollPosition >= sectionTop &&
+        scrollPosition < sectionTop + sectionHeight
+      ) {
+        activeIndex.value = index;
+      }
+    }
+  });
+  showOriginalNav.value = scrollPosition > 0;
+};
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll1);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll1);
+});
 </script>
 
 <template>
   <el-backtop :right="10" :bottom="10" />
-  <Header />
+  <Header :onlyShowOriginalNav="showOriginalNav" />
+
   <div class="full-screen">
     <div id="index" class="index">
       <div class="content">
@@ -56,21 +87,21 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div id="recommend-offset" class="recommend">
+    <div id="recommend1" class="recommend">
       <div class="content">
         <div class="titles">
           <Recommend :bean="bean1" />
         </div>
       </div>
     </div>
-    <div id="recommend-offset" class="recommend new_bg">
+    <div id="recommend2" class="recommend new_bg">
       <div class="content">
         <div class="titles">
           <Recommend :bean="bean2" />
         </div>
       </div>
     </div>
-    <div id="recommend-offset" class="recommend">
+    <div id="recommend2" class="recommend">
       <div class="content">
         <div class="titles">
           <Recommend :bean="bean3" />
@@ -78,13 +109,17 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div id="contact-offset" class="contact">
+    <div id="contact" class="contact">
       <div class="content">
         <h2 class="title">数字化标杆案例</h2>
+        <div class="more">
+          <div class="moreBtn" @click="goTo(bean?.searchTag)">查看更多案例</div>
+          <span class="green-animate-arrow"></span>
+        </div>
         <div class="contact-info-container">
-          <el-carousel :interval="4000" type="card" height="200px">
+          <el-carousel :interval="4000" type="card" height="300px">
             <el-carousel-item v-for="item in 6" :key="item">
-              <img src="https://picsum.photos/1000/300" alt="" srcset="" />
+              <img src="https://picsum.photos/1000/500" alt="" srcset="" />
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -196,10 +231,47 @@ onMounted(async () => {
     padding: 10px 8px 10px;
     text-align: center;
     background: url(@/assets/img/more_bg.jpg) no-repeat center top;
+    padding: 80px 0;
     // background-size: auto 616px;
     .content {
       .m-reactive-box;
-
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      .more {
+        width: 150px;
+        cursor: pointer;
+        align-items: center;
+        display: flex;
+        .moreBtn {
+          font-weight: 600;
+          color: #fff;
+        }
+        .green-animate-arrow {
+          display: inline-block;
+          margin-left: 10px;
+          right: 0;
+          width: 16px;
+          height: 16px;
+          transition: all ease-in-out 0.3s;
+          border-radius: 8px;
+          background-color: #fff;
+          background-image: url(@/assets/svg/arrow-left-green.svg);
+          background-repeat: no-repeat;
+          background-position: center;
+          vertical-align: middle;
+        }
+      }
+      .more:hover {
+        .moreBtn {
+          font-weight: 800;
+        }
+        .green-animate-arrow {
+          width: 32px;
+        }
+      }
       .contact-info-container {
         width: 100%;
         padding-bottom: 50px;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Search } from "@element-plus/icons-vue";
-import Mic from "@/assets/svg/mic.svg";
+import Mic from "@/assets/svg/mic.svg?component";
 
 import { ref, onMounted, onUnmounted } from "vue";
 

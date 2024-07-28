@@ -18,7 +18,7 @@ onMounted(async () => {
 
 <template>
   <el-backtop :right="10" :bottom="10" />
-  <Header />
+  <Header :onlyShowOriginalNav="false" />
   <div class="index" v-if="server_info">
     <div class="content">
       <div class="pic_box">
@@ -39,51 +39,60 @@ onMounted(async () => {
         <div class="functionality_version">
           <div class="label">功能版本：</div>
           <div class="options">
-            <div
+            <!-- <div
               class="option"
               v-for="(item, index) in server_info.product_images"
               :key="index"
             >
               {{ item }}
+            </div> -->
+            <div class="option">
+              {{ server_info.product_category }}
             </div>
           </div>
         </div>
         <div class="quantity_specifications">
-          <div class="label">功能版本：</div>
+          <div class="label">数量规格：</div>
           <div class="options">
-            <div
+            <!-- <div
               class="option"
               v-for="(item, index) in server_info.product_images"
               :key="index"
             >
               {{ item }}
+            </div> -->
+            <div class="option">
+              {{ server_info.product_status }}
             </div>
           </div>
         </div>
         <div class="validity_period">
-          <div class="label">功能版本：</div>
+          <div class="label">有效期限：</div>
           <div class="options">
-            <div
+            <!-- <div
               class="option"
               v-for="(item, index) in server_info.product_images"
               :key="index"
             >
               {{ item }}
+            </div> -->
+            <div class="option">
+              {{ server_info.validity_period }}
             </div>
           </div>
         </div>
         <div class="divider"></div>
         <div class="deployment_methods">
           <div class="label">部署方式：</div>
-          <div class="options">SaaS服务</div>
+          <div class="options">{{ server_info.delivery_method }}</div>
         </div>
         <div class="saleable_range">
           <div class="label">可售范围：</div>
-          <div class="options">全国</div>
+          <div class="options">{{ server_info.sale_region }}</div>
         </div>
         <div class="telephone">
           <div class="label">服务咨询电话：</div>
-          <div class="options">15256986032</div>
+          <div class="options">{{ server_info.service_phone }}</div>
         </div>
         <div class="description">
           <div class="label">说明：</div>

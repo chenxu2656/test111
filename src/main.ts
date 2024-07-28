@@ -8,7 +8,7 @@ import { createApp, type Directive } from "vue";
 import App from "./App.vue";
 import { getPlatformConfig } from "./config";
 import router from "./router";
-import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+
 // import PureDescriptions from "@pureadmin/descriptions";
 
 // 引入重置样式
@@ -52,6 +52,7 @@ import "tippy.js/themes/light.css";
 
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import VueTippy from "vue-tippy";
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
@@ -74,7 +75,7 @@ getPlatformConfig(app).then(async (config) => {
     .use(MotionPlugin)
     .use(useElementPlus)
     .use(Table)
-
+    .use(pinia)
     .use(useEcharts);
   app.mount("#app");
 });

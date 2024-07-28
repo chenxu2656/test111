@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import router from "@/router";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 import { useHomeStore } from "@/store/modules/home";
 const homeStore = useHomeStore();
@@ -50,15 +51,15 @@ const goTo = (id: string) => {
   <div class="item">
     <div class="header">
       <div class="type">
-        <span class="type_name">{{ bean.product_type }}</span>
+        <span class="type_name">{{ bean?.product_type }}</span>
       </div>
       <div class="logo">
-        <img class="img" :src="bean.product_image" alt="" />
-        <div class="name">{{ bean.product_name }}</div>
+        <img class="img" :src="bean?.product_image" alt="" />
+        <div class="name">{{ bean?.product_name }}</div>
       </div>
       <div class="info">
-        <div class="desc">{{ bean.product_description }}</div>
-        <div class="tags" v-for="tag in bean.tags">
+        <div class="desc">{{ bean?.product_description }}</div>
+        <div class="tags" v-for="tag in bean?.tags">
           <span class="tag">{{ tag }}</span>
         </div>
       </div>
@@ -66,20 +67,22 @@ const goTo = (id: string) => {
     <div class="comment">
       <div class="comment_box">
         <div class="avatar">
-          <img class="img" :src="bean.exampleAvatar" alt="" />
-          <div class="name">{{ bean.exampleName }}</div>
+          <img class="img" :src="bean?.exampleAvatar" alt="" />
+          <div class="name">{{ bean?.exampleName }}</div>
         </div>
 
-        <div class="comment_con">{{ bean.exampleComment }}</div>
+        <div class="comment_con">{{ bean?.exampleComment }}</div>
       </div>
     </div>
     <div class="price">
       <div class="price_box">
-        <span class="discount_price">￥{{ bean.discount_price }}</span>
-        <span class="old_price">￥{{ bean.price }}</span>
+        <span class="discount_price">￥{{ bean?.discount_price }}</span>
+        <span class="old_price">￥{{ bean?.price }}</span>
       </div>
       <div class="button">
-        <el-button @click="goTo(bean.id)" type="primary">立即体验</el-button>
+        <el-button @click="goTo(bean?.id as string)" type="primary"
+          >立即体验</el-button
+        >
       </div>
     </div>
   </div>

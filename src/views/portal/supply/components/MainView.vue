@@ -3,7 +3,8 @@ import { Search, CaretRight, Location, Right } from "@element-plus/icons-vue";
 import { getAddressByCode } from "@/utils/address";
 import { useSupplyStoreHook } from "@/store/modules/supply";
 import { ref, onMounted, computed } from "vue";
-import router from "@/router";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const keyWord = ref("");
 var currentPage = ref(1);
 var total = computed(() => {
@@ -45,9 +46,7 @@ const goToLogin = () => {
             <el-button :icon="Search" @click="searchKeyword"></el-button>
           </template>
         </el-input>
-        <el-button
-          type="success"
-          @click="goToLogin" class="offerBt"
+        <el-button type="success" @click="goToLogin" class="offerBt"
           >需求发布 <el-icon :size="20"><CaretRight /></el-icon
         ></el-button>
       </div>
@@ -65,8 +64,7 @@ const goToLogin = () => {
             ><div class="titleName">{{ supplyInfo.name }}</div></el-col
           >
           <el-col :span="2"
-            ><el-icon class="myIcon">
-              <Right /> </el-icon
+            ><el-icon class="myIcon"> <Right /> </el-icon
           ></el-col>
         </el-row>
 
@@ -82,8 +80,7 @@ const goToLogin = () => {
           >
           <el-col :span="13">
             <el-text
-              ><el-icon>
-                <Location /> </el-icon
+              ><el-icon> <Location /> </el-icon
               >{{ getAddressByCode(supplyInfo.region) }}</el-text
             >
             <span class="bottomDate">{{ supplyInfo.start_date }}</span></el-col
@@ -103,9 +100,9 @@ const goToLogin = () => {
   </div>
 </template>
 <style scoped lang="less">
-@big:calc((1rem + 1vw)*0.7);
-@middle:calc((1rem + 1vw)*0.5);
-@small:calc((1rem + 1vw)*0.4);
+@big:calc ((1rem + 1vw)*0.7);
+@middle:calc ((1rem + 1vw)*0.5);
+@small:calc ((1rem + 1vw)*0.4);
 .picture {
   background-image: url("https://preprod.lingyangplat.com/antelope-static-resource/website/images/second-page-banners/banner-demand-EDF2FA.jpg");
   background-size: 100% 100%;
@@ -120,19 +117,19 @@ const goToLogin = () => {
 .search {
   margin-left: 5vw;
 }
-.pageSet{
+.pageSet {
   margin: 5vh 0 5vh 25vw;
-  font-size:@middle
+  font-size: @middle;
 }
-.input-with-select{
+.input-with-select {
   max-width: 30vw;
-   height: 6vh;
-   font-size:@middle;
-}
-.offerBt{
-  margin-left: 3vw; 
   height: 6vh;
-  font-size:@middle;
+  font-size: @middle;
+}
+.offerBt {
+  margin-left: 3vw;
+  height: 6vh;
+  font-size: @middle;
 }
 .titleName {
   font-size: @big;
@@ -147,8 +144,8 @@ const goToLogin = () => {
   font-weight: 600;
   margin-top: 1vh;
 }
-.tagText{
-  font-size:@middle;
+.tagText {
+  font-size: @middle;
 }
 .allCard {
   width: 60vw;

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useHomeStore } from "@/store/modules/home";
+const homeStore = useHomeStore();
+import { useRouter } from "vue-router";
+const router = useRouter();
 interface NewBean {
   id: string;
   product_category: string;
@@ -34,6 +38,12 @@ const props = defineProps<{
 }>();
 
 const bean = props.data;
+
+const goTo = (id: string) => {
+  console.log(id);
+  homeStore.setClickedService(id);
+  router.push("/detail");
+};
 </script>
 
 <template>
@@ -57,7 +67,9 @@ const bean = props.data;
         <span class="old_price">￥{{ bean.price }}</span>
       </div>
       <div class="button">
-        <el-button type="primary">立即体验</el-button>
+        <el-button type="primary" @click="goTo(bean?.id as string)"
+          >立即体验</el-button
+        >
       </div>
     </div>
   </div>
