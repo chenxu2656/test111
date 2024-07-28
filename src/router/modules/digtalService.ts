@@ -31,8 +31,7 @@ export default {
     {
       path: "/digtalServiceservice/order",
       name: "订单管理",
-      component: () =>
-        import("@/views/admin/requirement/requirementManagement.vue"),
+      component: () => import("@/views/admin/digtalServices/order/index.vue"),
       meta: {
         title: "订单管理",
       },

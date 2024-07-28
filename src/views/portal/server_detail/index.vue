@@ -4,6 +4,7 @@ import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import { onMounted, ref } from "vue";
 import { getServerDetail } from "./api";
 import { useHomeStore } from "@/store/modules/home";
+import router from "@/router";
 const homeStore = useHomeStore();
 
 const server_info = ref(null);
@@ -14,6 +15,9 @@ onMounted(async () => {
   server_info.value = resp;
   console.log(server_info.value);
 });
+const buynow = () => {
+  router.push("/orderconfirm");
+};
 </script>
 
 <template>
@@ -99,7 +103,7 @@ onMounted(async () => {
           <div class="options">支持定制，更多需求，欢迎咨询！</div>
         </div>
         <div class="button_box">
-          <el-button class="buy">立即购买</el-button>
+          <el-button class="buy" @click="buynow">立即购买</el-button>
           <el-button class="test">免费体验</el-button>
         </div>
       </div>

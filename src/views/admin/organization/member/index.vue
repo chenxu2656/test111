@@ -91,7 +91,24 @@ const serachPatient = async () => {
 onMounted(async () => {
   await getMemberList(1);
 });
-const invitePerson = () => {
+const invitePerson = async () => {
+  const inviteInfo = {
+    orgid: JSON.parse(localStorage.getItem("orgInfo")).id,
+    inviter: JSON.parse(localStorage.getItem("userInfo")).username,
+    name: JSON.parse(localStorage.getItem("orgInfo")).organization_name,
+  };
+  inviteInfo;
+  const searchResp = await http.request<any>("post", `/api/v1/notifications`, {
+    data: {
+      from_user_name: JSON.parse(localStorage.getItem("userInfo")).username,
+      from_user_id: JSON.parse(localStorage.getItem("userInfo")).id,
+      target_id: memberInfo.value.id,
+      notification_type: 2,
+      notification_title: "组织加入邀请",
+      notification_content: JSON.stringify(inviteInfo),
+      status: false,
+    },
+  });
   ElMessage.success("邀请成功，请通知用户在通知中心同意");
 };
 watch(

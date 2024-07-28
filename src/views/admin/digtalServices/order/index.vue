@@ -5,8 +5,8 @@ import { Delete, Plus } from "@element-plus/icons-vue";
 import { PaginationProps, PureTable } from "@pureadmin/table";
 import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
-
 const searchField = ref("");
+const orgId = ref(localStorage.getItem("orgId"));
 const limit = ref(10);
 const router = useRouter();
 const dataList = ref([]);
@@ -27,47 +27,60 @@ const createRequirement = () => {
 };
 const columns = [
   {
-    label: "需求名称",
-    prop: "name",
+    label: "订单号",
+    prop: "id",
     align: "center",
   },
   {
-    label: "需求类型",
-    prop: "category",
+    label: "订单时间",
+    slot: "orderTime",
     align: "center",
   },
   {
-    label: "需求区域",
-    slot: "region",
+    label: "商品名",
+    prop: "productName",
     align: "center",
   },
   {
-    label: "需求时间范围",
-    slot: "duration",
+    label: "订单状态",
+    slot: "status",
     align: "center",
   },
   {
-    label: "需求内容",
+    label: "客户信息",
     slot: "content",
     align: "center",
   },
 
-  {
-    label: "操作",
-    slot: "action",
-    align: "center",
-  },
+  // {
+  //   label: "操作",
+  //   slot: "action",
+  //   align: "center",
+  // },
 ];
+const getOrderStatus = (status) => {
+  const statusMap = {
+    0: "未支付", // Initial state
+    1: "已支付", // Payment made
+    2: "已取消", // Order canceled
+    3: "已退款", // Refund issued
+    4: "已收货", // Order received by customer
+    6: "已完成", // Order completed
+    7: "订单失败", // Order failed
+  };
+  // Return the corresponding status description or 'Unknown' if not found
+  return statusMap[status] || "Unknown";
+};
 const getRequirementList = async (pageNumber: number) => {
   const params = {
     skip: (pageNumber - 1) * limit.value,
     limit: limit.value,
-    uid: JSON.parse(localStorage.getItem("userInfo")).id,
+    org_id: JSON.parse(localStorage.getItem("orgInfo")).id,
   };
   if (searchField.value && searchField.value.length >= 3) {
     params.keyword = searchField.value;
   }
-  const resp = await http.request<any>("get", "/api/v1/requirements/list", {
+  const resp = await http.request<any>("get", "/api/v1/orders/sale", {
     params: {
       ...params,
     },
@@ -93,15 +106,15 @@ watch(
 </script>
 
 <template>
-  <div>
+  <div v-if="orgId">
     <el-row :gutter="24" justify="space-around">
       <el-col :span="24">
         <el-card class="box-card">
           <el-form class="flex gap-5">
-            <el-form-item label="需求名称" class="flex-grow">
+            <el-form-item label="查询订单" class="flex-grow">
               <el-input
-                label="需求名称"
-                placeholder="请输入需求名称,最少需要三个字符"
+                label="查询订单"
+                placeholder="订单名称,最少需要三个字符"
                 clearable
                 v-model="searchField"
               ></el-input>
@@ -115,9 +128,6 @@ watch(
           </el-form>
         </el-card>
         <el-card class="box-card my-5">
-          <el-button type="primary" :icon="Plus" @click="createRequirement"
-            >发布需求</el-button
-          >
           <PureTable
             adaptive
             stripe
@@ -130,24 +140,26 @@ watch(
             :pagination="pagination"
             style="height: 500px"
           >
-            <template #region="{ row }">
-              {{ getAddressByCode(row.region) }}
+            <template #orderTime="{ row }">
+              {{ new Date(row.ctime) }}
             </template>
-            <template #duration="{ row }">
-              {{ row.start_date }} - {{ row.end_date }}
+
+            <template #status="{ row }">
+              {{ getOrderStatus(row.status) }}
             </template>
             <template #content="{ row }">
-              {{ row.content }}
+              <span class="text-sky-600 underline">View</span>
             </template>
-            <template #action="{ row }">
+            <!-- <template #action="{ row }">
               <div class="actions flex gap-5 justify-center">
                 <el-icon color="red"><Delete /></el-icon>
                 <el-icon color="#409eff"><Edit /></el-icon>
               </div>
-            </template>
+            </template> -->
           </PureTable>
         </el-card>
       </el-col>
     </el-row>
   </div>
+  <noOrganization v-else />
 </template>

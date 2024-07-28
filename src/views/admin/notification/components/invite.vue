@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { http } from "@/utils/http";
 import { onMounted, ref } from "vue";
+import empty from "@/views/admin/empty/empty.vue";
 const loading = ref(true);
 const dataList = ref([]);
 onMounted(async () => {
@@ -44,6 +45,7 @@ const read = async (item: object) => {
   <div v-if="loading"></div>
   <div v-else>
     <el-card
+      v-if="dataList.length > 0"
       v-for="item in dataList"
       :key="item.id"
       :style="{

@@ -1,29 +1,86 @@
 <script setup lang="ts">
-import ReCol from '@/components/ReCol'
-import { ReNormalCountTo } from '@/components/ReCountTo'
-import { useRenderFlicker } from '@/components/ReFlicker'
-import { type OptionsType } from '@/components/ReSegmented'
-import { markRaw, ref } from 'vue'
-import { ChartLine, ChartRound } from './components/charts'
-import WelcomeTable from './components/table/index.vue'
-import { chartData, latestNewsData } from './data'
-import { randomGradient, useDark } from './utils'
-
+import ReCol from "@/components/ReCol";
+import { ReNormalCountTo } from "@/components/ReCountTo";
+import { useRenderFlicker } from "@/components/ReFlicker";
+import { type OptionsType } from "@/components/ReSegmented";
+import { markRaw, ref, onMounted } from "vue";
+import { ChartLine, ChartRound } from "./components/charts";
+import WelcomeTable from "./components/table/index.vue";
+import { latestNewsData } from "./data";
+import { randomGradient, useDark } from "./utils";
+import CheckLine from "@iconify-icons/ri/chat-check-line";
+import GroupLine from "@iconify-icons/ri/group-line";
+import Question from "@iconify-icons/ri/question-answer-line";
+import { http } from "@/utils/http";
+import router from "@/router";
 defineOptions({
-  name: 'Welcome'
-})
+  name: "Welcome",
+});
+const requireList = ref({
+  data: [],
+  length: 0,
+});
+const userInfo = ref(JSON.parse(localStorage.getItem("userInfo")));
+console.log("userInfo,", userInfo.value);
+const { isDark } = useDark();
 
-const { isDark } = useDark()
-
-let curWeek = ref(1) // 0上周、1本周
-const optionsBasis: Array<OptionsType> = [
+const chartData = ref([
   {
-    label: '上周'
+    icon: GroupLine,
+    bgColor: "#effaff",
+    color: "#41b6ff",
+    duration: 2200,
+    name: "需求数量",
+    value: 0,
+    // percent: "+88%",
+    data: [2101, 5288, 4239, 4962, 6752, 5208, 7450], // 平滑折线图数据
   },
   {
-    label: '本周'
-  }
-]
+    icon: Question,
+    bgColor: "#fff5f4",
+    color: "#e85f33",
+    duration: 1600,
+    name: "科技成果",
+    value: 0,
+    // percent: "+70%",
+    data: [2216, 1148, 1255, 788, 4821, 1973, 4379],
+  },
+  {
+    icon: CheckLine,
+    bgColor: "#eff8f4",
+    color: "#26ce83",
+    duration: 1500,
+    name: "数字化服务",
+    value: 0,
+    // percent: "+99%",
+    data: [861, 1002, 3195, 1715, 3666, 2415, 3645],
+  },
+]);
+// {"requirements_count":6,"technologyAchievements_count":0,"products_count":7}
+onMounted(async () => {
+  await http
+    .request<any>("get", "/api/v1/dashboardNum", {
+      params: {
+        uid: userInfo.value.id,
+        org_id: JSON.parse(localStorage.getItem("orgInfo")).id,
+      },
+    })
+    .then((resp) => {
+      chartData.value[0].value = resp.requirements_count;
+      chartData.value[1].value = resp.technologyAchievements_count;
+      chartData.value[2].value = resp.products_count;
+    });
+  await http
+    .request<any>("get", "/api/v1/requirements/list", {
+      params: {
+        limit: 7,
+      },
+    })
+    .then((resp) => {
+      requireList.value = resp;
+    });
+});
+// 获取各个数据的数量
 </script>
 
 <template>
@@ -40,14 +97,14 @@ const optionsBasis: Array<OptionsType> = [
         :xs="24"
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 80 * (index + 1)
-          }
+            delay: 80 * (index + 1),
+          },
         }"
       >
         <el-card class="line-card" shadow="never">
@@ -58,7 +115,7 @@ const optionsBasis: Array<OptionsType> = [
             <div
               class="w-8 h-8 flex justify-center items-center rounded-md"
               :style="{
-                backgroundColor: isDark ? 'transparent' : item.bgColor
+                backgroundColor: isDark ? 'transparent' : item.bgColor,
               }"
             >
               <IconifyIconOffline
@@ -76,7 +133,6 @@ const optionsBasis: Array<OptionsType> = [
                 :startVal="100"
                 :endVal="item.value"
               />
-              <p class="font-medium text-green-500">{{ item.percent }}</p>
             </div>
             <ChartLine
               v-if="item.data.length > 1"
@@ -88,85 +144,39 @@ const optionsBasis: Array<OptionsType> = [
           </div>
         </el-card>
       </re-col>
-<!-- 
       <re-col
-        v-motion
-        class="mb-[18px]"
-        :value="18"
-        :xs="24"
-        :initial="{
-          opacity: 0,
-          y: 100
-        }"
-        :enter="{
-          opacity: 1,
-          y: 0,
-          transition: {
-            delay: 400
-          }
-        }"
-      >
-        <el-card class="bar-card" shadow="never">
-          <div class="flex justify-between">
-            <span class="text-md font-medium">订单管理</span>
-            <Segmented v-model="curWeek" :options="optionsBasis" />
-          </div>
-          <div class="flex justify-between items-start mt-3">
-            <ChartBar
-              :requireData="barChartData[curWeek].requireData"
-              :questionData="barChartData[curWeek].questionData"
-            />
-          </div>
-        </el-card>
-      </re-col> -->
-
-      <!-- <re-col
         v-motion
         class="mb-[18px]"
         :value="6"
         :xs="24"
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 480
-          }
+            delay: 640,
+          },
         }"
       >
         <el-card shadow="never">
-          <div class="flex justify-between">
-            <span class="text-md font-medium">解决概率</span>
-          </div>
-          <div
-            v-for="(item, index) in progressData"
-            :key="index"
-            :class="[
-              'flex',
-              'justify-between',
-              'items-start',
-              index === 0 ? 'mt-8' : 'mt-[2.15rem]'
-            ]"
-          >
-            <el-progress
-              :text-inside="true"
-              :percentage="item.percentage"
-              :stroke-width="21"
-              :color="item.color"
-              striped
-              striped-flow
-              :duration="item.duration"
-            />
-            <span class="text-nowrap ml-2 text-text_color_regular text-sm">
-              {{ item.week }}
-            </span>
+          <div class="userInfo flex justify-center" style="flex-wrap: wrap">
+            <div class="flex items-center">
+              <img
+                src="@/assets/images/logo.png"
+                alt=""
+                srcset=""
+                style="width: 80px"
+              />
+              <div class="user">{{ userInfo.username }}</div>
+            </div>
+
+            <el-button style="width: 80%" type="primary">专家认证</el-button>
           </div>
         </el-card>
-      </re-col> -->
-
+      </re-col>
       <re-col
         v-motion
         class="mb-[18px]"
@@ -174,14 +184,14 @@ const optionsBasis: Array<OptionsType> = [
         :xs="24"
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 560
-          }
+            delay: 560,
+          },
         }"
       >
         <el-card shadow="never" class="h-[580px]">
@@ -199,24 +209,30 @@ const optionsBasis: Array<OptionsType> = [
         :xs="24"
         :initial="{
           opacity: 0,
-          y: 100
+          y: 100,
         }"
         :enter="{
           opacity: 1,
           y: 0,
           transition: {
-            delay: 640
-          }
+            delay: 640,
+          },
         }"
       >
         <el-card shadow="never">
           <div class="flex justify-between">
-            <span class="text-md font-medium">需求动态</span>
+            <span class="text-md font-medium"
+              >全网需求,共{{ requireList.length }}条<span
+                class="text-sky-500 ml-5 underline cursor-pointer"
+                @click="router.push('/service/solveRequirement')"
+                >查看全部</span
+              ></span
+            >
           </div>
           <el-scrollbar max-height="504" class="mt-3">
             <el-timeline>
               <el-timeline-item
-                v-for="(item, index) in latestNewsData"
+                v-for="(item, index) in requireList.data"
                 :key="index"
                 center
                 placement="top"
@@ -224,17 +240,15 @@ const optionsBasis: Array<OptionsType> = [
                   markRaw(
                     useRenderFlicker({
                       background: randomGradient({
-                        randomizeHue: true
-                      })
-                    })
+                        randomizeHue: true,
+                      }),
+                    }),
                   )
                 "
-                :timestamp="item.date"
+                :timestamp="`${item.ctime.slice(0, 10)} ${item.ctime.slice(11, 19)}`"
               >
                 <p class="text-text_color_regular text-sm">
-                  {{
-                    `新增 ${item.requiredNumber} 条问题，${item.resolveNumber} 条已解决`
-                  }}
+                  {{ `新增 ${item.name} 需求` }}
                 </p>
               </el-timeline-item>
             </el-timeline>

@@ -13,7 +13,7 @@ onMounted(async () => {
       "get",
       `/api/v1/organizationMembers/user/${userId}`,
     );
-
+    localStorage.setItem("orgInfo", JSON.stringify(org_resp));
     loading.value = false;
     org_id.value = org_resp.id;
     localStorage.setItem("orgId", org_id.value);

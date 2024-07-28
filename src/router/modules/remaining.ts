@@ -58,6 +58,16 @@ export default [
     },
   },
   {
+    path: "/orderconfirm",
+    name: "orderconfirm",
+    component: () => import("@/views/portal/server_detail/orderconfirm.vue"),
+    meta: {
+      title: "订单确认",
+      showLink: false,
+      rank: 103,
+    },
+  },
+  {
     path: "/supply",
     name: "Supply",
     component: () => import("@/views/portal/supply/index.vue"),
