@@ -8,6 +8,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import Header from "@/views/portal/a-components/less/Header.vue";
 import { useHomeStore } from "@/store/modules/home";
 import { storeToRefs } from "pinia";
+import arrow from "@/assets/svg/arrow.svg?component";
 const homeStore = useHomeStore();
 const { bean1, bean2, bean3, searchTags, activeIndex } =
   storeToRefs(useHomeStore());
@@ -71,6 +72,17 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll1);
 });
+
+const dialogFormVisible = ref(false);
+const formLabelWidth = "80px";
+const form = reactive({
+  name: "",
+  org: "",
+  position: "",
+  phone: "",
+  care: "",
+  request: "",
+});
 </script>
 
 <template>
@@ -117,15 +129,106 @@ onUnmounted(() => {
           <span class="green-animate-arrow"></span>
         </div>
         <div class="contact-info-container">
-          <el-carousel :interval="4000" type="card" height="300px">
+          <el-carousel :interval="4000000" type="card" height="300px">
             <el-carousel-item v-for="item in 6" :key="item">
-              <img src="https://picsum.photos/1000/500" alt="" srcset="" />
+              <div class="item">
+                <img src="https://picsum.photos/352/260" class="img" />
+                <div class="info">
+                  <div class="title">
+                    MES+ERP为“非标”生产提质增效，“点亮”安徽蚌埠这家企业的“暗”数据！
+                  </div>
+                  <div class="tags">
+                    <div
+                      class="span"
+                      v-for="item in [
+                        '#封接器生产',
+                        '#生产监控',
+                        '#数字化车间',
+                      ]"
+                    >
+                      {{ item }}
+                    </div>
+                  </div>
+                  <div class="relation">
+                    相关产品：
+                    <span class="product">慧尔云ERP</span>
+                  </div>
+                  <div class="link">
+                    查看详情
+                    <arrow />
+                  </div>
+                </div>
+              </div>
             </el-carousel-item>
           </el-carousel>
         </div>
       </div>
     </div>
-
+    <div class="zixun new_bg1">
+      <div class="content">
+        <div class="title">欢迎咨询</div>
+        <div class="desc">羚羊数字化企业管家奥迪法海好看好看</div>
+        <div class="link" @click="dialogFormVisible = true">
+          立即咨询
+          <arrow />
+        </div>
+      </div>
+    </div>
+    <el-dialog v-model="dialogFormVisible" title="添加企业信息" width="500">
+      <el-form :model="form">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input
+            v-model="form.name"
+            placeholder="请输入姓名"
+            autocomplete="off"
+          />
+        </el-form-item>
+        <el-form-item label="公司/单位" :label-width="formLabelWidth">
+          <el-input
+            v-model="form.org"
+            placeholder="请输入公司/单位"
+            autocomplete="off"
+          />
+        </el-form-item>
+        <el-form-item label="职位" :label-width="formLabelWidth">
+          <el-input
+            v-model="form.position"
+            placeholder="请输入职位"
+            autocomplete="off"
+          />
+        </el-form-item>
+        <el-form-item label="手机" :label-width="formLabelWidth">
+          <el-input
+            v-model="form.phone"
+            placeholder="请输入手机"
+            autocomplete="off"
+          />
+        </el-form-item>
+        <el-form-item label="我关注的" :label-width="formLabelWidth">
+          <el-select v-model="form.care" placeholder="请选择">
+            <el-option label="Zone No.1" value="shanghai" />
+            <el-option label="Zone No.2" value="beijing" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="其他诉求" :label-width="formLabelWidth">
+          <el-input
+            v-model="form.request"
+            placeholder="请输入其他诉求"
+            autocomplete="off"
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4 }"
+          />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">
+            提交
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
     <CommonFooter id="declare-offset" />
   </div>
 </template>
@@ -221,8 +324,61 @@ onUnmounted(() => {
       }
     }
   }
+  .zixun {
+    height: 284px;
+
+    width: 100%;
+    background-color: #fafbfc;
+    padding: 10px 24px 20px;
+
+    .content {
+      .m-reactive-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .title {
+        margin-top: 50px;
+        text-align: center;
+        width: auto;
+        color: #333;
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+      .desc {
+        color: #333;
+        font-size: 16px;
+        margin-bottom: 20px;
+        text-align: center;
+        line-height: 28px;
+      }
+      .link {
+        height: 40px;
+        margin-top: 10px;
+        line-height: 40px;
+        color: #fff;
+        text-align: left;
+        font-weight: 600;
+        font-size: 14px;
+        padding-left: 15px;
+        width: 200px;
+        background-color: #13ae68;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 15px;
+      }
+    }
+  }
   .new_bg {
     background: url(@/assets/img/recomm_bg.jpg) no-repeat center top;
+    background-position: center top;
+  }
+  .new_bg1 {
+    background: url(@/assets/img/zixun.jpeg) no-repeat center top;
+    background-color: #f4fcfc;
+    background-size: auto 284px;
   }
 
   .contact {
@@ -277,6 +433,79 @@ onUnmounted(() => {
         padding-bottom: 50px;
         background: url(@/assets/img/more_bg.jpg) no-repeat center top;
         background-size: auto 616px;
+
+        .item {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          flex-direction: row;
+          height: 100%;
+          .img {
+            width: 352px;
+            height: 260px;
+            background-color: #333;
+            margin: 0 20px;
+            border-radius: 10px;
+          }
+          .info {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            height: 80%;
+            margin: 0 20px 0 0;
+
+            .title {
+              font-size: 16px;
+              font-weight: 600;
+              text-align: left;
+              width: 100%;
+              color: #333;
+            }
+            .tags {
+              font-size: 12px;
+              font-weight: 400;
+              width: 100%;
+              color: #333;
+              display: flex;
+              margin-top: 10px;
+              .span {
+                margin-right: 10px;
+                width: fit-content;
+                background-color: #f7f8fa;
+                border-radius: 8px;
+                padding: 3px 5px;
+              }
+            }
+            .relation {
+              font-size: 14px;
+              width: 100%;
+              text-align: left;
+              margin-top: 28%;
+              color: #475669;
+              .product {
+                color: #13ae68;
+                margin-left: 10px;
+              }
+            }
+            .link {
+              height: 40px;
+              margin-top: 10px;
+              line-height: 40px;
+              color: #fff;
+              text-align: left;
+              font-weight: 600;
+              font-size: 14px;
+              padding-left: 15px;
+              width: 60%;
+              background-color: #13ae68;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              padding-right: 15px;
+            }
+          }
+        }
         @media (max-width: 1000px) {
           grid-template-columns: repeat(3, 1fr);
         }

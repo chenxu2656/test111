@@ -349,7 +349,7 @@ function scrollToSection(sectionId, index) {
   justify-items: center;
   width: 100%;
   min-width: @bodyMinWidth;
-  padding: 0 calc((100vw - 300px) / 10);
+  padding: 0 calc((100vw - 300px) / 4);
   .often {
     display: flex;
     place-content: center;
@@ -399,7 +399,7 @@ function scrollToSection(sectionId, index) {
 
   width: 100%;
   min-width: @bodyMinWidth;
-  padding: 0 calc((100vw - 300px) / 20);
+  padding: 0 calc((100vw - 300px) / 4);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -440,7 +440,7 @@ function scrollToSection(sectionId, index) {
   width: 100%;
   min-width: @bodyMinWidth;
   //box-shadow: 0 0 30px rgba(0, 0, 0, .2);
-  padding: 0 calc((100vw - 300px) / 10);
+  padding: 0 calc((100vw - 300px) / 4);
   //background-color: @light-bord-color;
 
   font-size: 16px;
