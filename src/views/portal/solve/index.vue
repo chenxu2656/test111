@@ -5,31 +5,28 @@ import MainView from "@/views/portal/solve/components/MainView.vue";
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 </script>
 <template>
-   <el-backtop :right="10" :bottom="10" />
-<Header></Header>
- <div class="all_layout">
+  <el-backtop :right="10" :bottom="10" />
+  <Header :onlyShowOriginalNav="false" />
+  <div class="all_layout">
     <el-container>
-      <el-aside width="20vw"><MySide/></el-aside>
-      <el-main> <MainView/></el-main>
+      <el-aside width="20vw"><MySide /></el-aside>
+      <el-main> <MainView /></el-main>
     </el-container>
-   
   </div>
- <CommonFooter id="declare-offset" />
-  
+  <CommonFooter id="declare-offset" />
 </template>
 <style lang="scss" scoped>
-$fullHeight:80vh;
-.all_layout{
+$fullHeight: 80vh;
+.all_layout {
   // margin-top: 11vh;
   background-color: white;
-   min-height: $fullHeight;
+  min-height: $fullHeight;
 }
-.el-container{
+.el-container {
   margin-left: 10vw;
-   padding-top: 70px;
+  padding-top: 70px;
 }
-  .el-main{
-    padding: 0;
-    
-  }
+.el-main {
+  padding: 0;
+}
 </style>

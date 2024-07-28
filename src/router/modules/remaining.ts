@@ -40,7 +40,7 @@ export default [
   {
     path: "/search",
     name: "Search",
-    component: () => import("@/views/portal/search/index.vue"),
+    component: () => import("@/views/portal/search/Index.vue"),
     meta: {
       title: "Search",
       showLink: false,

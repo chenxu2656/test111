@@ -100,7 +100,7 @@ const goToDetail = (id) => {
        </el-card>
     </el-card>
   </div>
-  <div  class="chatBoard" >
+  <div class="chatBoard">
     <el-card class="chatCard" shadow="never">
       <h3>留言</h3> 
       <el-input v-model="textarea" maxlength="200" resize="none"
@@ -136,7 +136,7 @@ const goToDetail = (id) => {
 .chatCard{
   min-height: @chatHeight;
 }
-.message{
+.message {
   width: 77vw;
   margin-top: 2vh;
   resize:none;

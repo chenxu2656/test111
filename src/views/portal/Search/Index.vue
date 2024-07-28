@@ -10,6 +10,7 @@ import { getSearchList } from "./api";
 const homeStore = useHomeStore();
 const radioCategory = ref<string>("");
 const radioPrice = ref<string>("");
+const searchInput = ref<string>("");
 const items = ref<string[]>([
   "初始内容1",
   "初始内容2",
@@ -21,7 +22,6 @@ const items = ref<string[]>([
 const fetchSearchResults = async (searchParam: string) => {
   try {
     const response = await getSearchList(searchParam, 0);
-    // Handle the response and update items
 
     return response.data;
   } catch (error) {
@@ -42,14 +42,12 @@ const updateItems = () => {
 const searchList = ref([]);
 
 onMounted(async () => {
-  // Check if clickedTag has a value and fetch search results
   if (homeStore.clickedTag) {
     searchList.value = await fetchSearchResults(homeStore.clickedTag);
   } else {
-    await fetchSearchResults(""); // Default search
+    searchList.value = await fetchSearchResults(""); // Default search
   }
 
-  // Set an interval to update items dynamically
   setInterval(() => {
     updateItems();
   }, 5000);
@@ -68,20 +66,27 @@ const handleInputChange = () => {
   }
 };
 
-// Watch for changes in radioCategory and trigger search
-watch(radioCategory, (newValue) => {
-  fetchSearchResults(newValue);
+const handleSearch = async () => {
+  searchList.value = await fetchSearchResults(searchInput.value);
+};
+
+watch(radioCategory, async (newValue) => {
+  searchList.value = await fetchSearchResults(newValue);
 });
 </script>
 <template>
   <el-backtop :right="10" :bottom="10" />
-  <Header />
+  <Header :onlyShowOriginalNav="false" />
   <div id="index" class="index">
     <div class="content">
       <div class="introduce">
-        <el-input class="search_input">
+        <el-input
+          class="search_input"
+          v-model="searchInput"
+          @keyup.enter="handleSearch"
+        >
           <template #append>
-            <el-button :icon="Search" />
+            <el-button :icon="Search" @click="handleSearch" />
           </template>
         </el-input>
         <div class="guess_you_like_box">
