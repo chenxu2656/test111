@@ -28,7 +28,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       proxy: {
         "/api/v1": {
           // 这里填写后端地址
-          target: "http://127.0.0.1:8000/",
+          target: "http://124.222.84.233:8000/",
           changeOrigin: true,
           bypass: function (req, res, options) {
             // 设置代理转发前缀
