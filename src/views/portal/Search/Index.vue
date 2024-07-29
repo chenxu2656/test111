@@ -4,8 +4,8 @@ import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import Header from "@/views/portal/a-components/less/Header.vue";
 import SearchItem from "@/views/portal/a-components/less/SearchItem.vue";
 import { Search } from "@element-plus/icons-vue";
-import { onMounted, ref, watch } from "vue";
-import { getSearchList } from "./api";
+import { onMounted, onUnmounted, ref, watch } from "vue";
+import { getSearchList, getSearchListByKeyword } from "./api";
 
 const homeStore = useHomeStore();
 const radioCategory = ref<string>("");
@@ -19,10 +19,38 @@ const items = ref<string[]>([
 ]);
 
 // Function to fetch search results
-const fetchSearchResults = async (searchParam: string) => {
+const fetchSearchResults = async (searchParam: string, skip: number) => {
   try {
-    const response = await getSearchList(searchParam, 0);
+    const response = await getSearchList(searchParam, skip);
 
+    searchList.value = response.data;
+    pagination.value = {
+      ...pagination.value,
+      total: response.length,
+    };
+    setTimeout(() => {
+      dataLoading.value = false;
+    }, 500);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching search results:", error);
+  }
+};
+const fetchSearchResultsByKeyword = async (
+  searchParam: string,
+  skip: number,
+) => {
+  try {
+    const response = await getSearchListByKeyword(searchParam, skip);
+
+    searchList.value = response.data;
+    pagination.value = {
+      ...pagination.value,
+      total: response.length,
+    };
+    setTimeout(() => {
+      dataLoading.value = false;
+    }, 500);
     return response.data;
   } catch (error) {
     console.error("Error fetching search results:", error);
@@ -40,17 +68,27 @@ const updateItems = () => {
 };
 
 const searchList = ref([]);
+const dataLoading = ref(true);
+const pagination = ref({ current: 1, pageSize: 12, total: 0 });
 
 onMounted(async () => {
   if (homeStore.clickedTag) {
-    searchList.value = await fetchSearchResults(homeStore.clickedTag);
+    searchInput.value = homeStore.clickedTag;
+    searchList.value = await fetchSearchResults(
+      homeStore.clickedTag,
+      pagination.value.current,
+    );
   } else {
-    searchList.value = await fetchSearchResults(""); // Default search
+    searchList.value = await fetchSearchResults("", pagination.value.current); // Default search
   }
 
   setInterval(() => {
     updateItems();
   }, 5000);
+});
+
+onUnmounted(() => {
+  homeStore.resetClickedTag();
 });
 
 const minPrice = ref<number | null>(null);
@@ -67,12 +105,21 @@ const handleInputChange = () => {
 };
 
 const handleSearch = async () => {
-  searchList.value = await fetchSearchResults(searchInput.value);
+  searchList.value = await fetchSearchResultsByKeyword(searchInput.value, 1);
 };
 
 watch(radioCategory, async (newValue) => {
-  searchList.value = await fetchSearchResults(newValue);
+  searchList.value = await fetchSearchResults(newValue, 0);
 });
+
+const onPageSizeChange = (size: number) => {
+  pagination.value.pageSize = size;
+  pagination.value.current = 1;
+};
+const onCurrentChange = (current: number) => {
+  pagination.value.current = current;
+  fetchSearchResults(homeStore.clickedTag, current);
+};
 </script>
 <template>
   <el-backtop :right="10" :bottom="10" />
@@ -159,11 +206,20 @@ watch(radioCategory, async (newValue) => {
         </div>
       </div>
     </div>
-    <div class="search_result">
+    <div class="search_result" v-loading="dataLoading">
       <SearchItem v-for="(item, index) in searchList" :data="item" />
     </div>
     <div class="pagination">
-      <el-pagination background layout="prev, pager, next" :total="1000" />
+      <el-pagination
+        v-model:currentPage="pagination.current"
+        class="float-right"
+        :page-size="pagination.pageSize"
+        :total="pagination.total"
+        :background="true"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="onPageSizeChange"
+        @current-change="onCurrentChange"
+      />
     </div>
   </div>
   <CommonFooter id="declare-offset" />

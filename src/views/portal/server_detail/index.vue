@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Header from "@/views/portal/a-components/less/Header.vue";
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { getServerDetail } from "./api";
 import { useHomeStore } from "@/store/modules/home";
 import router from "@/router";
@@ -11,9 +11,12 @@ const server_info = ref(null);
 
 onMounted(async () => {
   const resp = await getServerDetail(homeStore.clickedService);
-
   server_info.value = resp;
   console.log(server_info.value);
+});
+
+onUnmounted(() => {
+  homeStore.resetClickedService();
 });
 const buynow = () => {
   router.push(`/orderconfirm?productid=${server_info.value.id}`);

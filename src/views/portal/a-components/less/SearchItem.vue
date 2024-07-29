@@ -132,15 +132,19 @@ const goTo = (id: string) => {
       padding: 0 20px;
       margin-top: 10px;
       .desc {
+        position: relative;
         overflow: hidden;
         display: -webkit-box;
-        text-overflow: ellipsis;
+        -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
         word-break: break-all;
         font-size: 14px;
         color: #333;
-        margin-bottom: 15px;
+        line-height: 1.2;
+        min-height: calc(1.2em * 5);
       }
+
       .tags {
         display: inline-flex;
         .tag {

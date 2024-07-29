@@ -46,8 +46,16 @@ export const useHomeStore = defineStore(
     const setclickedTag = (value: string) => {
       clickedTag.value = value;
     };
+
+    const resetClickedTag = () => {
+      clickedTag.value = "";
+    };
     const setClickedService = (value: string) => {
       clickedService.value = value;
+    };
+
+    const resetClickedService = () => {
+      clickedService.value = "";
     };
     return {
       clickedTag,
@@ -59,7 +67,9 @@ export const useHomeStore = defineStore(
       searchTags,
       activeIndex,
       setclickedTag,
+      resetClickedTag,
       setClickedService,
+      resetClickedService,
     };
   },
   {
