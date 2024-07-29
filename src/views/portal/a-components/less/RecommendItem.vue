@@ -58,7 +58,9 @@ const goTo = (id: string) => {
         <div class="name">{{ bean?.product_name }}</div>
       </div>
       <div class="info">
-        <div class="desc">{{ bean?.product_description }}</div>
+        <div class="desc text-14px leading-24px text-#565D66 ell2">
+          {{ bean?.product_description }}
+        </div>
         <div class="tags" v-for="tag in bean?.tags">
           <span class="tag">{{ tag }}</span>
         </div>
@@ -135,6 +137,7 @@ const goTo = (id: string) => {
     .logo {
       display: flex;
       flex-direction: row;
+      align-items: center;
       .img {
         width: 60px;
         height: 60px;
@@ -146,7 +149,7 @@ const goTo = (id: string) => {
         max-width: 100%;
         overflow: hidden;
         transition: all ease-in-out 0.3s;
-        color: #15975d;
+        color: #333;
         font-size: 20px;
         line-height: 32px;
         text-overflow: ellipsis;
@@ -168,8 +171,8 @@ const goTo = (id: string) => {
         word-break: break-all;
         font-size: 14px;
         color: #333;
-        line-height: 1.2;
-        min-height: calc(1.2em * 5);
+
+        min-height: calc(1.5em * 5);
       }
 
       .tags {
@@ -190,6 +193,7 @@ const goTo = (id: string) => {
     width: 100%;
     height: 120px;
     margin-top: 10px;
+    display: none;
     .comment_box {
       width: 95%;
       margin: 0 auto;
@@ -230,7 +234,7 @@ const goTo = (id: string) => {
     }
   }
   .price {
-    border-top: 1px solid #d3d3d3;
+    border-top: 1px solid #f2f3f5;
     height: 100px;
     display: flex;
     flex-direction: row;
@@ -271,6 +275,11 @@ const goTo = (id: string) => {
 .item:hover {
   .button {
     display: block;
+  }
+  .logo {
+    .name {
+      color: #15975d;
+    }
   }
 }
 </style>
