@@ -13,15 +13,15 @@ const homeStore = useHomeStore();
 const { bean1, bean2, bean3, searchTags, activeIndex } =
   storeToRefs(useHomeStore());
 onMounted(async () => {
-  const reap1 = await getHomeDisplayList("供应链管理");
+  const reap1 = await getHomeDisplayList("AI新技术");
   bean1.value.data = reap1.data;
   console.log(bean1.value);
 
-  const reap2 = await getHomeDisplayList("营销管理");
+  const reap2 = await getHomeDisplayList("生产制造");
   bean2.value.data = reap2.data;
   console.log(bean2.value);
 
-  const reap3 = await getHomeDisplayList("解决方案");
+  const reap3 = await getHomeDisplayList("数字化服务");
   bean3.value.data = reap3.data;
   console.log(bean3.value);
 });

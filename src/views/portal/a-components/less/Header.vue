@@ -77,7 +77,7 @@ watch(
       headerHeight.value = "70px";
     } else {
       window.removeEventListener("scroll", transparentAnimation);
-      headerHeight.value = "50px";
+      headerHeight.value = "70px";
     }
   },
   {
@@ -87,7 +87,7 @@ watch(
 
 function transparentAnimation() {
   if (window.scrollY > 0) {
-    headerHeight.value = "50px";
+    headerHeight.value = "70px";
     appStates.$patch({
       headerState: {
         bgc: "white",
@@ -98,7 +98,7 @@ function transparentAnimation() {
     headerHeight.value = "70px";
     appStates.$patch({
       headerState: {
-        bgc: "transparent",
+        bgc: "white",
         color: "#101010",
       },
     });
@@ -110,7 +110,7 @@ function onMouseover() {
     window.scrollY === 0 &&
     headerState.value.showBehavior.includes("transparentMode")
   ) {
-    headerHeight.value = "50px";
+    headerHeight.value = "70px";
     appStates.$patch({
       headerState: {
         color: "#101010",
@@ -177,11 +177,11 @@ const goToLogin = () => {
 const showOriginalNav = ref(true);
 
 const handleScroll = () => {
-  if (document.documentElement.scrollTop > 500) {
-    showOriginalNav.value = false;
-  } else {
-    showOriginalNav.value = true;
-  }
+  // if (document.documentElement.scrollTop > 500) {
+  //   showOriginalNav.value = false;
+  // } else {
+  //   showOriginalNav.value = true;
+  // }
 };
 
 onMounted(() => {
@@ -241,7 +241,7 @@ function scrollToSection(sectionId, index) {
       ref="header"
       class="header original-navbar"
       :style="{
-        backgroundColor: headerState.bgc,
+        backgroundColor: white,
         height: headerHeight,
         position: headerState.position,
         boxShadow: headerBoxShadow,
@@ -349,13 +349,12 @@ function scrollToSection(sectionId, index) {
   justify-items: center;
   width: 100%;
   min-width: @bodyMinWidth;
-  padding: 0 calc((100vw - 300px) / 4);
+  padding: 0 50px;
   .often {
     display: flex;
     place-content: center;
     place-items: center;
     height: 80px;
-    width: 600px;
   }
   :deep(.search_input) {
     height: 40px;
@@ -440,7 +439,7 @@ function scrollToSection(sectionId, index) {
   width: 100%;
   min-width: @bodyMinWidth;
   //box-shadow: 0 0 30px rgba(0, 0, 0, .2);
-  padding: 0 calc((100vw - 300px) / 4);
+  padding: 0 50px;
   //background-color: @light-bord-color;
 
   font-size: 16px;
@@ -474,9 +473,9 @@ function scrollToSection(sectionId, index) {
 
   .content-pc {
     height: 100%;
-    display: grid;
-    grid-template-columns: auto auto auto 1fr;
-    grid-template-rows: 100%;
+    width: 70vw;
+    display: flex;
+
     justify-items: start;
     align-items: center;
 

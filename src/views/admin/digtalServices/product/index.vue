@@ -39,17 +39,17 @@ const dataLoading = ref(true);
 const getCardList = async (pageNumber: number) => {
   const resp = await http.request<any>("get", "/api/v1/products/search", {
     params: {
-      limit: 10,
-      skip: (pageNumber - 1) * 10,
+      limit: 12,
+      skip: (pageNumber - 1) * 12,
       uid: localStorage.getItem("orgId"),
     },
   });
   console.log("resp", resp);
   return resp;
 };
-const getCardListData = async () => {
+const getCardListData = async (num: number) => {
   try {
-    const { data, length } = await getCardList(1);
+    const { data, length } = await getCardList(num);
     productList.value = data;
     pagination.value = {
       ...pagination.value,
@@ -66,7 +66,7 @@ const getCardListData = async () => {
 };
 
 onMounted(() => {
-  getCardListData();
+  getCardListData(1);
 });
 
 const formDialogVisible = ref(false);
@@ -79,6 +79,7 @@ const onPageSizeChange = (size: number) => {
 };
 const onCurrentChange = (current: number) => {
   pagination.value.current = current;
+  getCardListData(current);
 };
 const handleDeleteItem = (product) => {
   ElMessageBox.confirm(
@@ -134,31 +135,13 @@ const handleManageProduct = (product) => {
       element-loading-svg-view-box="-10, -10, 50, 50"
     >
       <el-empty
-        v-show="
-          productList
-            .slice(
-              pagination.pageSize * (pagination.current - 1),
-              pagination.pageSize * pagination.current,
-            )
-            .filter((v) =>
-              v.product_name.toLowerCase().includes(searchValue.toLowerCase()),
-            ).length === 0
-        "
+        v-show="productList.length === 0"
         :description="`${searchValue} 产品不存在`"
       />
       <template v-if="pagination.total > 0">
         <el-row :gutter="16">
           <el-col
-            v-for="(product, index) in productList
-              .slice(
-                pagination.pageSize * (pagination.current - 1),
-                pagination.pageSize * pagination.current,
-              )
-              .filter((v) =>
-                v.product_name
-                  .toLowerCase()
-                  .includes(searchValue.toLowerCase()),
-              )"
+            v-for="(product, index) in productList"
             :key="index"
             :xs="24"
             :sm="12"
@@ -178,7 +161,6 @@ const handleManageProduct = (product) => {
           class="float-right"
           :page-size="pagination.pageSize"
           :total="pagination.total"
-          :page-sizes="[12, 24, 36]"
           :background="true"
           layout="total, sizes, prev, pager, next, jumper"
           @size-change="onPageSizeChange"

@@ -30,10 +30,19 @@ export default {
     },
     {
       path: "/digtalServiceservice/order",
-      name: "订单管理",
+      name: "销售订单",
       component: () => import("@/views/admin/digtalServices/order/index.vue"),
       meta: {
-        title: "订单管理",
+        title: "销售订单",
+      },
+    },
+    {
+      path: "/digtalServiceservice/buyorder",
+      name: "我的订单",
+      component: () =>
+        import("@/views/admin/digtalServices/orderbuy/index.vue"),
+      meta: {
+        title: "我的订单",
       },
     },
   ],
