@@ -22,10 +22,10 @@ export const getSupplyDetail = (id: string) => {
   );
 };
 
-//获取随机3个需求
+//获取随机5个需求
 export const getRandomRequirments=(category:string)=>{
   return http.request<any>( "get",
-    baseUrlApi(`requirements/random?category=${category}&num=3`),
+    baseUrlApi(`requirements/random?category=${category}&num=5`),
   );
 }
 /**创建需求 */
