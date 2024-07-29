@@ -2,11 +2,19 @@
 import Header from "../a-components/less/Header.vue";
 import { Warning } from "@element-plus/icons-vue";
 import { useSolveStoreHook } from "@/store/modules/solve";
+import { getAddressByCode } from "@/utils/address";
 const solveDetail = useSolveStoreHook().solveObj;
 const formattedPrice = (price) => {
   return useSolveStoreHook().formattedPrice(price);
 };
-
+const checkAddress=(address)=>{
+  let content=getAddressByCode(address);
+  if (content === undefined) {  
+    // 可以在这里返回一个默认值、抛出错误或进行其他处理  
+    return null; // 或者 ''，取决于你的需求  
+  }  
+  return content.split('-')[0];  
+}
 // import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 </script>
 <template>
@@ -15,56 +23,50 @@ const formattedPrice = (price) => {
   <div class="all_layout">
     <div class="all_card">
       <el-card>
-        <el-descriptions :title="solveDetail.achievement_name">
-          <el-descriptions-item label="成果年份：">{{
-            solveDetail.achievement_year
-          }}</el-descriptions-item>
-          <el-descriptions-item label="价格：">{{
-            formattedPrice(solveDetail.achievement_transfer_price)
-          }}</el-descriptions-item>
-          <el-descriptions-item label="转让方式：">{{
-            solveDetail.achievement_transfer_method
-          }}</el-descriptions-item>
-          <el-descriptions-item label="成果类别：">
-            <el-tag size="small">{{ solveDetail.achievement_category }}</el-tag>
-          </el-descriptions-item>
-          <el-descriptions-item label="成果属性：">{{
-            solveDetail.achievement_attribute
-          }}</el-descriptions-item>
-          <el-descriptions-item label="成果成熟度：">{{
-            solveDetail.achievement_maturity
-          }}</el-descriptions-item>
-          <el-descriptions-item label="技术领域：">{{
-            solveDetail.technology_field
-          }}</el-descriptions-item>
-          <el-descriptions-item label="应用行业：">{{
-            solveDetail.main_application_industry
-          }}</el-descriptions-item>
-          <el-descriptions-item label="所属产业：">{{
-            solveDetail.industry_sector
-          }}</el-descriptions-item>
-          <el-descriptions-item label="专利号码：">{{
-            solveDetail.patent_number
-          }}</el-descriptions-item>
-        </el-descriptions>
-        <el-button type="primary" style="margin-top: 3vh" size="small"
+        <h3>{{solveDetail.achievement_name}}</h3>
+        <p>成果年份：{{solveDetail.achievement_year}}</p>
+        <p>价格：{{formattedPrice(solveDetail.achievement_transfer_price)}}</p>
+        <el-row>
+          <el-col :span="12">
+            <p>转让方式：{{solveDetail.achievement_transfer_method}}</p>
+            <p>成果属性：{{solveDetail.achievement_attribute}}</p>
+            <p>技术领域：{{solveDetail.technology_field}}</p>
+            <p>所属产业：{{solveDetail.industry_sector}}</p>
+          </el-col>
+          <el-col :span="12">
+            <p>成果类别：{{ solveDetail.achievement_category }}</p>
+            <p>成果成熟度：{{ solveDetail.achievement_maturity }}</p>
+            <p>应用行业：{{ solveDetail.main_application_industry}}</p>
+            <p>专利号码：{{   solveDetail.patent_number }}</p>
+          </el-col>
+        </el-row >
+        <div style="margin-top: 2vh;float:left;padding-bottom:2vh" >
+          <el-button type="primary" size="small"
           >联系发布人</el-button
         >
-        <el-button type="primary" style="margin-top: 3vh" size="small" plain
+        <el-button type="primary" size="small" plain
           >联系平台经理</el-button
         >
+        </div>
+      
         <div style="float: right; margin-top: 3vh">
           <el-text style="margin-right: 1vw; cursor: pointer"
             ><el-icon><Warning></Warning></el-icon> 举报</el-text
           >
-          IP来自安徽省
+          IP来自{{ checkAddress(solveDetail.region) }}
         </div>
       </el-card>
-      <el-card class="bottomC">
+      <div>
+
+      </div>
+     
+        <el-card class="bottomC">
         <h3>技术简介</h3>
-        <el-text>{{ solveDetail.achievement_brief_introduction }}</el-text>
+        <div v-html="solveDetail.achievement_brief_introduction"></div>
         <p class="file">附件：无</p>
       </el-card>
+ 
+     
     </div>
     <el-card class="rightC">
       <h3>发布人信息</h3>
@@ -82,25 +84,42 @@ const formattedPrice = (price) => {
   </div>
   <!-- <CommonFooter id="declare-offset" /> -->
 </template>
-<style lang="scss" scoped>
-$fullHeight: 80vh;
+<style lang="less" scoped>
+@fullHeight: 80vh;
+@big:calc((1rem + 1vw)*0.7);
+@middle:calc((1rem + 1vw)*0.5);
+@small:calc((1rem + 1vw)*0.4);
+
 .all_layout {
-  margin-left: 10vw;
-  min-height: $fullHeight;
+  // margin-left: 10vw;
+  height: @fullHeight;
   display: flex;
   margin-top: 11vh;
+  background: rgb(247, 248, 250);
+}
+h3{
+font-size:@big;
+padding-bottom: 1vh;
+}
+.el-descriptions-item{
+  font-size:@middle
 }
 .all_card {
+  margin-left:10vw;
   width: 55vw;
   height: 30vh;
 }
 .el-card {
   border: none;
+  font-size:@middle;
+  box-shadow: none;
 }
+
 .bottomC {
   width: 55vw;
   margin-top: 2vh;
   min-height: 25vh;
+  margin-bottom:3vh
 }
 .rightC {
   width: 24vw;

@@ -4,7 +4,7 @@ import { store } from '../utils'
 export const useSolveStore = defineStore({
   id: 'pure-solve',
   state: () => ({
-    solveObj:''
+    solveObj:{}
   }),
   actions: {
    formattedPrice (price:number){

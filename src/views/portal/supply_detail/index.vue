@@ -5,22 +5,26 @@ import { useSupplyStoreHook } from '@/store/modules/supply';
 import { getAddressByCode } from "@/utils/address";
 import { getSupplyDetail } from "@/api/supply";
 import { onMounted,reactive,ref } from "vue";
-import router from "@/router";
 var supplyDetail = reactive({data:{}});
 const textarea=ref("")
+const anonymous=ref(false)
 var category="";
 var supplyInfos = computed(() => {
   return useSupplyStoreHook().randomList;
 });
-onMounted(() => {
-  let id=useSupplyStoreHook().supplyId
+const initView=(id)=>{
   getSupplyDetail(id).then(res => {
   supplyDetail.data = res
   console.log(res)
   category=res.category
   useSupplyStoreHook().getRandomRequirments(category)
   })
+}
+onMounted(() => {
+  let id=useSupplyStoreHook().supplyId
+  initView(id)
 })
+
 const changeRecommends=()=>{
   useSupplyStoreHook().getRandomRequirments(category)
 }
@@ -32,15 +36,7 @@ const checkAddress=(address)=>{
   }  
   return content.split('-')[0];  
 }
-const goToDetail = (id) => {
-  useSupplyStoreHook().supplyId = id;
-  getSupplyDetail(id).then(res => {
-  supplyDetail.data = res
-  console.log(res)
-  category=res.category
-  useSupplyStoreHook().getRandomRequirments(category)
-  })
-};
+
 
 </script>
 <template>
@@ -92,7 +88,7 @@ const goToDetail = (id) => {
     <div style="display:flex;margin-bottom: 3vh"> <h3>为您推荐</h3> 
       <el-text  class="refresh" @click="changeRecommends()"><el-icon><Refresh/></el-icon>换一批</el-text>
       </div>
-     <el-card shadow="never" @click="goToDetail(i.id)" v-for="i,index in supplyInfos" class="recommend" :key="index">
+     <el-card shadow="never" @click="initView(i.id)" v-for="i,index in supplyInfos" class="recommend" :key="index">
       <div style="float:left">
         <img src="../../../assets/img/computer.png" class="imgLogo"/>
       </div>
@@ -105,15 +101,24 @@ const goToDetail = (id) => {
   </el-card>
 </div>
 
-
   <div class="chatBoard">
     <el-card class="chatCard" shadow="never">
       <h3>留言</h3> 
       <el-input v-model="textarea" maxlength="200" resize="none"
     class="message" placeholder="请留下精彩留言" :rows="4"
     show-word-limit type="textarea"/>
-    <el-button type="success" size="small" style="float:right;margin-top: 2vh">发送</el-button>
-    </el-card>
+    <div>
+      <el-button type="success" size="small" style="float:right;margin-top: 2vh">发送</el-button>
+      <el-switch v-model="anonymous"
+      active-text="匿名留言" />
+    
+    </div>
+  <div class=comments>
+    <h3>精选留言(0)</h3> 
+    <el-divider/>
+  </div>
+   
+  </el-card>
 </div>
 
  <!-- <CommonFooter id="declare-offset" /> -->
@@ -124,30 +129,41 @@ const goToDetail = (id) => {
 @big:calc((1rem + 1vw)*0.7);
 @middle:calc((1rem + 1vw)*0.5);
 @small:calc((1rem + 1vw)*0.4);
+
 .all_layout{
-  margin-left: 10vw;
+padding-left:10vw;
   min-height: @fullHeight;
   display: flex;
   margin-top: 11vh;
+  background: rgb(247, 248, 250);
 }
 .el-text{
   font-size:@middle;
   color:#000;
 }
+.el-card{
+  background-color: #fff;
+}
 .chatBoard{
-  margin-left: 10vw;
-  width:80vw;
-  min-height: @chatHeight+5vh;
+  width:100%;
+  min-height: auto;
+  background: rgb(247, 248, 250);
   // margin-bottom: 10vh;
+  padding-bottom: 3vh;
 }
 .chatCard{
   min-height: @chatHeight;
+  width: 80vw;
+  margin-left:10vw;
 }
 .message {
   width: 77vw;
   margin-top: 2vh;
   resize:none;
   // line-height:4vh;
+}
+.comments{
+  margin-top:3vh;
 }
   .all_card{
     width: 55vw;
@@ -210,8 +226,12 @@ const goToDetail = (id) => {
     // background-color:blue;
     cursor: pointer;
   }
+  .el-switch {
+    font-size:@middle;
+  }
   .el-divider{
-    margin: 10px 0
+    margin: 10px 0;
+    border-top:1px solid #e6e8eb;
   }
   .titleName{
     font-size:@big;

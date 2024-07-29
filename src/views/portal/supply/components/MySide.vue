@@ -47,19 +47,13 @@ const reset = () => {
 </script>
 <template>
   <div class="full_side">
-    <!-- <div class="sort">
-      <h4>分类</h4>
-      <el-button v-for="item in form.category" type='primary' 
-      size="small" @click="categoryChange(item)"
-      :plain="form.categorySelect!=item">{{ item }}</el-button>
-      <el-divider style="padding-bottom: 0;margin-bottom: 0;"></el-divider>
-    </div> -->
+
     <div class="sort">
       <h4>需求类型</h4>
       <el-button type='success' 
       size="small" @click="categoryChange('全部')"
       :plain="form.categorySelect!='全部'">全部</el-button>
-      <el-popover placement="right" :width="300" trigger="click" v-for="items in companyType" :key="items" >
+      <el-popover placement="bottom" :width="300" trigger="click" v-for="items in companyType" :key="items" >
       <template #reference>
         <el-button  type='success' size="small" @click="showType(items.value)"
       :plain="form.categorySelect!=items.label">{{ items.label }}</el-button>
@@ -79,7 +73,7 @@ const reset = () => {
       <el-button type='success' 
       size="small" @click="getAllRegion"
       :plain="form.provinceFlag!='全部'">全部</el-button>
-      <el-popover placement="right" :width="250" trigger="click" v-for="items in city" :key="items" >
+      <el-popover placement="bottom" :width="250" trigger="click" v-for="items in city" :key="items" >
       <template #reference>
         <el-button  type='success' size="small" @click="showCity(items.label)"
       :plain="form.provinceFlag!=items.label">{{ items.label }}</el-button>
@@ -90,7 +84,7 @@ const reset = () => {
     </el-popover>
       <el-divider style="padding-bottom: 0;margin-bottom: 0;"></el-divider>
     </div>
-    <el-button type="primary" style="margin: 3vh 2.5vw;width:15vw;" @click="reset">全部重置</el-button>
+    <el-button type="success" style="margin: 3vh 2.5vw;width:15vw;" @click="reset">全部重置</el-button>
   </div>
 </template>
 <style scoped lang="less">
