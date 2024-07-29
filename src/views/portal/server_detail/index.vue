@@ -126,7 +126,6 @@ const buynow = () => {
   min-height: 396px;
   display: flex;
   flex-direction: column;
-
   .content {
     .m-reactive-box;
     color: @dark-font-color;
@@ -162,7 +161,7 @@ const buynow = () => {
           padding: 5px 8px;
           margin-left: 20px;
           color: #13ae68;
-          background-color: #ecf9f3;
+          background-color: #ffffff;
           border-radius: 10px;
         }
       }

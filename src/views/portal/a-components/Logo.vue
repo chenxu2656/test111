@@ -4,7 +4,7 @@ import { RouterLink } from "vue-router";
 
 <template>
   <RouterLink class="ainow-logo" to="/">
-    <img src="@/assets/images/logo_with_name.png" />
+    <img src="@/assets/images/logo.png" />
   </RouterLink>
 </template>
 

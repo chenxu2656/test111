@@ -9,21 +9,21 @@ export const useHomeStore = defineStore(
     const clickedService = ref("");
     const activeIndex = ref(null);
     const bean1 = ref({
-      title: "MAAS新应用，玩转AI新技术",
+      title: "AI赋能，万事轻松！",
       subTitle: "能交给AI工具的，就别自己埋头苦干！",
-      searchTag: "供应链管理",
+      searchTag: "AI新技术",
       data: [],
     });
 
     const bean2 = ref({
-      title: "羚羊精选，1.5折起！",
+      title: "软硬件技术赋能，1.5折起！",
       subTitle: "软件/硬件/服务，满足企业数字化多样需求",
-      searchTag: "营销管理",
+      searchTag: "生产制造",
       data: [],
     });
 
     const bean3 = ref({
-      title: "软件服务包，数字化0元购",
+      title: "数字化服务0元购",
       subTitle: "政府买单，帮助中小企业轻松开启数字化",
       searchTag: "解决方案",
       data: [],

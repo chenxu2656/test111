@@ -68,6 +68,16 @@ export default [
     },
   },
   {
+    path: "/ordercheck",
+    name: "ordercheck",
+    component: () => import("@/views/portal/server_detail/ordercheck.vue"),
+    meta: {
+      title: "订单确认",
+      showLink: false,
+      rank: 103,
+    },
+  },
+  {
     path: "/supply",
     name: "Supply",
     component: () => import("@/views/portal/supply/index.vue"),
