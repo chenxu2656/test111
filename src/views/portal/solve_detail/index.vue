@@ -1,11 +1,12 @@
 <script setup>
 import Header from "../a-components/less/Header.vue";
+import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import { Warning } from "@element-plus/icons-vue";
-import { useSolveStoreHook } from "@/store/modules/solve";
+import  useSolveStore from "@/store/modules/solve";
 import { getAddressByCode } from "@/utils/address";
-const solveDetail = useSolveStoreHook().solveObj;
+const solveDetail = useSolveStore().solveObj;
 const formattedPrice = (price) => {
-  return useSolveStoreHook().formattedPrice(price);
+  return useSolveStore().formattedPrice(price);
 };
 const checkAddress = (address) => {
   let content = getAddressByCode(address);
@@ -22,13 +23,13 @@ const checkAddress = (address) => {
   <Header :onlyShowOriginalNav="false" />
   <div class="all_layout">
     <el-row :gutter="20">
-      <el-col :span="18">
+      <el-col :span="17.5">
         <div class="all_card">
-          <el-card>
+          <el-card class="myCard">
             <h3>{{ solveDetail.achievement_name }}</h3>
             <p>成果年份：{{ solveDetail.achievement_year }}</p>
             <p>
-              价格：{{ formattedPrice(solveDetail.achievement_transfer_price) }}
+              价格：<span class="priceNum">{{ '￥'+formattedPrice(solveDetail.achievement_transfer_price) }}</span>
             </p>
             <el-row>
               <el-col :span="12">
@@ -50,54 +51,25 @@ const checkAddress = (address) => {
                 >联系平台经理</el-button
               >
             </div>
-
-            <div style="float: right; margin-top: 3vh">
+            <div style="float: right; margin-top: 2vh">
               <el-text style="margin-right: 1vw; cursor: pointer"
-                ><el-icon><Warning></Warning></el-icon> 举报</el-text
-              >
+                ><el-icon><Warning></Warning></el-icon> 举报</el-text>
               IP来自{{ checkAddress(solveDetail.region) }}
             </div>
           </el-card>
           <div></div>
-
           <el-card class="bottomC">
             <h3>技术简介</h3>
             <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
-            <div v-html="solveDetail.achievement_brief_introduction"></div>
             <p class="file">附件：无</p>
           </el-card>
-        </div></el-col
-      >
-      <el-col :span="6">
+        </div></el-col>
+      <el-col :span="6.5">
         <el-card class="rightC">
           <h3>发布人信息</h3>
           <el-text
             ><p>发布人：{{ solveDetail.contact_person }}</p>
-            <p>所属单位：{{ solveDetail.company_name }}</p></el-text
-          >
+            <p>所属单位：{{ solveDetail.company_name }}</p></el-text>
           <h3 style="margin-top: 3vh">对接记录</h3>
           <el-table :data="tableData" style="width: 100%" max-height="250">
             <el-table-column prop="date" label="对接ID" width="100" />
@@ -107,18 +79,19 @@ const checkAddress = (address) => {
       ></el-col>
     </el-row>
   </div>
-  <!-- <CommonFooter id="declare-offset" /> -->
+
+  <CommonFooter id="declare-offset" />
 </template>
 <style lang="less" scoped>
 @fullHeight: 80vh;
-@big:calc ((1rem + 1vw)*0.7);
-@middle:calc ((1rem + 1vw)*0.5);
-@small:calc ((1rem + 1vw)*0.4);
+@big:calc((1rem + 1vw)*0.7);
+@middle:calc((1rem + 1vw)*0.5);
+@small:calc((1rem + 1vw)*0.4);
 
 .all_layout {
   // margin-left: 10vw;
   // height: @fullHeight;
-  display: flex;
+   display: flex;
   margin-top: 11vh;
   background: rgb(247, 248, 250);
 }
@@ -148,7 +121,6 @@ h3 {
 }
 .rightC {
   width: 24vw;
-
   max-height: 70vh;
   overflow: auto;
 }
@@ -171,5 +143,15 @@ h3 {
 }
 .file {
   margin-top: 2vh;
+}
+.myCard p{
+  line-height: 3vh;
+  vertical-align: middle;
+  font-size:@middle;
+}
+.priceNum{
+  color:#ff8d1a;
+  font-size: @big;
+  font-weight: bold;
 }
 </style>

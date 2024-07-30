@@ -1,7 +1,7 @@
 <script setup>
 import { Search, CaretRight, Location, Right } from "@element-plus/icons-vue";
 import { getAddressByCode } from "@/utils/address";
-import { useSupplyStoreHook } from "@/store/modules/supply";
+import  useSupplyStoreHook  from "@/store/modules/supply";
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -40,8 +40,7 @@ const goToLogin = () => {
         <el-input
           v-model="keyWord"
           placeholder="请输入关键词"
-          class="input-with-select"
-        >
+          class="input-with-select">
           <template #append>
             <el-button :icon="Search" @click="searchKeyword"></el-button>
           </template>
@@ -57,34 +56,27 @@ const goToLogin = () => {
         v-for="(supplyInfo, index) in supplyInfos"
         shadow="none"
         :key="index"
-        @click="goToDetail(supplyInfo.id)"
-      >
+        @click="goToDetail(supplyInfo.id)">
         <el-row>
           <el-col :span="22"
-            ><div class="titleName">{{ supplyInfo.name }}</div></el-col
-          >
+            ><div class="titleName">{{ supplyInfo.name }}</div></el-col>
           <el-col :span="2"
             ><el-icon class="myIcon"> <Right /> </el-icon
           ></el-col>
         </el-row>
-
-        <el-text line-clamp="2" class="cardText">
+        <el-text line-clamp="3" class="cardText">
           {{ supplyInfo.content }}
         </el-text>
-
         <el-row class="bottomD">
           <el-col :span="11">
             <el-tag type="info"
               ><span class="tagText">{{ supplyInfo.type }}</span></el-tag
-            ></el-col
-          >
+            ></el-col>
           <el-col :span="13">
             <el-text
               ><el-icon> <Location /> </el-icon
-              >{{ getAddressByCode(supplyInfo.region) }}</el-text
-            >
-            <span class="bottomDate">{{ supplyInfo.start_date }}</span></el-col
-          >
+              >{{ getAddressByCode(supplyInfo.region) }}</el-text>
+            <span class="bottomDate">{{ supplyInfo.start_date }}</span></el-col>
         </el-row>
       </el-card>
     </div>
@@ -100,9 +92,9 @@ const goToLogin = () => {
   </div>
 </template>
 <style scoped lang="less">
-@big:calc ((1rem + 1vw)*0.7);
-@middle:calc ((1rem + 1vw)*0.5);
-@small:calc ((1rem + 1vw)*0.4);
+@big:calc((1rem + 1vw)*0.7);
+@middle:calc((1rem + 1vw)*0.5);
+@small:calc((1rem + 1vw)*0.45);
 .picture {
   background-image: url("https://preprod.lingyangplat.com/antelope-static-resource/website/images/second-page-banners/banner-demand-EDF2FA.jpg");
   background-size: 100% 100%;
@@ -153,10 +145,10 @@ const goToLogin = () => {
   grid-template-columns: 1fr 1fr;
 }
 .myCard {
-  width: 25vw;
-  margin-left: 5vw;
+  width: 28vw;
+  margin-left: 2vw;
   margin-top: 4vh;
-  height: 26vh;
+  height: 30vh;
   cursor: pointer;
   border-width: 0.5px;
   --el-card-padding: 15px;
@@ -174,7 +166,7 @@ const goToLogin = () => {
 .cardText {
   font-size: @middle;
   margin-top: 1vh;
-  min-height: 8vh;
+  min-height: 12vh;
   line-height: 4vh;
 }
 .bottomD {

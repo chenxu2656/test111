@@ -1,7 +1,7 @@
 <script setup>
 import Header from "../a-components/less/Header.vue";
 import { Warning,Refresh } from "@element-plus/icons-vue";
-import { useSupplyStoreHook } from '@/store/modules/supply';
+import  useSupplyStoreHook  from '@/store/modules/supply';
 import { getAddressByCode } from "@/utils/address";
 import { getSupplyDetail } from "@/api/supply";
 import { onMounted,reactive,ref } from "vue";
@@ -13,6 +13,7 @@ var supplyInfos = computed(() => {
   return useSupplyStoreHook().randomList;
 });
 const initView=(id)=>{
+  useSupplyStoreHook().supplyId=id
   getSupplyDetail(id).then(res => {
   supplyDetail.data = res
   console.log(res)
@@ -36,7 +37,6 @@ const checkAddress=(address)=>{
   }  
   return content.split('-')[0];  
 }
-
 
 </script>
 <template>
@@ -116,6 +116,23 @@ const checkAddress=(address)=>{
   <div class=comments>
     <h3>精选留言(0)</h3> 
     <el-divider/>
+    <el-card shadow="never"  v-for="i,index in supplyInfos" class="commentsText" :key="index">
+      <div style="float:left">
+        <img src="../../../assets/img/computer.png" class="imgLogo"/>
+      </div>
+      <div class="recommendC">
+     <div>
+      <el-text truncated><b>{{i.contactName}}</b></el-text>
+      <div style="float:right">
+      {{i.start_date}}</div>  
+     </div> 
+      <el-text size="small" line-clamp="2" class="recommendContent">{{i.content}}</el-text>
+      
+      
+      <p> <el-text style="float:right; cursor: pointer"><el-icon><Warning></Warning></el-icon> 举报</el-text> IP来自{{checkAddress(i.company_location)}}</p>
+    </div>
+     <el-divider v-show="index<4"></el-divider>
+     </el-card>
   </div>
    
   </el-card>
@@ -220,11 +237,17 @@ padding-left:10vw;
     height:6vh;
   }
   .recommend {
-
+    height: auto;
     // margin-top: 2vh;
     --el-card-padding:5px;
     // background-color:blue;
     cursor: pointer;
+  }
+  .commentsText {
+    height: auto;
+    // margin-top: 2vh;
+    --el-card-padding:5px;
+    // background-color:blue;
   }
   .el-switch {
     font-size:@middle;
@@ -238,6 +261,10 @@ padding-left:10vw;
     // margin-left:1.2vw;
   }
   .region{
+    float: right;
+    margin-top: 3vh;
+  }
+  .regionC{
     float: right;
     margin-top: 3vh;
   }

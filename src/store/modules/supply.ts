@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 import { store } from "../utils";
 import { getSupplyList, getRandomRequirments } from "@/api/supply";
-export const useSupplyStore = defineStore({
-  id: "pure-supply",
+export const useSupplyStoreHook = defineStore('pure-supply',{
   state: () => ({
     supplyId: "3632b75c-b717-4bd6-9d0e-789eaa0883d7",
     current_page: 1,
@@ -73,7 +72,9 @@ export const useSupplyStore = defineStore({
       });
     },
   },
+  persist: {  
+    id:'pure-supply',
+    path:['supplyId']
+   },  
 });
-export function useSupplyStoreHook() {
-  return useSupplyStore(store);
-}
+export default  useSupplyStoreHook

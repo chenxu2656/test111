@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
-import { store } from "../utils";
 
-export const useSolveStore = defineStore({
-  id: "pure-solve",
+export const useSolveStore = defineStore('pure-solve',{
+  // id: "pure-solve",
   state: () => ({
     solveObj: {},
   }),
@@ -15,7 +14,9 @@ export const useSolveStore = defineStore({
       }
     },
   },
+  persist:{
+    id:'pure-solve',
+    path:['solveObj']
+  },
 });
-export function useSolveStoreHook() {
-  return useSolveStore(store);
-}
+export default useSolveStore

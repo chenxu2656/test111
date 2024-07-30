@@ -2,7 +2,7 @@
 import { Search, CaretRight,Location } from "@element-plus/icons-vue";
 import { getAddressByCode } from "@/utils/address";
 import { getSolveList } from '@/api/solve';
-import { useSolveStoreHook } from '@/store/modules/solve'
+import useSolveStore from '@/store/modules/solve'
 import { ref,reactive,onMounted } from "vue";
 import router from '@/router'
 const keyWord = ref("");
@@ -19,11 +19,11 @@ onMounted(() => {
   })
 })
 const formattedPrice = (price) => {
-  return useSolveStoreHook().formattedPrice(price)
+  return useSolveStore().formattedPrice(price)
 }
 
 const goToDetail = (info) => {
-  useSolveStoreHook().solveObj=info
+  useSolveStore().solveObj=info
   // console.log(useSupplyStoreHook().supplyId)
   router.push('/solve_detail')
 }
