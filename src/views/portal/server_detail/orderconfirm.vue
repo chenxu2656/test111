@@ -96,7 +96,7 @@ const createOrder = async () => {
     return;
   }
   // /api/v1/orders
-  orderInfo.value.total_amount = 1;
+  // orderInfo.value.total_amount = 1;
   console.log("orderInfo", orderInfo.value);
   const host = window.location.href.split("/#/")[0];
   const backUrl = `${host}`;
