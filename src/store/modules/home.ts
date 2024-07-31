@@ -57,6 +57,7 @@ export const useHomeStore = defineStore(
     const resetClickedService = () => {
       clickedService.value = "";
     };
+
     return {
       clickedTag,
       clickedService,

@@ -7,6 +7,7 @@ import { ref, watch, onUnmounted, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { Search } from "@element-plus/icons-vue";
 import { useHomeStore } from "@/store/modules/home";
+import { isUserLoggedIn } from "@/utils/auth";
 
 const props = defineProps({
   onlyShowOriginalNav: {
@@ -171,7 +172,16 @@ function autoHide() {
 }
 
 const goToLogin = () => {
-  router.push("/login");
+  console.log(isUserLoggedIn());
+  if (isUserLoggedIn()) {
+    router.push("/welcome");
+  } else {
+    const currentPath = window.location.href;
+    const parts = currentPath.split("/");
+    const lastPart = "/" + parts.pop();
+    localStorage.setItem("redirectPath", lastPart);
+    router.push("/login");
+  }
 };
 
 const showOriginalNav = ref(true);

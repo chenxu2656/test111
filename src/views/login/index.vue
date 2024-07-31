@@ -85,24 +85,30 @@ const sendCode = () => {
     }
   });
 };
-const loginSuccess = async() => {
-  const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-  const org_resp = await http.request<any>(
+const loginSuccess = async () => {
+  const redirectPath = localStorage.getItem("redirectPath") || "/welcome";
+  localStorage.removeItem("redirectPath");
+
+  await router.push(redirectPath);
+  message("登录成功", { type: "success" });
+
+  if (redirectPath === "/welcome") {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const org_resp = await http.request<any>(
       "get",
       `/api/v1/organizationMembers/user/${userInfo.id}`,
     );
-  if (org_resp.id) {
-        localStorage.setItem("org_id", org_resp.organization_id);
-        localStorage.setItem("orgInfo", JSON.stringify(org_resp))
+    if (org_resp.id) {
+      localStorage.setItem("org_id", org_resp.organization_id);
+      localStorage.setItem("orgInfo", JSON.stringify(org_resp));
+    }
   }
-  return initRouter().then(() => {
+
+  initRouter().then(() => {
     console.log("getTopMenu(true)", getTopMenu(true));
-    router.push("/welcome").then(async() => {
-      
-      message("登录成功", { type: "success" });
-    });
   });
 };
+
 const verifyCode = (phone: string, code: string) => {
   ruleFormRef.value.validate(async (valid) => {
     if (valid) {
