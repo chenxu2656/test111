@@ -28,4 +28,4 @@ export const getRandomRequirments=(category:string)=>{
     baseUrlApi(`requirements/random?category=${category}&num=5`),
   );
 }
-/**创建需求 */
+

@@ -5,6 +5,7 @@ import  useSupplyStoreHook  from '@/store/modules/supply';
 import { getAddressByCode } from "@/utils/address";
 import { getSupplyDetail } from "@/api/supply";
 import { onMounted,reactive,ref } from "vue";
+import { isUserLoggedIn } from "@/utils/auth";
 var supplyDetail = reactive({data:{}});
 const textarea=ref("")
 const anonymous=ref(false)
@@ -37,7 +38,19 @@ const checkAddress=(address)=>{
   }  
   return content.split('-')[0];  
 }
-
+const createComments=()=>{
+  if (isUserLoggedIn()) {
+    useSupplyStoreHook().createComment(anonymous.value,textarea.value)
+    textarea.value=""
+    anonymous.value=false
+  } else {
+    const currentPath = window.location.href;
+    const parts = currentPath.split("/");
+    const lastPart = "/" + parts.pop();
+    localStorage.setItem("redirectPath", lastPart);
+    router.push("/login");
+  }
+}
 </script>
 <template>
  <el-backtop :right="10" :bottom="10" />
@@ -108,7 +121,8 @@ const checkAddress=(address)=>{
     class="message" placeholder="请留下精彩留言" :rows="4"
     show-word-limit type="textarea"/>
     <div>
-      <el-button type="success" size="small" style="float:right;margin-top: 2vh">发送</el-button>
+      <el-button type="success" size="small" @click="createComments()"
+      style="float:right;margin-top: 2vh">发送</el-button>
       <el-switch v-model="anonymous"
       active-text="匿名留言" />
     

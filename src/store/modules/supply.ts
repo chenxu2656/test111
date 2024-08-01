@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
-import { store } from "../utils";
 import { getSupplyList, getRandomRequirments } from "@/api/supply";
+import {createNotification} from "@/api/notice"
 export const useSupplyStoreHook = defineStore('pure-supply',{
   state: () => ({
-    supplyId: "3632b75c-b717-4bd6-9d0e-789eaa0883d7",
+    supplyId: "",
     current_page: 1,
     keyWord: "",
     category: "",
@@ -12,6 +12,15 @@ export const useSupplyStoreHook = defineStore('pure-supply',{
     supplyList: [],
     randomList: [],
     supplyLength: 0,
+    notification:{
+      from_user_name: "",
+      from_user_id: "",
+      target_id: "",
+      notification_type: 1,
+      notification_title: "需求留言",
+      notification_content: "",
+      status: false
+    }
   }),
   actions: {
     setCategory(category: string) {
@@ -65,12 +74,22 @@ export const useSupplyStoreHook = defineStore('pure-supply',{
         console.log(res);
       });
     },
-    //获取三个随机同品类需求
+    //获取5个随机同品类需求
     getRandomRequirments(category: string) {
       getRandomRequirments(category).then((res) => {
         this.randomList = res.data;
       });
     },
+    createComment(flag: boolean,content:string){
+      let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+      this.notification.from_user_name=flag?'匿名':userInfo.username;
+      this.notification.from_user_id=userInfo.id;
+      this.notification.target_id=this.supplyId;
+      this.notification.notification_content=content;
+      createNotification(this.notification).then(res=>{
+        console.log(res)
+      })
+    }
   },
   persist: {  
     id:'pure-supply',
