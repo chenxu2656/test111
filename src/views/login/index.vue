@@ -50,7 +50,7 @@ const registerRuleForm = reactive({
 /** 使用公共函数，避免`removeEventListener`失效 */
 function onkeypress({ code }: KeyboardEvent) {
   if (code === "Enter") {
-    onLogin(ruleFormRef.value);
+    verifyCode(ruleForm.phoneNumber, ruleForm.verificationCode);
   }
 }
 onMounted(() => {
@@ -104,7 +104,7 @@ const loginSuccess = async () => {
     }
   }
 
-  initRouter().then(() => {
+  return initRouter().then(() => {
     console.log("getTopMenu(true)", getTopMenu(true));
   });
 };

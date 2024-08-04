@@ -184,6 +184,15 @@ const goToLogin = () => {
   }
 };
 
+const goToWork = () => {
+  console.log(isUserLoggedIn());
+  if (isUserLoggedIn()) {
+    router.push("/welcome");
+  } else {
+    router.push("/login");
+  }
+};
+
 const showOriginalNav = ref(true);
 
 const handleScroll = () => {
@@ -281,7 +290,7 @@ function scrollToSection(sectionId, index) {
       </div>
       <div style="flex-grow: 1"></div>
       <div class="right_options">
-        <el-button link type="primary" class="work" @click="goToLogin"
+        <el-button link type="primary" class="work" @click="goToWork"
           >工作台</el-button
         >
         <el-button type="primary" class="login" @click="goToLogin"

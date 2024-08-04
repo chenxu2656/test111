@@ -1,0 +1,199 @@
+.el-overlay.is-message-box {
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif !important;
+
+  .el-overlay-message-box {
+    .el-message-box {
+      --el-messagebox-width: 606px;
+      padding: 0;
+      height: 236px;
+
+      .el-message-box__header {
+        padding: 0 64px;
+        height: 40px;
+
+        .el-message-box__title {
+          height: 40px;
+          font-size: 20px;
+          display: flex;
+          align-items: flex-end;
+        }
+
+        .el-message-box__headerbtn {
+          width: 80px;
+          height: 60px;
+
+          i {
+            font-size: 22px;
+          }
+        }
+      }
+
+      .el-message-box__content {
+        position: absolute;
+        height: 124px;
+
+        .el-message-box__container {
+          justify-content: center;
+          width: 606px;
+          padding: 0 64px;
+          height: 124px;
+          font-size: 20px;
+          font-weight: 400;
+          color: #333;
+          line-height: 27px;
+          text-align: center;
+        }
+      }
+
+      .el-message-box__btns {
+        background-color: #edeef2;
+        position: absolute;
+        padding: 0 64px;
+        width: 606px;
+        bottom: 0;
+        height: 72px;
+
+        .el-button {
+          width: 100px;
+          height: 40px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI',
+            'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+            'Helvetica Neue', sans-serif !important;
+          font-weight: 400;
+          font-size: 16px;
+          border-radius: 4px;
+        }
+
+        .cancel-btn {
+          border: none;
+          text-decoration: underline;
+          background-color: rgba($color: #000000, $alpha: 0);
+        }
+      }
+
+      &.withInput {
+        .el-message-box__header {
+          .el-message-box__title {
+            height: 40px;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: flex-end;
+          }
+        }
+
+        .el-message-box__content {
+          display: flex;
+          position: absolute;
+          height: 124px;
+          width: 100%;
+          justify-content: space-between;
+          padding: 0 64px;
+
+          .el-message-box__container {
+            justify-content: flex-start;
+            width: auto;
+            height: 124px;
+            padding: 0 !important;
+            font-size: 20px;
+            font-weight: 400;
+            color: #333;
+            flex-grow: 1;
+          }
+
+          .el-message-box__input {
+            display: flex;
+            flex-grow: 1;
+            padding-top: 0 !important;
+            align-items: center;
+            .el-input {
+              .el-input__wrapper {
+                height: 44px !important;
+                .el-input__inner {
+                  height: 44px !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // warning 的弹窗在这里设置
+  div[aria-label='Warning'] {
+    .el-message-box {
+      --el-messagebox-width: 606px;
+      padding: 0;
+      height: 236px;
+
+      .el-message-box__header {
+        padding: 0 64px;
+        height: 40px;
+
+        .el-message-box__title {
+          height: 40px;
+          font-size: 20px;
+          display: flex;
+          align-items: flex-end;
+        }
+
+        .el-message-box__headerbtn {
+          display: none;
+        }
+      }
+
+      .el-message-box__content {
+        position: absolute;
+        height: 124px;
+
+        .el-message-box__container {
+          justify-content: center;
+          width: 606px;
+          padding: 0 40px;
+          height: 124px;
+          font-size: 20px;
+          font-weight: 400;
+          color: #333;
+          line-height: 27px;
+          text-align: center;
+
+          .el-message-box__status.el-message-box-icon--warning {
+            color: #e24445;
+          }
+        }
+      }
+
+      .el-message-box__btns {
+        background-color: #edeef2;
+        position: absolute;
+        padding: 0 64px;
+        width: 606px;
+        bottom: 0;
+        height: 72px;
+
+        .el-button {
+          width: 100px;
+          height: 40px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI',
+            'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+            'Helvetica Neue', sans-serif !important;
+          font-weight: 400;
+          font-size: 16px;
+          border-radius: 4px;
+          background-color: #e24445;
+          box-shadow: none;
+          border: none;
+        }
+
+        .cancel-btn {
+          border: none;
+          text-decoration: underline;
+          background-color: rgba($color: #000000, $alpha: 0);
+        }
+      }
+    }
+  }
+}

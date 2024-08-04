@@ -5,6 +5,9 @@ import { onMounted, onUnmounted, ref } from "vue";
 import { getServerDetail } from "./api";
 import { useHomeStore } from "@/store/modules/home";
 import router from "@/router";
+import { isUserLoggedIn } from "@/utils/auth";
+import { ElMessageBox } from "element-plus";
+import "@/assets/el-message-box.scss";
 const homeStore = useHomeStore();
 
 const server_info = ref(null);
@@ -19,7 +22,23 @@ onUnmounted(() => {
   homeStore.resetClickedService();
 });
 const buynow = () => {
-  router.push(`/orderconfirm?productid=${server_info.value.id}`);
+  if (isUserLoggedIn()) {
+    router.push(`/orderconfirm?productid=${server_info.value.id}`);
+  } else {
+    ElMessageBox.confirm("购买产品前请先登录。", "", {
+      confirmButtonText: "登录",
+      cancelButtonText: "取消",
+      cancelButtonClass: "cancel-btn",
+    })
+      .then(async () => {
+        const currentPath = window.location.href;
+        const parts = currentPath.split("/");
+        const lastPart = "/" + parts.pop();
+        localStorage.setItem("redirectPath", lastPart);
+        router.push("/login");
+      })
+      .catch(() => {});
+  }
 };
 </script>
 
