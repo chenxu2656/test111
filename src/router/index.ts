@@ -117,7 +117,7 @@ router.beforeEach((to, from, next) => {
 
   if (!isUserLoggedInFlag && !whiteList.includes(to.path)) {
     localStorage.setItem("redirectPath", to.fullPath);
-    next("/login");
+    next("/portal");
   } else {
     next();
   }
