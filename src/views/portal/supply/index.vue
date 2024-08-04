@@ -3,14 +3,13 @@ import Header from "../a-components/less/Header.vue";
 import MySide from "@/views/portal/supply/components/MySide.vue";
 import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import MainView from "./components/MainView.vue";
-import { ref } from "vue";
 </script>
 <template>
   <el-backtop :right="10" :bottom="10" />
   <Header :onlyShowOriginalNav="false" />
   <div class="all_layout">
     <el-container>
-      <el-aside width="20vw"><MySide /></el-aside>
+      <el-aside width="20vw"><MySide :message="'supply'"/></el-aside>
       <el-main><MainView /></el-main>
     </el-container>
   </div>

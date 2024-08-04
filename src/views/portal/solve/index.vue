@@ -9,7 +9,7 @@ import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
   <Header :onlyShowOriginalNav="false" />
   <div class="all_layout">
     <el-container>
-      <el-aside width="20vw"><MySide /></el-aside>
+      <el-aside width="20vw"><MySide :message="'solve'"/></el-aside>
       <el-main> <MainView /></el-main>
     </el-container>
   </div>

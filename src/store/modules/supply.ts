@@ -92,8 +92,7 @@ export const useSupplyStoreHook = defineStore('pure-supply',{
     }
   },
   persist: {  
-    id:'pure-supply',
-    path:['supplyId']
+    paths:['supplyId']
    },  
 });
 export default  useSupplyStoreHook

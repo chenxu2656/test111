@@ -1,30 +1,35 @@
 <script setup>
 import { Search, CaretRight,Location } from "@element-plus/icons-vue";
 import { getAddressByCode } from "@/utils/address";
-import { getSolveList } from '@/api/solve';
 import useSolveStore from '@/store/modules/solve'
-import { ref,reactive,onMounted } from "vue";
-import router from '@/router'
+import { ref,onMounted } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter()
 const keyWord = ref("");
-const currentPage = ref(1);
-const pageSize = 10;
-var size = ref(11);
-var solveInfos =reactive([]);
+var currentPage = ref(1);
+var total = computed(() => {
+  return useSolveStore().supplyLength;
+});
+var solveInfos = computed(() => {
+  return useSolveStore().supplyList;
+});
+const handleCurrentChange = () => {
+  useSolveStore().current_page = currentPage.value;
+  useSolveStore().searchSupply2();
+};
 onMounted(() => {
-  getSolveList().then(res => {
-    console.log(res)
-     solveInfos.splice(0, solveInfos.length, ...res.data);
-      size = res.length;
-    console.log(solveInfos)
-  })
+  handleCurrentChange();
 })
+const searchKeyword = () => {
+  useSolveStore().keyWord = keyWord.value;
+  useSolveStore().searchSupply();
+};
 const formattedPrice = (price) => {
   return useSolveStore().formattedPrice(price)
 }
 
 const goToDetail = (info) => {
   useSolveStore().solveObj=info
-  // console.log(useSupplyStoreHook().supplyId)
   router.push('/solve_detail')
 }
 const cancelHtml=(item)=>{
@@ -42,7 +47,7 @@ const cancelHtml=(item)=>{
       class="input-with-select"
     >
       <template #append>
-        <el-button :icon="Search"></el-button>
+        <el-button :icon="Search"  @click="searchKeyword()"></el-button>
       </template>
     </el-input>
     <el-button type="success" class="sussessBt">
@@ -87,12 +92,10 @@ const cancelHtml=(item)=>{
       <el-pagination
       class="pageSet"
       v-model:current-page="currentPage"
-      v-model:page-size="pageSize"
-      :size="size"
+      default-page-size
       :disabled="disabled"
       layout="prev, pager, next, jumper"
-      :total="5"
-      @size-change="handleSizeChange"
+      :total="total"
       @current-change="handleCurrentChange"
     />
   </div>
