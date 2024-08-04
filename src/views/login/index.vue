@@ -104,7 +104,7 @@ const loginSuccess = async () => {
     }
   }
 
-  return initRouter().then(() => {
+  initRouter().then(() => {
     console.log("getTopMenu(true)", getTopMenu(true));
   });
 };
