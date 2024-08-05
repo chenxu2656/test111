@@ -6,6 +6,8 @@ import { getAddressByCode } from "@/utils/address";
 import { getSupplyDetail } from "@/api/supply";
 import { onMounted,reactive,ref } from "vue";
 import { isUserLoggedIn } from "@/utils/auth";
+import { useRouter } from "vue-router";
+const router = useRouter()
 var supplyDetail = reactive({data:{}});
 const textarea=ref("")
 const anonymous=ref(false)
@@ -13,6 +15,7 @@ var category="";
 var supplyInfos = computed(() => {
   return useSupplyStoreHook().randomList;
 });
+const dialogVisible = ref(false)
 const initView=(id)=>{
   useSupplyStoreHook().supplyId=id
   getSupplyDetail(id).then(res => {
@@ -51,6 +54,17 @@ const createComments=()=>{
     router.push("/login");
   }
 }
+const getPhoneNumber=()=>{
+  if (isUserLoggedIn()) {
+    dialogVisible.value=true
+  } else {
+    const currentPath = window.location.href;
+    const parts = currentPath.split("/");
+    const lastPart = "/" + parts.pop();
+    localStorage.setItem("redirectPath", lastPart);
+    router.push("/login");
+  }
+}
 </script>
 <template>
  <el-backtop :right="10" :bottom="10" />
@@ -79,7 +93,20 @@ const createComments=()=>{
     </p>
     </el-card>
     <el-button type="primary" style="margin-top: 2vh"
-    size="small">获得联系方式</el-button>
+    size="small" @click="getPhoneNumber()">获得联系方式</el-button>
+    <el-dialog
+    v-model="dialogVisible"
+    title="提示"
+    width="500">
+    <span>联系电话：{{supplyDetail.data.contactPhone}}</span>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">
+         确定
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
     <div class="region">
       <el-text style="margin-right: 1vw;cursor: pointer"><el-icon><Warning></Warning></el-icon> 举报</el-text>  
       IP来自{{checkAddress(supplyDetail.data.company_location)}}</div>

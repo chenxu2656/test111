@@ -4,7 +4,10 @@ import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 import { Warning } from "@element-plus/icons-vue";
 import  useSolveStore from "@/store/modules/solve";
 import { getAddressByCode } from "@/utils/address";
+import { isUserLoggedIn } from "@/utils/auth";
 const solveDetail = useSolveStore().solveObj;
+const dialogVisible1 = ref(false)
+const dialogVisible2 = ref(false)
 const formattedPrice = (price) => {
   return useSolveStore().formattedPrice(price);
 };
@@ -16,6 +19,28 @@ const checkAddress = (address) => {
   }
   return content.split("-")[0];
 };
+const getPhoneNumber1=()=>{
+  if (isUserLoggedIn()) {
+    dialogVisible1.value=true
+  } else {
+    const currentPath = window.location.href;
+    const parts = currentPath.split("/");
+    const lastPart = "/" + parts.pop();
+    localStorage.setItem("redirectPath", lastPart);
+    router.push("/login");
+  }
+}
+const getPhoneNumber2=()=>{
+  if (isUserLoggedIn()) {
+    dialogVisible2.value=true
+  } else {
+    const currentPath = window.location.href;
+    const parts = currentPath.split("/");
+    const lastPart = "/" + parts.pop();
+    localStorage.setItem("redirectPath", lastPart);
+    router.push("/login");
+  }
+}
 // import CommonFooter from "@/views/portal/a-views/CommonFooter.vue";
 </script>
 <template>
@@ -46,10 +71,36 @@ const checkAddress = (address) => {
               </el-col>
             </el-row>
             <div style="margin-top: 2vh; float: left; padding-bottom: 2vh">
-              <el-button type="primary" size="small">联系发布人</el-button>
-              <el-button type="primary" size="small" plain
+              <el-button type="primary" size="small" @click="getPhoneNumber1" style="margin-right:1vw">联系发布人</el-button>
+              <el-dialog
+                v-model="dialogVisible1"
+                title="提示"
+                width="500">
+                <span>联系电话：{{solveDetail.patent_number}}</span>
+                <template #footer>
+                  <div class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible1 = false">
+                    确定
+                    </el-button>
+                  </div>
+                </template>
+              </el-dialog>
+              <el-button type="primary" size="small" plain @click="getPhoneNumber2" 
                 >联系平台经理</el-button
               >
+              <el-dialog
+                v-model="dialogVisible2"
+                title="提示"
+                width="500">
+                <span>联系电话：1234567890</span>
+                <template #footer>
+                  <div class="dialog-footer">
+                    <el-button type="primary" @click="dialogVisible2 = false">
+                    确定
+                    </el-button>
+                  </div>
+                </template>
+              </el-dialog>
             </div>
             <div style="float: right; margin-top: 2vh">
               <el-text style="margin-right: 1vw; cursor: pointer"
